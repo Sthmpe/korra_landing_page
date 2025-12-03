@@ -85,7 +85,7 @@ export default function App() {
             
            {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-              <img src="/korra_logo_icon.png" alt="Korra Logo" className="h-8 w-8 md:h-10 md:w-10 object-contain" />
+              <img src="/korra_logo_icon.png" alt="Korra Logo" className="h-12 w-12 md:h-12 md:w-12 object-contain" />
               <span className={`font-bold text-xl md:text-2xl tracking-tight ${colors.text}`}>Korra</span>
             </div>
 
