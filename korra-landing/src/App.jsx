@@ -83,9 +83,9 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
             
-            {/* Logo Section */}
+           {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
-              <Hexagon className={`h-7 w-7 md:h-8 md:w-8 ${colors.accent}`} fill="currentColor" fillOpacity={0.1} strokeWidth={2.5} />
+              <img src="/korra_logo_icon.png" alt="Korra Logo" className="h-8 w-8 md:h-10 md:w-10 object-contain" />
               <span className={`font-bold text-xl md:text-2xl tracking-tight ${colors.text}`}>Korra</span>
             </div>
 
