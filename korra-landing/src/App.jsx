@@ -11,7 +11,11 @@ import {
   Banknote,
   Clock,
   Lock,
-  FileText
+  FileText,
+  Briefcase,
+  ChevronDown, 
+  ChevronUp,
+  Users
 } from 'lucide-react';
 
 export default function App() {
@@ -44,6 +48,33 @@ export default function App() {
     setIsMenuOpen(false);
   };
 
+  const faqs = [
+    {
+      question: "Can I cancel my plan and get a refund?",
+      answer: (
+        <div className="space-y-2">
+          <p>It depends on the plan you chose:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li><strong>For "Strict Lock" Plans:</strong> You have a grace period during the Secure Buffer to cancel for a full refund. Immediately after the buffer ends, we release funds to the vendor to lock your price. If you cancel after this, 50% of your paid funds are retained as compensation to the vendor.</li>
+            <li><strong>For "Korra Direct" Plans:</strong> The cancellation policy is set by the Vendor (e.g., No Refund, Full Refund, or Exchange). Please check the Vendor's terms before paying.</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      question: "Why do you charge a cancellation fee?",
+      answer: "We don't charge it; the Vendor keeps it. In Nigeria, holding an item for 2 months costs money (inflation). If you fail to complete the payment, the vendor has lost other sales. The fee covers their 'Opportunity Cost' and protects them from losses."
+    },
+    {
+      question: "Is my money safe?",
+      answer: "Yes. Korra is a technology service provider that processes funds via regulated partners. We hold funds in a Secure Buffer during the initial grace period to ensure commitment from both parties."
+    },
+    {
+      question: "How do I start?",
+      answer: "Download the app, complete your KYC verification, and ask your favorite vendor to send you a Korra link. If they aren't on Korra yet, invite them!"
+    }
+  ];
+
   return (
     <div className={`min-h-screen ${colors.primaryBg} ${colors.text} font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden`}>
       
@@ -60,9 +91,10 @@ export default function App() {
 
             {/* Desktop Menu */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#economics" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>Rules & Fees</a>
-              <a href="#vendors" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>For Vendors</a>
-              <a href="#customers" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>For Customers</a>
+              <a href="#models" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>Our Models</a>
+              <a href="#benefits" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>Benefits</a>
+              <a href="#about" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>About Us</a>
+              <a href="#faq" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>FAQs</a>
               <button 
                 onClick={scrollToDownload}
                 className={`${colors.button} px-6 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-xl shadow-[#A54600]/20`}
@@ -84,9 +116,10 @@ export default function App() {
         {isMenuOpen && (
           <div className={`md:hidden bg-white border-b ${colors.border} absolute w-full left-0 top-16 shadow-lg`}>
             <div className="px-4 pt-4 pb-6 space-y-3">
-              <a href="#economics" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">Rules & Fees</a>
-              <a href="#vendors" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">For Vendors</a>
-              <a href="#customers" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">For Customers</a>
+              <a href="#models" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">Our Models</a>
+              <a href="#benefits" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">Benefits</a>
+              <a href="#about" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">About Us</a>
+              <a href="#faq" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">FAQs</a>
               <div className="pt-2">
                 <button 
                   onClick={scrollToDownload}
@@ -109,17 +142,16 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border ${colors.border} shadow-sm mb-6 md:mb-8 mx-auto`}>
             <span className={`flex h-2 w-2 rounded-full bg-[#A54600]`}></span>
-            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Financial Tool for Reservations</span>
+            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Save Now, Buy Later Infrastructure</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-[1.1] text-slate-900">
-            Secure Commitments. <br />
-            <span className="text-[#A54600]">Zero Risk Trading.</span>
+            Secure Sales. <br />
+            <span className="text-[#A54600]">Protect Against Inflation.</span>
           </h1>
           
           <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2">
-            Korra is the financial layer between serious buyers and verified vendors. 
-            We automate reservations and enforce commitment.
+            Korra is the transaction tool for serious commerce. We provide the payment rails and digital agreements for Vendors and Customers to transact securely over time.
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 items-stretch sm:items-center px-4 md:px-0">
@@ -146,26 +178,74 @@ export default function App() {
             </a>
           </div>
           
-          <div className="mt-6 text-xs md:text-sm text-slate-500">
-            Available for both <span className="font-bold text-slate-700">Vendors</span> and <span className="font-bold text-slate-700">Customers</span>
+          <div className="mt-6 text-xs md:text-sm text-slate-500 font-medium">
+            A Technology Service Provider.
           </div>
         </div>
       </section>
 
-      {/* --- THE RULES OF ENGAGEMENT (ECONOMICS) --- */}
-      <section id="economics" className="py-16 md:py-20 bg-white">
+      {/* --- TWO MODELS SECTION --- */}
+      <section id="models" className="py-16 md:py-20 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Two Ways to Transact</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Vendors choose the model that fits the customer relationship.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Model A: Strict Lock */}
+            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:border-[#A54600]/30 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#A54600] text-white flex items-center justify-center mb-6">
+                <Lock size={24} />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Strict Lock</h3>
+              <p className="text-sm text-[#A54600] font-bold uppercase tracking-wider mb-6">Secure • High Trust</p>
+              
+              <ul className="space-y-4 text-slate-700 text-sm md:text-base">
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> New customers & Items under ₦100k.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit:</strong> Minimum 30% - 40% required.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Secure Buffer:</strong> Funds held safely for 10 days.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Payout:</strong> 50% credited immediately after Secure Buffer.</span></li>
+                <li className="flex gap-3"><AlertCircle className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> 50% forfeit penalty after buffer.</span></li>
+              </ul>
+            </div>
+
+            {/* Model B: Korra Direct */}
+            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50">
+              <div className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center mb-6">
+                <Briefcase size={24} />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra Direct</h3>
+              <p className="text-sm text-slate-500 font-bold uppercase tracking-wider mb-6">Flexible • Loyal Customers</p>
+              
+              <ul className="space-y-4 text-slate-700 text-sm md:text-base">
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> Repeat customers & High-value items.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Flexible Rules:</strong> Vendor sets down payment & duration.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Instant Settlement:</strong> Funds credited to Vendor wallet immediately.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Bookkeeping:</strong> Korra tracks balance & sends reminders.</span></li>
+                <li className="flex gap-3"><AlertCircle className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Disputes:</strong> Resolved directly between parties.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- RULES & FEES --- */}
+      <section id="economics" className="py-16 md:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-900">Transparent Rules</h2>
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-900">Transparent Fee Structure</h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">
-              We are not a marketplace. We are a financial tool. Here is exactly how the money works.
+              We employ a Dual-Fee Structure to ensure sustainability.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 lg:gap-12">
             
-            {/* VENDOR ECONOMICS CARD */}
-            <div className="bg-slate-50 rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
+            {/* VENDOR FEES */}
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white shrink-0">
                   <Store size={20} className="md:w-6 md:h-6"/>
@@ -177,33 +257,24 @@ export default function App() {
                 <li className="flex gap-4">
                   <div className="mt-1 shrink-0"><Banknote className="text-[#A54600] w-5 h-5" /></div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm md:text-base">7.5% Service Charge</h4>
-                    <p className="text-xs md:text-sm text-slate-600 mt-1">We charge a flat percentage on the total transaction value. No monthly fees.</p>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <div className="mt-1 shrink-0"><Clock className="text-[#A54600] w-5 h-5" /></div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm md:text-base">50% Payout After 10 Days</h4>
-                    <p className="text-xs md:text-sm text-slate-600 mt-1">
-                      Once the 10-day cooling-off period passes, 50% of funds are released to you.
-                    </p>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Platform Fee</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">Deducted automatically upon entry. Covers automated bookkeeping and management.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
                   <div className="mt-1 shrink-0"><Lock className="text-[#A54600] w-5 h-5" /></div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm md:text-base">Default Protection</h4>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">50% Payout after Buffer</h4>
                     <p className="text-xs md:text-sm text-slate-600 mt-1">
-                      If the customer defaults after the 10-day window, you keep the funds released to cover opportunity cost.
+                      Once the Secure Buffer passes, 50% of funds are credited to your wallet immediately.
                     </p>
                   </div>
                 </li>
               </ul>
             </div>
 
-            {/* CUSTOMER ECONOMICS CARD */}
-            <div className="bg-slate-50 rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
+            {/* CUSTOMER FEES */}
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
                   <ShieldCheck size={20} className="md:w-6 md:h-6"/>
@@ -215,16 +286,16 @@ export default function App() {
                 <li className="flex gap-4">
                   <div className="mt-1 shrink-0"><TrendingUp className="text-slate-900 w-5 h-5" /></div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm md:text-base">3% Transaction Fee</h4>
-                    <p className="text-xs md:text-sm text-slate-600 mt-1">Charged on every deposit, capped at ₦4,000. <span className="font-bold text-[#A54600]">No Interest.</span></p>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">2% Processing Fee</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">Capped at ₦3,000. This is a convenience fee for flexible payments and inflation protection.</p>
                   </div>
                 </li>
                 <li className="flex gap-4">
-                  <div className="mt-1 shrink-0"><AlertCircle className="text-slate-900 w-5 h-5" /></div>
+                  <div className="mt-1 shrink-0"><Clock className="text-slate-900 w-5 h-5" /></div>
                   <div>
-                    <h4 className="font-bold text-slate-900 text-sm md:text-base">The 10-Day Rule</h4>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">10-Day Cooling Off</h4>
                     <p className="text-xs md:text-sm text-slate-600 mt-1">
-                      10 days to cancel for a refund. After 10 days, you are <strong>obligated</strong> to complete the plan.
+                      In the Strict Model, you have 10 days to cancel for a refund. After the Secure Buffer, cancelling forfeits 50% of paid funds.
                     </p>
                   </div>
                 </li>
@@ -236,121 +307,165 @@ export default function App() {
       </section>
 
       {/* --- VENDOR BENEFITS --- */}
-      <section id="vendors" className="py-16 md:py-20 bg-slate-50 border-y border-slate-200">
+      <section id="benefits" className="py-16 md:py-20 bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-             <div className="flex-1 w-full">
-               <span className="text-[#A54600] font-bold tracking-wider text-xs md:text-sm uppercase mb-2 block">Vendor Benefits</span>
-               <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 md:mb-6">No Manual Bookkeeping. <br/>Just Serious Buyers.</h2>
-               <p className="text-slate-600 mb-6 md:mb-8 text-base md:text-lg">
-                 Stop using notebooks to track who owes you what. Korra automates the entire collection process.
-               </p>
-               
-               <div className="space-y-4">
-                 <div className="flex items-start gap-3">
-                   <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
-                   <div>
-                     <h4 className="font-bold text-slate-900 text-sm md:text-base">Automated Payments</h4>
-                     <p className="text-xs md:text-sm text-slate-600">We remind the customer and collect payments automatically.</p>
+           
+           {/* Vendor Benefits */}
+           <div className="mb-20">
+             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+               <div className="flex-1 w-full">
+                 <span className="text-[#A54600] font-bold tracking-wider text-xs md:text-sm uppercase mb-2 block">For Vendors</span>
+                 <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 md:mb-6">No Manual Bookkeeping. <br/>Just Serious Buyers.</h2>
+                 <p className="text-slate-600 mb-6 md:mb-8 text-base md:text-lg">
+                   Stop using notebooks to track who owes you what. Korra automates the entire collection process.
+                 </p>
+                 <div className="space-y-4">
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Automated Payments</h4>
+                       <p className="text-xs md:text-sm text-slate-600">We remind the customer and collect payments automatically.</p>
+                     </div>
                    </div>
-                 </div>
-                 <div className="flex items-start gap-3">
-                   <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
-                   <div>
-                     <h4 className="font-bold text-slate-900 text-sm md:text-base">Down Payment Filter</h4>
-                     <p className="text-xs md:text-sm text-slate-600">Unserious buyers won't pass the down payment step.</p>
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Down Payment Filter</h4>
+                       <p className="text-xs md:text-sm text-slate-600">Unserious buyers won't pass the down payment step.</p>
+                     </div>
                    </div>
                  </div>
                </div>
-             </div>
-
-             <div className="flex-1 relative w-full mt-8 md:mt-0">
-                {/* Abstract Vendor Dashboard Graphic */}
-                <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-slate-100 relative z-10">
-                   <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
-                     <div>
-                       <p className="text-[10px] md:text-xs text-slate-400 font-bold uppercase">Pending Payout</p>
-                       <p className="text-xl md:text-2xl font-bold text-slate-900">₦250,000.00</p>
-                     </div>
-                     <div className="bg-[#A54600]/10 text-[#A54600] px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold">
-                       In 2 Days
-                     </div>
-                   </div>
-                   <div className="space-y-3">
-                     <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                       <div className="flex items-center gap-3">
-                         <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">JD</div>
-                         <div>
-                            <p className="text-xs md:text-sm font-bold text-slate-900">John Doe</p>
-                            <p className="text-[10px] md:text-xs text-slate-500">Iphone 13 Pro Max</p>
-                         </div>
+               <div className="flex-1 relative w-full mt-8 md:mt-0">
+                  {/* Abstract Vendor Dashboard Graphic */}
+                  <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-slate-100 relative z-10">
+                     <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                       <div>
+                         <p className="text-[10px] md:text-xs text-slate-400 font-bold uppercase">Pending Release</p>
+                         <p className="text-xl md:text-2xl font-bold text-slate-900">₦15,000.00</p>
                        </div>
-                       <span className="text-[10px] md:text-xs font-bold text-[#A54600]">Paid 50%</span>
-                     </div>
-                     <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg opacity-50">
-                       <div className="flex items-center gap-3">
-                         <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">AS</div>
-                         <div>
-                            <p className="text-xs md:text-sm font-bold text-slate-900">Amaka Smith</p>
-                            <p className="text-[10px] md:text-xs text-slate-500">Wig Installation</p>
-                         </div>
+                       <div className="bg-[#A54600]/10 text-[#A54600] px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold">
+                         Secure Buffer
                        </div>
-                       <span className="text-[10px] md:text-xs font-bold text-slate-400">Locked</span>
                      </div>
-                   </div>
-                </div>
-                {/* Decorative Elements */}
-                <div className="absolute top-10 -right-4 w-24 h-24 bg-[#A54600] rounded-full opacity-10 blur-xl"></div>
-                <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-slate-900 rounded-full opacity-5 blur-xl"></div>
+                     <div className="space-y-3">
+                       <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                         <div className="flex items-center gap-3">
+                           <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">JD</div>
+                           <div>
+                              <p className="text-xs md:text-sm font-bold text-slate-900">John Doe</p>
+                              <p className="text-[10px] md:text-xs text-slate-500">Iphone 11 (Strict Lock)</p>
+                           </div>
+                         </div>
+                         <span className="text-[10px] md:text-xs font-bold text-[#A54600]">Paid 40%</span>
+                       </div>
+                     </div>
+                  </div>
+                  {/* Decorative Elements */}
+                  <div className="absolute top-10 -right-4 w-24 h-24 bg-[#A54600] rounded-full opacity-10 blur-xl"></div>
+                  <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-slate-900 rounded-full opacity-5 blur-xl"></div>
+               </div>
              </div>
            </div>
+
+           {/* Customer Benefits */}
+           <div className="pt-8 border-t border-slate-200">
+             <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
+               <div className="flex-1 w-full">
+                 <span className="text-slate-500 font-bold tracking-wider text-xs md:text-sm uppercase mb-2 block">For Customers</span>
+                 <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 md:mb-6">Lock Price Today. <br/>Pay Small Small.</h2>
+                 <p className="text-slate-600 mb-6 md:mb-8 text-base md:text-lg">
+                   Don't let inflation eat your savings. Secure the item you need now and pay at your own pace.
+                 </p>
+                 <div className="space-y-4">
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-slate-900 w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Beat Inflation</h4>
+                       <p className="text-xs md:text-sm text-slate-600">The price is locked the moment you pay your deposit. No price hikes.</p>
+                     </div>
+                   </div>
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-slate-900 w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Zero Stress</h4>
+                       <p className="text-xs md:text-sm text-slate-600">No awkward conversations. We handle the schedule and reminders.</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div className="flex-1 relative w-full mt-8 md:mt-0">
+                  {/* Abstract Customer Graphic */}
+                  <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-100 relative z-10 flex flex-col items-center text-center">
+                     <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                        <Lock className="text-slate-900 w-8 h-8" />
+                     </div>
+                     <h3 className="font-bold text-lg text-slate-900">Price Locked</h3>
+                     <p className="text-sm text-slate-500 mb-4">You secured this item at ₦80,000</p>
+                     <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div className="bg-[#A54600] h-full w-2/3"></div>
+                     </div>
+                     <p className="text-xs text-slate-400 mt-2">65% Paid • 35% Remaining</p>
+                  </div>
+                  <div className="absolute top-5 -left-5 w-24 h-24 bg-slate-900 rounded-full opacity-5 blur-xl"></div>
+               </div>
+             </div>
+           </div>
+
         </div>
       </section>
 
-      {/* --- CUSTOMER TRUST SECTION --- */}
-      <section id="customers" className="py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="text-center max-w-3xl mx-auto mb-10 md:mb-12">
-             <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4">Request. Approve. Secure.</h2>
-             <p className="text-slate-600 text-sm md:text-base">
-               You find the vendor, you agree on the price, and you use Korra to pay securely over time.
-             </p>
-           </div>
+      {/* --- ABOUT US SECTION --- */}
+      <section id="about" className="py-16 md:py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 mb-6">
+            <Users className="w-4 h-4 text-slate-500" />
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-wide">About Us</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Building the Trust Layer for African Commerce</h2>
+          <p className="text-slate-600 text-lg leading-relaxed mb-8">
+            Korra is the embedded "Save Now, Buy Later" (SNBL) infrastructure designed to protect consumers from inflation while securing sales for vendors. 
+          </p>
+          <p className="text-slate-600 text-lg leading-relaxed">
+            We are not a marketplace. We do not list products. We provide the digital agreement and payment rails for Vendors and Customers who already know each other to transact securely over time.
+          </p>
+        </div>
+      </section>
 
-           <div className="grid md:grid-cols-3 gap-8 text-center">
-             <div className="p-4 md:p-6">
-               <div className="w-14 h-14 md:w-16 md:h-16 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                 <Store className="text-slate-900 w-6 h-6 md:w-8 md:h-8" />
-               </div>
-               <h3 className="font-bold text-base md:text-lg mb-2">1. Find Your Vendor</h3>
-               <p className="text-xs md:text-sm text-slate-600">
-                 Ask any Instagram seller or local shop to accept Korra.
-               </p>
-             </div>
-             <div className="p-4 md:p-6">
-               <div className="w-14 h-14 md:w-16 md:h-16 mx-auto bg-[#A54600]/10 rounded-full flex items-center justify-center mb-4">
-                 <Lock className="text-[#A54600] w-6 h-6 md:w-8 md:h-8" />
-               </div>
-               <h3 className="font-bold text-base md:text-lg mb-2">2. Lock It Down</h3>
-               <p className="text-xs md:text-sm text-slate-600">
-                 Pay your down payment. The item is reserved.
-               </p>
-             </div>
-             <div className="p-4 md:p-6">
-               <div className="w-14 h-14 md:w-16 md:h-16 mx-auto bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                 <CheckCircle className="text-slate-900 w-6 h-6 md:w-8 md:h-8" />
-               </div>
-               <h3 className="font-bold text-base md:text-lg mb-2">3. Complete & Collect</h3>
-               <p className="text-xs md:text-sm text-slate-600">
-                 Finish payments. Korra releases funds. Pick up item.
-               </p>
-             </div>
-           </div>
-           
-           <div className="mt-8 md:mt-12 bg-orange-50 border border-orange-100 p-4 md:p-6 rounded-xl flex items-start gap-4 max-w-2xl mx-auto">
-             <AlertCircle className="text-orange-600 flex-shrink-0 w-5 h-5 md:w-6 md:h-6" />
-             <div className="text-xs md:text-sm text-orange-800">
-               <strong>Important Disclaimer:</strong> We are a financial technology company, not a delivery service. We ensure the money is safe. Product quality is the responsibility of your vendor.
+      {/* --- FAQ SECTION --- */}
+      <section id="faq" className="py-16 md:py-20 bg-slate-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900">Frequently Asked Questions</h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <button 
+                  onClick={() => toggleFaq(index)}
+                  className="w-full flex justify-between items-center p-5 text-left bg-white hover:bg-slate-50 transition-colors"
+                >
+                  <span className="font-bold text-slate-900 text-sm md:text-base pr-4">{faq.question}</span>
+                  {openFaq === index ? <ChevronUp className="text-[#A54600] flex-shrink-0" /> : <ChevronDown className="text-slate-400 flex-shrink-0" />}
+                </button>
+                {openFaq === index && (
+                  <div className="p-5 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-0 bg-white">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- DISCLAIMER SECTION --- */}
+      <section className="py-12 bg-white border-t border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl flex flex-col md:flex-row items-start gap-4">
+             <AlertCircle className="text-slate-400 flex-shrink-0 w-6 h-6" />
+             <div className="text-xs md:text-sm text-slate-500 leading-relaxed">
+               <strong>Important Legal Disclaimer:</strong> Korra is a technology service provider. Funds are processed via regulated partners (Monnify/Providus). Korra does not guarantee product quality or delivery. We verify Identities (KYC), but the transaction risk regarding the goods remains with the parties.
              </div>
            </div>
         </div>
@@ -366,7 +481,7 @@ export default function App() {
                 <span className="font-bold text-xl text-white">Korra</span>
               </div>
               <p className="text-slate-500 text-sm leading-relaxed">
-                The smart reservation limit for modern commerce.
+                Save Now, Buy Later infrastructure for African commerce.
               </p>
             </div>
             
@@ -383,7 +498,7 @@ export default function App() {
                 <div>
                   <h4 className="text-white font-bold mb-4 text-sm uppercase">Contact</h4>
                   <ul className="space-y-2 text-sm">
-                    <li>support@korra.ng</li>
+                    <li>support@korra.com.ng</li>
                     <li>+234 800 KORRA</li>
                     <li>Lagos, Nigeria</li>
                   </ul>
