@@ -142,12 +142,12 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border ${colors.border} shadow-sm mb-6 md:mb-8 mx-auto`}>
             <span className={`flex h-2 w-2 rounded-full bg-[#A54600]`}></span>
-            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Save Now, Buy Later Infrastructure</span>
+            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Your Financial Tool for Reservations</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-[1.1] text-slate-900">
             Secure Sales. <br />
-            <span className="text-[#A54600]">Protect Against Inflation.</span>
+            <span className="text-[#A54600]">Lock the Price.</span>
           </h1>
           
           <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2">
@@ -424,7 +424,7 @@ export default function App() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Building the Trust Layer for African Commerce</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            Korra is the embedded "Save Now, Buy Later" (SNBL) infrastructure designed to protect consumers from inflation while securing sales for vendors. 
+            Korra is the embedded reservation and price-lock infrastructure designed to protect consumers from inflation while securing sales for vendors.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed">
             We are not a marketplace. We do not list products. We provide the digital agreement and payment rails for Vendors and Customers who already know each other to transact securely over time.
@@ -481,7 +481,7 @@ export default function App() {
                 <span className="font-bold text-xl text-white">Korra</span>
               </div>
               <p className="text-slate-500 text-sm leading-relaxed">
-                Save Now, Buy Later infrastructure for African commerce.
+                A Financial Tool for Reservations in African commerce.
               </p>
             </div>
             
