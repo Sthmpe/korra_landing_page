@@ -15,8 +15,7 @@ import {
   Briefcase,
   ChevronDown, 
   ChevronUp,
-  Users,
-  Wallet
+  Users
 } from 'lucide-react';
 
 export default function App() {
@@ -51,28 +50,28 @@ export default function App() {
 
   const faqs = [
     {
-      question: "Can I cancel my plan? How does Store Credit work?",
+      question: "Can I cancel my plan and get a refund?",
       answer: (
-        <div className="space-y-3">
-          <p>Yes, but the outcome depends on fairness to both parties:</p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li><strong>Strict Lock Plans:</strong> You have a 10-day grace period for a full refund. If you cancel <em>after</em> the buffer, the vendor retains 50% of paid funds as compensation. <span className="text-[#A54600] font-medium">Your remaining 50% is returned to you or kept as Store Credit</span> to purchase a different item from the same vendor.</li>
-            <li><strong>Korra Direct Plans:</strong> The vendor sets the policy. Many vendors allow you to convert your contributions into <strong>Store Credit</strong> to buy a cheaper item or swap products instead of losing money.</li>
+        <div className="space-y-2">
+          <p>It depends on the plan you chose:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li><strong>For "Strict Lock" Plans:</strong> You have a grace period during the Secure Buffer to cancel for a full refund. Immediately after the buffer ends, we release funds to the vendor to lock your price. If you cancel after this, 50% of your paid funds are retained as compensation to the vendor.</li>
+            <li><strong>For "Korra Direct" Plans:</strong> The cancellation policy is set by the Vendor (e.g., No Refund, Full Refund, or Exchange). Please check the Vendor's terms before paying.</li>
           </ul>
         </div>
       )
     },
     {
-      question: "Why is there a fee if I cancel late?",
-      answer: "This ensures the system remains low-risk for everyone. When a vendor holds an item for you for months, they lose other sales and face inflation costs. The fee isn't a punishment; it covers their 'Opportunity Cost' so they don't go out of business. It guarantees the ecosystem stays healthy."
+      question: "Why do you charge a cancellation fee?",
+      answer: "We don't charge it; the Vendor keeps it. In Nigeria, holding an item for 2 months costs money (inflation). If you fail to complete the payment, the vendor has lost other sales. The fee covers their 'Opportunity Cost' and protects them from losses."
     },
     {
       question: "Is my money safe?",
-      answer: "Highly Secure. Korra operates on a Low Risk Guarantee model. We are a technology service provider partnering with regulated financial institutions (Monnify/Providus). Your funds are held in a secure buffer during the critical setup phase to ensure mutual commitment."
+      answer: "Yes. Korra is a technology service provider that processes funds via regulated partners. We hold funds in a Secure Buffer during the initial grace period to ensure commitment from both parties."
     },
     {
-      question: "What is Store Credit?",
-      answer: "Store Credit is the smart way to recover value. Instead of a total loss on a cancelled plan, your remaining balance stays valid with the vendor. You can use it to buy a more affordable item immediately or start a new plan when you are ready."
+      question: "How do I start?",
+      answer: "Download the app, complete your KYC verification, and ask your favorite vendor to send you a Korra link. If they aren't on Korra yet, invite them!"
     }
   ];
 
@@ -84,7 +83,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
             
-            {/* Logo Section */}
+           {/* Logo Section */}
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
               <img src="/korra_logo_icon.png" alt="Korra Logo" className="h-12 w-12 md:h-12 md:w-12 object-contain" />
               <span className={`font-bold text-xl md:text-2xl tracking-tight ${colors.text}`}>Korra</span>
@@ -143,7 +142,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border ${colors.border} shadow-sm mb-6 md:mb-8 mx-auto`}>
             <span className={`flex h-2 w-2 rounded-full bg-[#A54600]`}></span>
-            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Low Risk. Highly Secure.</span>
+            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Your Financial Tool for Reservations</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-[1.1] text-slate-900">
@@ -209,7 +208,7 @@ export default function App() {
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit:</strong> Minimum 30% - 40% required.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Secure Buffer:</strong> Funds held safely for 10 days.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Payout:</strong> 50% credited immediately after Secure Buffer.</span></li>
-                <li className="flex gap-3"><Wallet className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> Balance converts to <strong>Store Credit</strong> or Refund (less 50% penalty).</span></li>
+                <li className="flex gap-3"><AlertCircle className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> 50% forfeit penalty after buffer.</span></li>
               </ul>
             </div>
 
@@ -226,7 +225,7 @@ export default function App() {
                 <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Flexible Rules:</strong> Vendor sets down payment & duration.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Instant Settlement:</strong> Funds credited to Vendor wallet immediately.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Bookkeeping:</strong> Korra tracks balance & sends reminders.</span></li>
-                <li className="flex gap-3"><Wallet className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Store Credit:</strong> Available on cancellation if allowed by Vendor.</span></li>
+                <li className="flex gap-3"><AlertCircle className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Disputes:</strong> Resolved directly between parties.</span></li>
               </ul>
             </div>
           </div>
@@ -425,7 +424,7 @@ export default function App() {
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Building the Trust Layer for African Commerce</h2>
           <p className="text-slate-600 text-lg leading-relaxed mb-8">
-            Korra is the embedded Financial Tool for Reservations powering African commerce, designed to protect consumers from inflation while securing sales for vendors. 
+            Korra is the embedded reservation and price-lock infrastructure designed to protect consumers from inflation while securing sales for vendors.
           </p>
           <p className="text-slate-600 text-lg leading-relaxed">
             We are not a marketplace. We do not list products. We provide the digital agreement and payment rails for Vendors and Customers who already know each other to transact securely over time.
@@ -478,11 +477,9 @@ export default function App() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-1 md:col-span-1">
                <div className="flex items-center gap-2 mb-4">
-                {/* UPDATED: Reverted to Hexagon Icon for Footer as requested */}
                 <Hexagon className="h-6 w-6 text-[#A54600]" fill="currentColor" />
                 <span className="font-bold text-xl text-white">Korra</span>
               </div>
-              {/* UPDATED: Specific footer text as requested */}
               <p className="text-slate-500 text-sm leading-relaxed">
                 A Financial Tool for Reservations in African commerce.
               </p>
