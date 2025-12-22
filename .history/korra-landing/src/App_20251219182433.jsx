@@ -93,29 +93,29 @@ export default function App() {
     <div className={`min-h-screen ${colors.primaryBg} ${colors.text} font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden`}>
 
       {/* --- MODALS --- */}
-      {activeModal === 'terms' && (
-        <LegalModal 
-          title="Customer Terms of Service" 
-          sections={customerTermsData} 
-          onClose={closeModal} 
-        />
-      )}
+{activeModal === 'terms' && (
+  <LegalModal 
+    title="Customer Terms of Service" 
+    sections={customerTermsData} 
+    onClose={closeModal} 
+  />
+)}
 
-      {activeModal === 'vendor' && (
-        <LegalModal 
-          title="Vendor Agreement" 
-          sections={vendorAgreementData} 
-          onClose={closeModal} 
-        />
-      )}
+{activeModal === 'vendor' && (
+  <LegalModal 
+    title="Vendor Agreement" 
+    sections={vendorAgreementData} 
+    onClose={closeModal} 
+  />
+)}
 
-      {activeModal === 'privacy' && (
-        <LegalModal 
-          title="Privacy Policy" 
-          sections={privacyData} 
-          onClose={closeModal} 
-        />
-      )}
+{activeModal === 'privacy' && (
+  <LegalModal 
+    title="Privacy Policy" 
+    sections={privacyData} 
+    onClose={closeModal} 
+  />
+)}
       
       {/* --- NAVIGATION --- */}
       <nav className={`fixed w-full z-50 bg-white/95 backdrop-blur-md border-b ${colors.border}`}>
