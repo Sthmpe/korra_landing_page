@@ -1,0 +1,753 @@
+import React, { useState } from 'react';
+import { 
+  Menu, 
+  X, 
+  ShieldCheck, 
+  TrendingUp, 
+  Store, 
+  Hexagon,
+  CheckCircle,
+  AlertCircle,
+  Banknote,
+  Clock,
+  Lock,
+  FileText,
+  Briefcase,
+  ChevronDown, 
+  ChevronUp,
+  Users,
+  Wallet,
+  RefreshCcw // Added for 'Store Credit' visualization
+} from 'lucide-react';
+
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [openFaq, setOpenFaq] = useState(null);
+  const [activeModal, setActiveModal] = useState(null); // 'terms', 'privacy', 'vendor'
+
+  const openModal = (type) => {
+    setActiveModal(type);
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  };
+
+  const closeModal = () => {
+    setActiveModal(null);
+    document.body.style.overflow = 'unset';
+  };
+
+  // BRAND COLORS CONFIGURATION
+  const colors = {
+    primaryBg: "bg-white", 
+    secondaryBg: "bg-slate-50",
+    accent: `text-[#A54600]`, 
+    button: `bg-[#A54600] hover:bg-[#8a3a00] text-white`, 
+    buttonSecondary: `bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200`,
+    text: "text-slate-900", 
+    muted: "text-slate-600", 
+    border: "border-slate-200",
+    borderHover: `hover:border-[#A54600]`,
+    lightAccent: "bg-[#A54600]/10"
+  };
+
+  const toggleFaq = (index) => {
+    setOpenFaq(openFaq === index ? null : index);
+  };
+
+  const scrollToDownload = () => {
+    const element = document.getElementById('download-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  // UPDATED FAQS TO MATCH NEW MODEL
+  const faqs = [
+    {
+      question: "Can I cancel my plan? How does Store Credit work?",
+      answer: (
+        <div className="space-y-3">
+          <p>Yes, but the outcome depends on the plan type:</p>
+          <ul className="list-disc pl-5 space-y-2">
+            <li><strong>Strict Lock Plans:</strong> You have a <span className="text-[#A54600] font-medium">24-Hour Cooling Period</span>. If you cancel within 24 hours of payment, you get a full refund to your wallet. After 24 hours, funds are locked. Any cancellation after this buffer results in the balance being converted to <strong>Store Credit</strong> (minus any applicable penalty).</li>
+            <li><strong>Korra Direct Plans:</strong> These are for committed buyers. Cancellations are strictly converted to <strong>Store Credit</strong> only. You cannot withdraw cash, but you can use the credit to buy other items from the same vendor.</li>
+          </ul>
+        </div>
+      )
+    },
+    {
+      question: "What is the 3.5% Initiation Fee?",
+      answer: "This is a one-time platform fee charged when you start a plan. It covers the cost of the 24-Hour Secure Buffer, payment processing, and the automated bookkeeping technology that keeps your transaction secure."
+    },
+    {
+      question: "Is my money safe?",
+      answer: "Highly Secure. Korra operates on a Low Risk Guarantee model. We are a technology service provider partnering with regulated financial institutions (Monnify/Providus). Your funds are held in a secure buffer during the critical 24-hour setup phase to ensure mutual commitment."
+    },
+    {
+      question: "Why can't I get a cash refund on Korra Direct?",
+      answer: "Korra Direct is designed for high-trust, flexible relationships where the Vendor reserves an item specifically for you, often bypassing other buyers. To protect the Vendor from time-wasting, cancellations are returned as Store Credit, ensuring the value stays within the ecosystem."
+    }
+  ];
+
+  return (
+    <div className={`min-h-screen ${colors.primaryBg} ${colors.text} font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden`}>
+
+      {/* --- MODALS --- */}
+      {activeModal === 'terms' && (
+        <LegalModal 
+          title="Customer Terms of Service" 
+          sections={customerTermsData} 
+          onClose={closeModal} 
+        />
+      )}
+
+      {activeModal === 'vendor' && (
+        <LegalModal 
+          title="Vendor Agreement" 
+          sections={vendorAgreementData} 
+          onClose={closeModal} 
+        />
+      )}
+
+      {activeModal === 'privacy' && (
+        <LegalModal 
+          title="Privacy Policy" 
+          sections={privacyData} 
+          onClose={closeModal} 
+        />
+      )}
+      
+      {/* --- NAVIGATION --- */}
+      <nav className={`fixed w-full z-50 bg-white/95 backdrop-blur-md border-b ${colors.border}`}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16 md:h-20">
+            
+            {/* Logo Section */}
+            <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+              <img src="/korra_logo_icon.webp" alt="Korra Logo" className="h-12 w-12 md:h-12 md:w-12 object-contain" />
+              <span className={`font-bold text-xl md:text-2xl tracking-tight ${colors.text}`}>Korra</span>
+            </div>
+
+            {/* Desktop Menu */}
+            <div className="hidden md:flex items-center space-x-8">
+              <a href="#models" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>Our Models</a>
+              <a href="#benefits" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>Benefits</a>
+              <a href="#about" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>About Us</a>
+              <a href="#faq" className={`hover:${colors.accent} transition-colors text-sm font-medium`}>FAQs</a>
+              <button 
+                onClick={scrollToDownload}
+                className={`${colors.button} px-6 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-xl shadow-[#A54600]/20`}
+              >
+                Get Started
+              </button>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="md:hidden">
+              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-500 hover:text-slate-900 p-2">
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Menu Dropdown */}
+        {isMenuOpen && (
+          <div className={`md:hidden bg-white border-b ${colors.border} absolute w-full left-0 top-16 shadow-lg`}>
+            <div className="px-4 pt-4 pb-6 space-y-3">
+              <a href="#models" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">Our Models</a>
+              <a href="#benefits" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">Benefits</a>
+              <a href="#about" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">About Us</a>
+              <a href="#faq" onClick={() => setIsMenuOpen(false)} className="block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 border border-transparent hover:border-slate-100">FAQs</a>
+              <div className="pt-2">
+                <button 
+                  onClick={scrollToDownload}
+                  className={`w-full ${colors.button} px-4 py-3.5 rounded-xl font-bold text-base shadow-md`}
+                >
+                  Get Started
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+
+      {/* --- HERO SECTION --- */}
+      <section id="download-section" className="relative pt-28 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#A54600]/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border ${colors.border} shadow-sm mb-6 md:mb-8 mx-auto`}>
+            <span className={`flex h-2 w-2 rounded-full bg-[#A54600]`}></span>
+            <span className={`text-[10px] md:text-xs font-bold text-[#A54600] tracking-wide uppercase`}>Low Risk. Highly Secure.</span>
+          </div>
+          
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-[1.1] text-slate-900">
+            Secure Sales. <br />
+            <span className="text-[#A54600]">Lock the Price.</span>
+          </h1>
+          
+          <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2">
+            Korra is the transaction tool for serious commerce. We provide the payment rails and digital agreements for Vendors and Customers to transact securely over time.
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-3 md:gap-4 items-stretch sm:items-center px-4 md:px-0">
+            {/* Apple App Store Button */}
+            <a href="#" className="flex items-center gap-3 bg-slate-900 text-white px-4 py-3 rounded-xl hover:bg-slate-800 transition-all shadow-lg active:scale-95 justify-center">
+              <svg viewBox="0 0 384 512" fill="currentColor" className="w-6 h-6 md:w-8 md:h-8 shrink-0">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 46.9 94.3 83.6 94.3 32.5 0 40.2-22.6 81.1-22.6 42.1 0 50.8 22.6 83.3 22.6 34.5 0 63.6-55.6 77.9-92.4-44.3-17.2-70.5-56-70.5-98.6 0-36.6 23.4-66.7 46.3-83.3zM253 103.1c16.3-19.7 26.6-46.7 22.7-74.1-23.2 1.3-51.5 12.5-66.2 29.8-12.8 15-24.8 39.5-20.7 65.6 24.3 2.1 52.6-11.4 64.2-21.3z"/>
+              </svg>
+              <div className="text-left">
+                <div className="text-[10px] uppercase font-bold leading-none opacity-80">Download on the</div>
+                <div className="text-lg md:text-xl font-bold leading-tight">App Store</div>
+              </div>
+            </a>
+
+            {/* Google Play Store Button */}
+            <a href="#" className="flex items-center gap-3 bg-slate-900 text-white px-4 py-3 rounded-xl hover:bg-slate-800 transition-all shadow-lg active:scale-95 justify-center">
+               <svg viewBox="0 0 512 512" fill="currentColor" className="w-6 h-6 md:w-8 md:h-8 shrink-0">
+                <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+              </svg>
+              <div className="text-left">
+                <div className="text-[10px] uppercase font-bold leading-none opacity-80">Get it on</div>
+                <div className="text-lg md:text-xl font-bold leading-tight">Google Play</div>
+              </div>
+            </a>
+          </div>
+          
+          <div className="mt-6 text-xs md:text-sm text-slate-500 font-medium">
+            A Technology Service Provider.
+          </div>
+        </div>
+      </section>
+
+      {/* --- TWO MODELS SECTION --- */}
+      <section id="models" className="py-16 md:py-20 bg-white border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Two Ways to Transact</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Vendors choose the model that fits the customer relationship.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Model A: Strict Lock */}
+            <div className="p-8 rounded-3xl bg-slate-50 border border-slate-200 hover:border-[#A54600]/30 transition-all">
+              <div className="w-12 h-12 rounded-full bg-[#A54600] text-white flex items-center justify-center mb-6">
+                <Lock size={24} />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Strict Lock</h3>
+              <p className="text-sm text-[#A54600] font-bold uppercase tracking-wider mb-6">Secure • High Trust</p>
+              
+              <ul className="space-y-4 text-slate-700 text-sm md:text-base">
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> New customers & Items under ₦100k.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit:</strong> Minimum 30% - 40% required.</span></li>
+                <li className="flex gap-3"><Clock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>24-Hour Cooling:</strong> Full refund possible within the first 24 hours.</span></li>
+                <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Secure Buffer:</strong> Funds locked for 24 hours before Vendor payout.</span></li>
+                <li className="flex gap-3"><Wallet className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> Balance converts to <strong>Store Credit</strong> after the buffer expires.</span></li>
+              </ul>
+            </div>
+
+            {/* Model B: Korra Direct */}
+            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50">
+              <div className="w-12 h-12 rounded-full bg-slate-900 text-white flex items-center justify-center mb-6">
+                <Briefcase size={24} />
+              </div>
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra Direct</h3>
+              <p className="text-sm text-slate-500 font-bold uppercase tracking-wider mb-6">Flexible • Loyal Customers</p>
+              
+              <ul className="space-y-4 text-slate-700 text-sm md:text-base">
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> Repeat customers & High-value items.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Flexible Rules:</strong> Vendor sets down payment & duration.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Instant Settlement:</strong> Funds credited to Vendor wallet immediately.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Bookkeeping:</strong> Korra tracks balance & sends reminders.</span></li>
+                <li className="flex gap-3"><RefreshCcw className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> 100% <strong>Store Credit</strong> only. No cash refunds.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* --- RULES & FEES --- */}
+      <section id="economics" className="py-16 md:py-20 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10 md:mb-16">
+            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-900">Transparent Fee Structure</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">
+              We employ a Dual-Fee Structure to ensure sustainability and security.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-12">
+            
+            {/* VENDOR FEES */}
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white shrink-0">
+                  <Store size={20} className="md:w-6 md:h-6"/>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-slate-900">For Vendors</h3>
+              </div>
+              
+              <ul className="space-y-5">
+                <li className="flex gap-4">
+                  <div className="mt-1 shrink-0"><Banknote className="text-[#A54600] w-5 h-5" /></div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Platform Fee</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">Deducted automatically upon entry. Covers automated bookkeeping and management.</p>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <div className="mt-1 shrink-0"><Lock className="text-[#A54600] w-5 h-5" /></div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">Payout after 24H Buffer</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">
+                      For Strict Lock plans, funds are credited 24 hours after customer payment. Direct plans settle instantly.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            {/* CUSTOMER FEES */}
+            <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0">
+                  <ShieldCheck size={20} className="md:w-6 md:h-6"/>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-slate-900">For Customers</h3>
+              </div>
+              
+              <ul className="space-y-5">
+                <li className="flex gap-4">
+                  <div className="mt-1 shrink-0"><TrendingUp className="text-slate-900 w-5 h-5" /></div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Plan Initiation Fee</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">
+                      A one-time fee added to your down payment. This covers the payment gateway and includes the <strong>24-Hour Cooling Off</strong> protection.
+                    </p>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <div className="mt-1 shrink-0"><Clock className="text-slate-900 w-5 h-5" /></div>
+                  <div>
+                    <h4 className="font-bold text-slate-900 text-sm md:text-base">24-Hour Cooling Off</h4>
+                    <p className="text-xs md:text-sm text-slate-600 mt-1">
+                      In the Strict Model, you have 24 hours to cancel for a full refund to your wallet. After this window, cancellations revert to Store Credit.
+                    </p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* --- VENDOR BENEFITS --- */}
+      <section id="benefits" className="py-16 md:py-20 bg-white border-y border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+           
+           {/* Vendor Benefits */}
+           <div className="mb-20">
+             <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+               <div className="flex-1 w-full">
+                 <span className="text-[#A54600] font-bold tracking-wider text-xs md:text-sm uppercase mb-2 block">For Vendors</span>
+                 <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 md:mb-6">No Manual Bookkeeping. <br/>Just Serious Buyers.</h2>
+                 <p className="text-slate-600 mb-6 md:mb-8 text-base md:text-lg">
+                   Stop using notebooks to track who owes you what. Korra automates the entire collection process.
+                 </p>
+                 <div className="space-y-4">
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Automated Payments</h4>
+                       <p className="text-xs md:text-sm text-slate-600">We remind the customer and collect payments automatically.</p>
+                     </div>
+                   </div>
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-[#A54600] w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Down Payment Filter</h4>
+                       <p className="text-xs md:text-sm text-slate-600">Unserious buyers won't pass the down payment step.</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div className="flex-1 relative w-full mt-8 md:mt-0">
+                 {/* Abstract Vendor Dashboard Graphic */}
+                 <div className="bg-white rounded-2xl shadow-xl p-4 md:p-6 border border-slate-100 relative z-10">
+                     <div className="flex justify-between items-center mb-6 border-b border-slate-100 pb-4">
+                       <div>
+                         <p className="text-[10px] md:text-xs text-slate-400 font-bold uppercase">Pending Release</p>
+                         <p className="text-xl md:text-2xl font-bold text-slate-900">₦15,000.00</p>
+                       </div>
+                       <div className="bg-[#A54600]/10 text-[#A54600] px-2 py-1 md:px-3 rounded-full text-[10px] md:text-xs font-bold">
+                         24H Buffer
+                       </div>
+                     </div>
+                     <div className="space-y-3">
+                       <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+                         <div className="flex items-center gap-3">
+                           <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs">JD</div>
+                           <div>
+                              <p className="text-xs md:text-sm font-bold text-slate-900">John Doe</p>
+                              <p className="text-[10px] md:text-xs text-slate-500">Iphone 11 (Strict Lock)</p>
+                           </div>
+                         </div>
+                         <span className="text-[10px] md:text-xs font-bold text-[#A54600]">Paid 40%</span>
+                       </div>
+                     </div>
+                 </div>
+                 {/* Decorative Elements */}
+                 <div className="absolute top-10 -right-4 w-24 h-24 bg-[#A54600] rounded-full opacity-10 blur-xl"></div>
+                 <div className="absolute -bottom-5 -left-5 w-32 h-32 bg-slate-900 rounded-full opacity-5 blur-xl"></div>
+               </div>
+             </div>
+           </div>
+
+           {/* Customer Benefits */}
+           <div className="pt-8 border-t border-slate-200">
+             <div className="flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12">
+               <div className="flex-1 w-full">
+                 <span className="text-slate-500 font-bold tracking-wider text-xs md:text-sm uppercase mb-2 block">For Customers</span>
+                 <h2 className="text-2xl md:text-4xl font-bold text-slate-900 mb-4 md:mb-6">Lock Price Today. <br/>Pay Small Small.</h2>
+                 <p className="text-slate-600 mb-6 md:mb-8 text-base md:text-lg">
+                   Don't let inflation eat your savings. Secure the item you need now and pay at your own pace.
+                 </p>
+                 <div className="space-y-4">
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-slate-900 w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Beat Inflation</h4>
+                       <p className="text-xs md:text-sm text-slate-600">The price is locked the moment you pay your deposit. No price hikes.</p>
+                     </div>
+                   </div>
+                   <div className="flex items-start gap-3">
+                     <CheckCircle className="text-slate-900 w-5 h-5 md:w-6 md:h-6 mt-1 flex-shrink-0" />
+                     <div>
+                       <h4 className="font-bold text-slate-900 text-sm md:text-base">Zero Stress</h4>
+                       <p className="text-xs md:text-sm text-slate-600">No awkward conversations. We handle the schedule and reminders.</p>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+               <div className="flex-1 relative w-full mt-8 md:mt-0">
+                 {/* Abstract Customer Graphic */}
+                 <div className="bg-white rounded-2xl shadow-xl p-6 border border-slate-100 relative z-10 flex flex-col items-center text-center">
+                     <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
+                        <Lock className="text-slate-900 w-8 h-8" />
+                     </div>
+                     <h3 className="font-bold text-lg text-slate-900">Price Locked</h3>
+                     <p className="text-sm text-slate-500 mb-4">You secured this item at ₦80,000</p>
+                     <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                        <div className="bg-[#A54600] h-full w-2/3"></div>
+                     </div>
+                     <p className="text-xs text-slate-400 mt-2">65% Paid • 35% Remaining</p>
+                 </div>
+                 <div className="absolute top-5 -left-5 w-24 h-24 bg-slate-900 rounded-full opacity-5 blur-xl"></div>
+               </div>
+             </div>
+           </div>
+
+        </div>
+      </section>
+
+      {/* --- ABOUT US SECTION --- */}
+      <section id="about" className="py-16 md:py-20 bg-white">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 mb-6">
+            <Users className="w-4 h-4 text-slate-500" />
+            <span className="text-xs font-bold text-slate-600 uppercase tracking-wide">About Us</span>
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Building the Trust Layer for African Commerce</h2>
+          <p className="text-slate-600 text-lg leading-relaxed mb-8">
+            Korra is the embedded Financial Tool for Reservations powering African commerce, designed to protect consumers from inflation while securing sales for vendors. 
+          </p>
+          <p className="text-slate-600 text-lg leading-relaxed">
+            We are not a marketplace. We do not list products. We provide the digital agreement and payment rails for Vendors and Customers who already know each other to transact securely over time.
+          </p>
+        </div>
+      </section>
+
+      {/* --- FAQ SECTION --- */}
+      <section id="faq" className="py-16 md:py-20 bg-slate-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900">Frequently Asked Questions</h2>
+          </div>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <div key={index} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <button 
+                  onClick={() => toggleFaq(index)}
+                  className="w-full flex justify-between items-center p-5 text-left bg-white hover:bg-slate-50 transition-colors"
+                >
+                  <span className="font-bold text-slate-900 text-sm md:text-base pr-4">{faq.question}</span>
+                  {openFaq === index ? <ChevronUp className="text-[#A54600] flex-shrink-0" /> : <ChevronDown className="text-slate-400 flex-shrink-0" />}
+                </button>
+                {openFaq === index && (
+                  <div className="p-5 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-0 bg-white">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* --- DISCLAIMER SECTION --- */}
+      <section className="py-12 bg-white border-t border-slate-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="bg-slate-50 border border-slate-200 p-6 rounded-2xl flex flex-col md:flex-row items-start gap-4">
+             <AlertCircle className="text-slate-400 flex-shrink-0 w-6 h-6" />
+             <div className="text-xs md:text-sm text-slate-500 leading-relaxed">
+               <strong>Important Legal Disclaimer:</strong> Korra is a technology service provider. Funds are processed via regulated partners (Monnify/Providus). Korra does not guarantee product quality or delivery. We verify Identities (KYC), but the transaction risk regarding the goods remains with the parties.
+             </div>
+           </div>
+        </div>
+      </section>
+
+      {/* --- FOOTER --- */}
+      <footer className="bg-slate-900 text-slate-400 py-10 md:py-12 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-4 gap-8 mb-8">
+            <div className="col-span-1 md:col-span-1">
+               <div className="flex items-center gap-2 mb-4">
+                {/* UPDATED: Reverted to Hexagon Icon for Footer as requested */}
+                <Hexagon className="h-6 w-6 text-[#A54600]" fill="currentColor" />
+                <span className="font-bold text-xl text-white">Korra</span>
+              </div>
+              {/* UPDATED: Specific footer text as requested */}
+              <p className="text-slate-500 text-sm leading-relaxed">
+                A Financial Tool for Reservations in African commerce.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-8 md:col-span-3">
+                <div>
+                  <h4 className="text-white font-bold mb-4 text-sm uppercase">Legal</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>
+                      <button onClick={() => openModal('terms')} className="hover:text-[#A54600] text-left">
+                        Terms of Service
+                      </button>
+                    </li>
+                    <li>
+                      <button onClick={() => openModal('privacy')} className="hover:text-[#A54600] text-left">
+                        Privacy Policy
+                      </button>
+                    </li>
+                    <li>
+                      <button onClick={() => openModal('vendor')} className="hover:text-[#A54600] text-left">
+                        Vendor Agreement
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="text-white font-bold mb-4 text-sm uppercase">Contact</h4>
+                  <ul className="space-y-2 text-sm">
+                    <li>support@korra.com.ng</li>
+                    <li>+234 800 KORRA</li>
+                    <li>Lagos, Nigeria</li>
+                  </ul>
+                </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-slate-600 text-xs md:text-sm">© {new Date().getFullYear()} Korra Financial Services.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+const LegalModal = ({ title, sections, onClose }) => {
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div 
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity" 
+        onClick={onClose}
+      ></div>
+
+      {/* Modal Content */}
+      <div className="relative bg-white rounded-2xl w-full max-w-2xl max-h-[85vh] shadow-2xl flex flex-col animate-in fade-in zoom-in duration-200">
+        
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-slate-100">
+          <h2 className="text-xl font-bold text-slate-900">{title}</h2>
+          <button 
+            onClick={onClose}
+            className="p-2 bg-slate-50 hover:bg-slate-100 rounded-full text-slate-500 transition-colors"
+          >
+            <X size={20} />
+          </button>
+        </div>
+
+        {/* Scrollable Body */}
+        <div className="overflow-y-auto p-6 space-y-8">
+          {sections.map((section, idx) => (
+            <div key={idx}>
+              <h3 className="text-base font-bold text-slate-900 mb-3 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#A54600]"></span>
+                {section.heading}
+              </h3>
+              <ul className="space-y-2 pl-4 border-l-2 border-slate-100">
+                {section.items.map((item, i) => (
+                  <li key={i} className="text-sm text-slate-600 leading-relaxed">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="p-4 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+          <button 
+            onClick={onClose}
+            className="w-full bg-slate-900 text-white font-bold py-3 rounded-xl hover:bg-slate-800 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
+// --- 1. VENDOR AGREEMENT ---
+const vendorAgreementData = [
+  {
+    heading: '1. The Vendor Program',
+    items: [
+      'Korra operates as a financial infrastructure tool designed to facilitate reservation-based transactions. We act as a payment processor and agreement recorder, not a marketplace or an escrow agent.',
+      'You retain full autonomy over your customer sourcing and sales agreements. Korra provides the digital rails to structure payments and secure price locks.',
+      'You may choose between two transaction models: "Strict Lock" (for binding reservations) or "Korra Direct" (for flexible arrangements).'
+    ]
+  },
+  {
+    heading: '2. Fees & Commission (3.5%)',
+    items: [
+      'Korra charges a flat Platform Fee of 3.5% on every credit settled to your Vendor Wallet.',
+      'This fee serves as consideration for the use of our automated bookkeeping, payment gateway infrastructure, and reservation technology.',
+      'The 3.5% fee is automatically deducted "on-entry" when funds are credited to your wallet. The balance reflected in your wallet is fully withdrawable.'
+    ]
+  },
+  {
+    heading: '3. Payments & Settlement Agreement',
+    items: [
+      'Settlements are processed based on the Agreement Terms, not delivery verification.',
+      'For "Strict Lock" Plans: Funds are held for a mandatory 24-hour cooling-off period. After 24 hours, funds are automatically released to your wallet to formalize the reservation.',
+      'For "Korra Direct" Plans: Funds are settled to your wallet immediately after payment.',
+      'Price Lock Obligations: You must strictly honor the price lock and terms agreed upon initiation. Under "Strict Lock", you are obligated to maintain the reservation as long as the customer is active.',
+      'Refunds: In the event of a customer cancellation, refunds are processed strictly as Store Credit unless it falls within the 24-hour cooling period of a Strict Lock plan.'
+    ]
+  },
+  {
+    heading: '4. Delivery & Logistics Responsibility',
+    items: [
+      'Korra does not oversee logistics, enforce shipping timelines, or require proof of delivery (Waybills). Delivery is a private contractual obligation between you and the Customer.',
+      'Funds are released based on the payment schedule and agreement milestones, not on physical handover of goods.',
+      'You bear full liability for fulfilling orders. Any failure to deliver after funds are settled constitutes a breach of contract with the Customer, for which you are solely responsible.'
+    ]
+  },
+  {
+    heading: '5. Prohibited Items & Conduct',
+    items: [
+      'The listing or sale of illegal, counterfeit, stolen, or prohibited items is strictly forbidden. Korra maintains a zero-tolerance policy for illicit trade.',
+      'We reserve the right to suspend accounts and freeze funds if activity violates Nigerian law or CBN financial regulations.',
+      'Bypassing the platform to complete a Korra-initiated transaction offline to avoid fees is a violation of these terms.'
+    ]
+  }
+];
+
+// --- 2. CUSTOMER TERMS ---
+const customerTermsData = [
+  {
+    heading: '1. About Korra Reservation',
+    items: [
+      'Korra is a financial reservation tool. We allow you to structure "Reserve & Pay" agreements with Vendors.',
+      'We are NOT a marketplace or a retailer. We do not own the goods. We facilitate the payment agreement between you and the Vendor.',
+      'You are responsible for verifying the Vendor\'s reputation before transacting. Korra verifies Identity (KYC), not product quality.'
+    ]
+  },
+  {
+    heading: '2. Fees & Charges',
+    items: [
+      'Korra charges a Plan Initiation Fee of 3.5% added to your down payment.',
+      'This fee covers payment gateway charges and the cost of securing the "Price Lock" technology.',
+      'This fee is non-refundable, even if you cancel the plan.'
+    ]
+  },
+  {
+    heading: '3. "Strict Lock" Rules (24-Hour Cooling Off)',
+    items: [
+      'If your plan is a "Strict Lock" plan:',
+      'You have a 24-hour grace period. You can cancel for a 100% Refund of your principal deposit (excluding initiation fee).',
+      '24 Hours Onwards: Funds are released to the Vendor to secure full ownership of the item.',
+      'Cancellation Penalty: If you cancel AFTER 24 hours, your balance is converted to Store Credit valid with that Vendor. Cash refunds are not available after the cooling period.'
+    ]
+  },
+  {
+    heading: '4. "Korra Direct" Rules',
+    items: [
+      'If your plan is a "Korra Direct" plan:',
+      'The Vendor controls the down payment and funds are settled to the Vendor immediately.',
+      'Cash refunds are NOT guaranteed. If you cancel a Direct plan, refunds are processed strictly as Store Credit valid only with that specific Vendor.'
+    ]
+  },
+  {
+    heading: '5. Delivery & Logistics',
+    items: [
+      'Korra does not manage delivery. Delivery is arranged between you and the Vendor.',
+      'We strongly recommend using insured courier services (GIG, Kwik, DHL).',
+      'If a Vendor fails to deliver after you complete payment, Korra will assist by providing the Vendor\'s Verified Identity Details to help you seek redress.'
+    ]
+  }
+];
+
+// --- 3. PRIVACY POLICY ---
+const privacyData = [
+  {
+    heading: '1. Information We Collect',
+    items: [
+      'To provide our services, we collect personal details (e.g., name, email, phone), verification data (e.g., NIN, BVN), and financial transaction history.',
+      'We also collect device metadata and usage logs to detect fraud and secure your account.'
+    ]
+  },
+  {
+    heading: '2. How We Use Your Data',
+    items: [
+      'Identity Verification: To comply with KYC (Know Your Customer) and AML (Anti-Money Laundering) regulations.',
+      'Service Delivery: To process payments, manage reservation plans, and coordinate with vendors.',
+      'Security: To monitor for suspicious activity and unauthorized access.'
+    ]
+  },
+  {
+    heading: '3. Information Sharing',
+    items: [
+      'We do not sell your personal data. Information is shared only with verified third parties essential to our service (e.g., Monnify for payments, vendors for order fulfillment).',
+      'We may disclose data to regulatory authorities or law enforcement if legally compelled to do so.'
+    ]
+  },
+  {
+    heading: '4. Data Security',
+    items: [
+      'We employ industry-standard encryption (bank-grade security) to protect your data both in transit and at rest.',
+      'While we implement robust security measures, no digital transmission is absolute. You are responsible for keeping your login credentials confidential.'
+    ]
+  }
+];
+
