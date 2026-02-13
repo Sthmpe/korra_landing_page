@@ -172,16 +172,16 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button onClick={goHome} className="flex items-center gap-2 text-slate-600 hover:text-[#A54600] font-bold text-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} /> Back to Korra
           </button>
-          <span className="font-bold text-lg text-slate-900">Trusted Merchants</span>
+          <span className="font-bold text-lg text-slate-900">Directory</span>
           <div className="w-20"></div>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Merchants.</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Partners.</h1>
           <p className="text-slate-600 max-w-2xl mx-auto text-base">
             Walk into any of these verified stores, negotiate your price, and get your Payment Code to lock it in today.
           </p>
@@ -396,7 +396,7 @@ export default function App() {
                     <Smartphone className="w-5 h-5" /> Download App (Android Only)
                   </a>
                   <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-3 bg-white text-slate-900 px-6 py-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all font-bold">
-                    <Globe className="w-5 h-5 text-slate-900" /> Launch Web App (iOS / android)
+                    <Globe className="w-5 h-5 text-slate-900" /> Launch Web Portal (iOS / PC)
                   </a>
                 </div>
               </div>

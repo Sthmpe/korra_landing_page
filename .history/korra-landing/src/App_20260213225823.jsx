@@ -174,14 +174,14 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
           <button onClick={goHome} className="flex items-center gap-2 text-slate-600 hover:text-[#A54600] font-bold text-sm">
             <ArrowLeft size={18} />
           </button>
-          <span className="font-bold text-lg text-slate-900">Trusted Merchants</span>
+          <span className="font-bold text-lg text-slate-900">Trusted Merchant</span>
           <div className="w-20"></div>
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Merchants.</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Partners.</h1>
           <p className="text-slate-600 max-w-2xl mx-auto text-base">
             Walk into any of these verified stores, negotiate your price, and get your Payment Code to lock it in today.
           </p>

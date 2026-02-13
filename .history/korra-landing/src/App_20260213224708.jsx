@@ -15,7 +15,7 @@ const TikTokIcon = ({ className }) => (
 );
 
 // ============================================================================
-// 1. ADMIN PORTAL (Merchant Management)
+// 2. ADMIN PORTAL (Merchant Management)
 // ============================================================================
 const AdminPortal = ({ goHome, liveMerchants = [] }) => {
   const [password, setPassword] = useState('');
@@ -25,8 +25,8 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Allow entry to try the password against the server
-    setIsAuthenticated(true);
+    if (password === 'David2026Boss') setIsAuthenticated(true);
+    else alert("Unauthorized");
   };
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -36,12 +36,11 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
     setLoading(true);
     
     try {
-      // 🚀 REPLACE WITH YOUR ACTUAL SUPABASE FUNCTION URL
       const res = await fetch('https://ltytmqjpektcgwajfzfm.supabase.co/functions/v1/merchants-api', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          adminPassword: password, // Uses the password you typed
+          adminPassword: password, // 🔒 Uses what you typed in the login screen!
           merchantData: {
             name: formData.name,
             category: formData.category,
@@ -61,12 +60,11 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
       const data = await res.json();
 
       if (res.ok && data.status === "SUCCESS") {
-        alert(`Merchant ${formData.name} added successfully! Refresh the page to see changes.`);
+        alert(`Merchant ${formData.name} added successfully!`);
+        // Clear the form
         setFormData({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
       } else {
         alert("Failed: " + (data.error || "Check your password."));
-        // If password was wrong, lock them out again
-        if (data.error === "Unauthorized Access.") setIsAuthenticated(false);
       }
       
     } catch (error) {
@@ -134,12 +132,16 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
         </form>
 
         <div className="mt-12 border-t border-slate-100 pt-8">
-           <h3 className="font-bold text-lg text-slate-900 mb-4">Live Merchants ({liveMerchants.length})</h3>
+           <h3 className="font-bold text-lg text-slate-900 mb-4">Current Merchants</h3>
            <div className="space-y-3">
-              {liveMerchants.length === 0 && <p className="text-sm text-slate-400">No merchants found in database.</p>}
+              {/* ✅ CHANGED FROM initialMerchants to liveMerchants */}
               {liveMerchants.map(m => (
                  <div key={m.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <div><p className="font-bold text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.category}</p></div>
+                    <div className="flex gap-2">
+                       <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit size={16}/></button>
+                       <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={16}/></button>
+                    </div>
                  </div>
               ))}
            </div>
@@ -150,109 +152,15 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
 };
 
 // ============================================================================
-// 2. DEDICATED MERCHANTS DIRECTORY PAGE
-// ============================================================================
-const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
-  const [merchantFilter, setMerchantFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  const categories = ['All', ...new Set(liveMerchants.map(m => m.category))];
-  
-  const filteredMerchants = liveMerchants.filter(m => {
-    const matchesCategory = merchantFilter === 'All' || m.category === merchantFilter;
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = (m.name || '').toLowerCase().includes(searchLower) || 
-                          (m.location || '').toLowerCase().includes(searchLower) || 
-                          (m.category || '').toLowerCase().includes(searchLower);
-    return matchesCategory && matchesSearch;
-  });
-
-  return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <button onClick={goHome} className="flex items-center gap-2 text-slate-600 hover:text-[#A54600] font-bold text-sm">
-            <ArrowLeft size={18} />
-          </button>
-          <span className="font-bold text-lg text-slate-900">Trusted Merchants</span>
-          <div className="w-20"></div>
-        </div>
-      </nav>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
-        <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Merchants.</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto text-base">
-            Walk into any of these verified stores, negotiate your price, and get your Payment Code to lock it in today.
-          </p>
-        </div>
-
-        {/* --- SEARCH BAR --- */}
-        <div className="max-w-2xl mx-auto mb-8 relative">
-           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-             <Search className="text-slate-400 w-5 h-5" />
-           </div>
-           <input 
-             type="text" 
-             placeholder="Search by store name, location, or category..." 
-             value={searchQuery}
-             onChange={(e) => setSearchQuery(e.target.value)}
-             className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:border-[#A54600] focus:ring-2 focus:ring-[#A54600]/20 outline-none text-slate-900 shadow-sm transition-all"
-           />
-        </div>
-
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map((cat, idx) => (
-            <button key={idx} onClick={() => setMerchantFilter(cat)} className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
-              {cat}
-            </button>
-          ))}
-        </div>
-
-        {loading ? (
-          <div className="text-center py-20 text-slate-500 font-bold animate-pulse">Loading merchants...</div>
-        ) : filteredMerchants.length === 0 ? (
-          <div className="text-center py-20 text-slate-500">No merchants found matching your search.</div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMerchants.map((merchant) => (
-              <div key={merchant.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col">
-                <div className="h-48 overflow-hidden relative">
-                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide z-10">{merchant.category}</div>
-                  <img src={merchant.imageUrl} alt={merchant.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">{merchant.name}</h3>
-                  <p className="text-xs font-bold text-[#A54600] mb-3 flex items-center gap-1"><Store size={12}/> {merchant.location}</p>
-                  <p className="text-sm text-slate-600 mb-6 flex-1">{merchant.description}</p>
-                  
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
-                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><MessageCircle size={16} /></a>)}
-                    {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><Instagram size={16} /></a>)}
-                    {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors" title="TikTok"><TikTokIcon className="w-4 h-4" /></a>)}
-                    {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors" title="Website"><Globe size={16} /></a>)}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ============================================================================
-// 3. MAIN APP COMPONENT
+// 4. MAIN APP COMPONENT
 // ============================================================================
 export default function App() {
   const [isAdminRoute] = useState(() => typeof window !== 'undefined' && window.location.search.includes('admin=true'));
   const [currentView, setCurrentView] = useState('home'); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-  const [activeModal, setActiveModal] = useState(null); 
+  const [activeModal, setActiveModal] = useState(null);
   
-  // 🚀 LIVE FIREBASE STATE
   const [merchantsList, setMerchantsList] = useState([]);
   const [loadingMerchants, setLoadingMerchants] = useState(true);
 
@@ -278,7 +186,8 @@ export default function App() {
     fetchMerchants();
   }, []);
 
-  // Handle routing
+  // Handle routing based on state
+  // Notice we now pass `liveMerchants={merchantsList}` down to the components
   if (isAdminRoute) return <AdminPortal goHome={() => window.location.href = '/'} liveMerchants={merchantsList} />;
   if (currentView === 'merchants') return <MerchantsDirectory goHome={() => setCurrentView('home')} liveMerchants={merchantsList} loading={loadingMerchants} />;
 
@@ -418,7 +327,7 @@ export default function App() {
               <ul className="space-y-4 text-slate-700 text-sm md:text-base">
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> New customers & High Value items.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit:</strong> Minimum 30% required.</span></li>
-                <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Total Commitment:</strong> Secured Commitment.</span></li>
+                <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Instant Settlement:</strong> Funds credited immediately.</span></li>
                 <li className="flex gap-3"><Wallet className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> No Refunds. Store Credit only.</span></li>
               </ul>
             </div>
@@ -444,6 +353,7 @@ export default function App() {
             <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">Dual-Fee Structure. Sustainability. Security.</p>
           </div>
           <div className="grid md:grid-cols-2 gap-6 lg:gap-12">
+            
             <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white shrink-0"><Store size={20} className="md:w-6 md:h-6"/></div><h3 className="text-xl md:text-2xl font-bold text-slate-900">For Merchants</h3></div>
               <ul className="space-y-5">
@@ -451,6 +361,7 @@ export default function App() {
                 <li className="flex gap-4"><div className="mt-1 shrink-0"><Lock className="text-[#A54600] w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">Instant Settlement</h4><p className="text-xs md:text-sm text-slate-600 mt-1">Funds are credited to your wallet immediately after customer payment is verified.</p></div></li>
               </ul>
             </div>
+
             <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0"><ShieldCheck size={20} className="md:w-6 md:h-6"/></div><h3 className="text-xl md:text-2xl font-bold text-slate-900">For Customers</h3></div>
               <ul className="space-y-5">
@@ -459,6 +370,7 @@ export default function App() {
                 <li className="flex gap-4"><div className="mt-1 shrink-0"><CheckCircle className="text-slate-900 w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">Commitment Policy</h4><p className="text-xs md:text-sm text-slate-600 mt-1">We do not offer cash refunds. Cancellation results in Store Credit only.</p></div></li>
               </ul>
             </div>
+
           </div>
         </div>
       </section>

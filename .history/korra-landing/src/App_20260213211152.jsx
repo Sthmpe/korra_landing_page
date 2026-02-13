@@ -4,7 +4,7 @@ import {
   CheckCircle, AlertCircle, Banknote, Lock, Briefcase,
   ChevronDown, ChevronUp, Users, Wallet, RefreshCcw,
   Smartphone, Globe, Instagram, MessageCircle, Upload, Plus,
-  ArrowLeft, Edit, Trash2, Search
+  ArrowLeft, Edit, Trash2
 } from 'lucide-react';
 
 // --- TIKTOK CUSTOM SVG ICON ---
@@ -15,18 +15,34 @@ const TikTokIcon = ({ className }) => (
 );
 
 // ============================================================================
-// 1. ADMIN PORTAL (Merchant Management)
+// 1. DUMMY DATA (This will be replaced by Firebase later)
 // ============================================================================
-const AdminPortal = ({ goHome, liveMerchants = [] }) => {
+const initialMerchants = [
+  {
+    id: 1, name: "Gadget Hub Ilorin", category: "Phones & Laptops", description: "Premium iPhones, MacBooks, and Samsung devices.", imageUrl: "https://images.unsplash.com/photo-1601784551446-20c9e07cd56e?auto=format&fit=crop&q=80&w=400", location: "Challenge, Ilorin",
+    socials: { whatsapp: "https://wa.me/2348000000000", instagram: "https://instagram.com", tiktok: "https://tiktok.com", website: "" }
+  },
+  {
+    id: 2, name: "Luxury Hairs by Teni", category: "Fashion & Wigs", description: "Bone straight, closures, and premium human hair.", imageUrl: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?auto=format&fit=crop&q=80&w=400", location: "Tanke, Ilorin",
+    socials: { whatsapp: "https://wa.me/2348000000000", instagram: "https://instagram.com", tiktok: "", website: "" }
+  }
+];
+
+// ============================================================================
+// 2. ADMIN PORTAL (Merchant Management)
+// ============================================================================
+const AdminPortal = ({ goHome }) => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  
+  // Form State
   const [formData, setFormData] = useState({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
   const [loading, setLoading] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Allow entry to try the password against the server
-    setIsAuthenticated(true);
+    if (password === 'David2026Boss') setIsAuthenticated(true);
+    else alert("Unauthorized");
   };
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -34,47 +50,12 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
   const handleUpload = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
-    try {
-      // 🚀 REPLACE WITH YOUR ACTUAL SUPABASE FUNCTION URL
-      const res = await fetch('https://ltytmqjpektcgwajfzfm.supabase.co/functions/v1/merchants-api', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          adminPassword: password, // Uses the password you typed
-          merchantData: {
-            name: formData.name,
-            category: formData.category,
-            location: formData.location,
-            description: formData.description,
-            imageUrl: formData.imageUrl,
-            socials: {
-              whatsapp: formData.whatsapp || "",
-              instagram: formData.instagram || "",
-              tiktok: formData.tiktok || "",
-              website: formData.website || ""
-            }
-          }
-        })
-      });
-
-      const data = await res.json();
-
-      if (res.ok && data.status === "SUCCESS") {
-        alert(`Merchant ${formData.name} added successfully! Refresh the page to see changes.`);
-        setFormData({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
-      } else {
-        alert("Failed: " + (data.error || "Check your password."));
-        // If password was wrong, lock them out again
-        if (data.error === "Unauthorized Access.") setIsAuthenticated(false);
-      }
-      
-    } catch (error) {
-      console.error("Upload error:", error);
-      alert("Network error. Make sure your Edge Function is deployed.");
-    } finally {
+    // TODO: Connect to Firebase Firestore here
+    setTimeout(() => {
+      alert(`Merchant ${formData.name} added successfully!`);
+      setFormData({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
       setLoading(false);
-    }
+    }, 1000);
   };
 
   if (!isAuthenticated) {
@@ -96,23 +77,24 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
   return (
     <div className="min-h-screen bg-slate-50 p-4 md:p-10">
       <div className="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-lg border border-slate-100">
-        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100 flex-wrap gap-4">
-          <div className="min-w-0 flex-1">
-            <h1 className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2 truncate">
-              <Upload className="text-[#A54600] shrink-0"/> Ghost Upload
-            </h1>
-            <p className="text-slate-500 text-xs md:text-sm mt-1 truncate">Database Merchant Injection</p>
+        <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
+          <div>
+            <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2"><Store className="text-[#A54600]"/> Merchant Database</h1>
+            <p className="text-slate-500 text-sm mt-1">Add, Update, or Remove Trusted Merchants</p>
           </div>
-          <div className="flex gap-4 shrink-0">
-             <button onClick={goHome} className="text-xs md:text-sm font-bold text-slate-500 hover:text-slate-900">Exit</button>
-             <button onClick={() => setIsAuthenticated(false)} className="text-xs md:text-sm font-bold text-red-500 hover:text-red-700">Lock</button>
+          <div className="flex gap-4">
+             <button onClick={goHome} className="text-sm font-bold text-slate-500 hover:text-slate-900">Exit to Site</button>
+             <button onClick={() => setIsAuthenticated(false)} className="text-sm font-bold text-red-500 hover:text-red-700">Lock</button>
           </div>
         </div>
 
         <form onSubmit={handleUpload} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div><label className="block text-sm font-bold text-slate-700 mb-2">Merchant Name</label><input required name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
-            <div><label className="block text-sm font-bold text-slate-700 mb-2">Category</label><input required name="category" placeholder="e.g. Fashion, Gadgets" value={formData.category} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
+            <div>
+               <label className="block text-sm font-bold text-slate-700 mb-2">Category</label>
+               <input required name="category" placeholder="e.g. Fashion, Gadgets, Furniture" value={formData.category} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/>
+            </div>
             <div><label className="block text-sm font-bold text-slate-700 mb-2">Location</label><input required name="location" placeholder="e.g. Tanke, Ilorin" value={formData.location} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
             <div><label className="block text-sm font-bold text-slate-700 mb-2">Banner Image URL</label><input required type="url" name="imageUrl" value={formData.imageUrl} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
           </div>
@@ -129,17 +111,24 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
           </div>
 
           <button disabled={loading} type="submit" className="w-full bg-[#A54600] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#8a3a00]">
-            <Plus size={20} /> {loading ? 'Saving...' : 'Add Merchant'}
+            <Plus size={20} /> {loading ? 'Saving to Database...' : 'Add Merchant'}
           </button>
         </form>
 
+        {/* Existing Merchants List (Admin Preview) */}
         <div className="mt-12 border-t border-slate-100 pt-8">
-           <h3 className="font-bold text-lg text-slate-900 mb-4">Live Merchants ({liveMerchants.length})</h3>
+           <h3 className="font-bold text-lg text-slate-900 mb-4">Current Merchants (Preview)</h3>
            <div className="space-y-3">
-              {liveMerchants.length === 0 && <p className="text-sm text-slate-400">No merchants found in database.</p>}
-              {liveMerchants.map(m => (
+              {initialMerchants.map(m => (
                  <div key={m.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
-                    <div><p className="font-bold text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.category}</p></div>
+                    <div>
+                       <p className="font-bold text-slate-900">{m.name}</p>
+                       <p className="text-xs text-slate-500">{m.category}</p>
+                    </div>
+                    <div className="flex gap-2">
+                       <button className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit size={16}/></button>
+                       <button className="p-2 text-red-600 hover:bg-red-50 rounded-lg"><Trash2 size={16}/></button>
+                    </div>
                  </div>
               ))}
            </div>
@@ -150,57 +139,35 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
 };
 
 // ============================================================================
-// 2. DEDICATED MERCHANTS DIRECTORY PAGE
+// 3. DEDICATED MERCHANTS DIRECTORY PAGE
 // ============================================================================
-const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
+const MerchantsDirectory = ({ goHome }) => {
   const [merchantFilter, setMerchantFilter] = useState('All');
-  const [searchQuery, setSearchQuery] = useState('');
-  
-  const categories = ['All', ...new Set(liveMerchants.map(m => m.category))];
-  
-  const filteredMerchants = liveMerchants.filter(m => {
-    const matchesCategory = merchantFilter === 'All' || m.category === merchantFilter;
-    const searchLower = searchQuery.toLowerCase();
-    const matchesSearch = (m.name || '').toLowerCase().includes(searchLower) || 
-                          (m.location || '').toLowerCase().includes(searchLower) || 
-                          (m.category || '').toLowerCase().includes(searchLower);
-    return matchesCategory && matchesSearch;
-  });
+  const categories = ['All', ...new Set(initialMerchants.map(m => m.category))];
+  const filteredMerchants = merchantFilter === 'All' ? initialMerchants : initialMerchants.filter(m => m.category === merchantFilter);
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
+      {/* Directory Navbar */}
       <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <button onClick={goHome} className="flex items-center gap-2 text-slate-600 hover:text-[#A54600] font-bold text-sm">
-            <ArrowLeft size={18} />
+            <ArrowLeft size={18} /> Back to Korra
           </button>
-          <span className="font-bold text-lg text-slate-900">Trusted Merchants</span>
-          <div className="w-20"></div>
+          <span className="font-bold text-lg text-slate-900">Merchant Directory</span>
+          <div className="w-20"></div> {/* Spacer for centering */}
         </div>
       </nav>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
         <div className="text-center mb-10">
-          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Merchants.</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Find Trusted Partners.</h1>
           <p className="text-slate-600 max-w-2xl mx-auto text-base">
             Walk into any of these verified stores, negotiate your price, and get your Payment Code to lock it in today.
           </p>
         </div>
 
-        {/* --- SEARCH BAR --- */}
-        <div className="max-w-2xl mx-auto mb-8 relative">
-           <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-             <Search className="text-slate-400 w-5 h-5" />
-           </div>
-           <input 
-             type="text" 
-             placeholder="Search by store name, location, or category..." 
-             value={searchQuery}
-             onChange={(e) => setSearchQuery(e.target.value)}
-             className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:border-[#A54600] focus:ring-2 focus:ring-[#A54600]/20 outline-none text-slate-900 shadow-sm transition-all"
-           />
-        </div>
-
+        {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat, idx) => (
             <button key={idx} onClick={() => setMerchantFilter(cat)} className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
@@ -209,78 +176,50 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
           ))}
         </div>
 
-        {loading ? (
-          <div className="text-center py-20 text-slate-500 font-bold animate-pulse">Loading merchants...</div>
-        ) : filteredMerchants.length === 0 ? (
-          <div className="text-center py-20 text-slate-500">No merchants found matching your search.</div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredMerchants.map((merchant) => (
-              <div key={merchant.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col">
-                <div className="h-48 overflow-hidden relative">
-                  <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide z-10">{merchant.category}</div>
-                  <img src={merchant.imageUrl} alt={merchant.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                </div>
-                <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1">{merchant.name}</h3>
-                  <p className="text-xs font-bold text-[#A54600] mb-3 flex items-center gap-1"><Store size={12}/> {merchant.location}</p>
-                  <p className="text-sm text-slate-600 mb-6 flex-1">{merchant.description}</p>
-                  
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
-                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><MessageCircle size={16} /></a>)}
-                    {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><Instagram size={16} /></a>)}
-                    {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors" title="TikTok"><TikTokIcon className="w-4 h-4" /></a>)}
-                    {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors" title="Website"><Globe size={16} /></a>)}
-                  </div>
+        {/* Merchant Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredMerchants.map((merchant) => (
+            <div key={merchant.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col">
+              <div className="h-48 overflow-hidden relative">
+                <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide z-10">{merchant.category}</div>
+                <img src={merchant.imageUrl} alt={merchant.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div className="p-6 flex-1 flex flex-col">
+                <h3 className="text-xl font-bold text-slate-900 mb-1">{merchant.name}</h3>
+                <p className="text-xs font-bold text-[#A54600] mb-3 flex items-center gap-1"><Store size={12}/> {merchant.location}</p>
+                <p className="text-sm text-slate-600 mb-6 flex-1">{merchant.description}</p>
+                
+                {/* Dynamic Socials */}
+                <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
+                  {merchant.socials.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><MessageCircle size={16} /></a>)}
+                  {merchant.socials.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><Instagram size={16} /></a>)}
+                  {merchant.socials.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors" title="TikTok"><TikTokIcon className="w-4 h-4" /></a>)}
+                  {merchant.socials.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors" title="Website"><Globe size={16} /></a>)}
                 </div>
               </div>
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 // ============================================================================
-// 3. MAIN APP COMPONENT
+// 4. MAIN APP COMPONENT
 // ============================================================================
 export default function App() {
+  // ROUTER LOGIC: Read URL for admin, or use state for standard navigation
   const [isAdminRoute] = useState(() => typeof window !== 'undefined' && window.location.search.includes('admin=true'));
-  const [currentView, setCurrentView] = useState('home'); 
+  const [currentView, setCurrentView] = useState('home'); // 'home' | 'merchants'
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [activeModal, setActiveModal] = useState(null); 
-  
-  // 🚀 LIVE FIREBASE STATE
-  const [merchantsList, setMerchantsList] = useState([]);
-  const [loadingMerchants, setLoadingMerchants] = useState(true);
 
-  // 🚀 FETCH LIVE MERCHANTS FROM SUPABASE
-  useEffect(() => {
-    const fetchMerchants = async () => {
-      try {
-        const res = await fetch('https://ltytmqjpektcgwajfzfm.supabase.co/functions/v1/merchants-api', { 
-          method: 'GET' 
-        });
-        const data = await res.json();
-        
-        if (data.merchants) {
-          setMerchantsList(data.merchants);
-        }
-      } catch (error) {
-        console.error("Failed to load merchants:", error);
-      } finally {
-        setLoadingMerchants(false);
-      }
-    };
-
-    fetchMerchants();
-  }, []);
-
-  // Handle routing
-  if (isAdminRoute) return <AdminPortal goHome={() => window.location.href = '/'} liveMerchants={merchantsList} />;
-  if (currentView === 'merchants') return <MerchantsDirectory goHome={() => setCurrentView('home')} liveMerchants={merchantsList} loading={loadingMerchants} />;
+  // Handle routing based on state
+  if (isAdminRoute) return <AdminPortal goHome={() => window.location.href = '/'} />;
+  if (currentView === 'merchants') return <MerchantsDirectory goHome={() => setCurrentView('home')} />;
 
   const openModal = (type) => { setActiveModal(type); document.body.style.overflow = 'hidden'; };
   const closeModal = () => { setActiveModal(null); document.body.style.overflow = 'unset'; };
@@ -293,19 +232,22 @@ export default function App() {
   };
 
   const faqs = [
-    { question: "Is Korra a loan? Do I pay interest or late fees?", answer: "No. Korra is strictly a reservation tool, not a credit provider. There is absolutely zero interest, no hidden charges, and no late fees if you miss a date. If your plan expires, your money is simply converted to Store Credit." },
     { question: "Can I cancel my plan? (Refund Policy)", answer: (<div className="space-y-3"><p>Yes, you can cancel a plan, but <span className="text-[#A54600] font-bold">we do not offer cash refunds.</span></p><p>If you cancel, your balance is immediately converted into <strong>Store Credit</strong>.</p></div>) },
-    { question: "What is Store Credit and how do I use it?", answer: (<div className="space-y-3"><p><strong>Store Credit</strong> works like a digital wallet balance for a specific Merchant.</p><p>If you cancel a purchase, that money sits in your "Store Credit" wallet with that merchant. You can use it to buy any other item from them. You cannot move it to a different merchant.</p></div>) },
+    { question: "What is Store Credit and how do I use it?", answer: (<div className="space-y-3"><p><strong>Store Credit</strong> works like a digital wallet balance for a specific Merchant.</p><p>For example: If you cancel an iPhone purchase, that money sits in your "Store Credit" wallet with that merchant. You can use it to buy a Samsung, AirPods, or any other item from them in the future. You cannot move it to a different merchant.</p></div>) },
+    { question: "What happens if I miss a payment?", answer: "We understand things happen. You have a grace period. If you completely default and the time expires, the plan will be automatically cancelled, and your money will be safely converted into Store Credit for that Merchant." },
     { question: "Why isn't the app on the Play Store yet?", answer: "We are currently in a Direct Release phase for early adopters. This allows us to push high-frequency updates without waiting for third-party approvals." },
+    { question: "What is the 3.5% Initiation Fee?", answer: "This is a one-time fee added to your down payment. It secures the 'Price Lock' technology, meaning even if the market price of the item doubles tomorrow, you will only pay the price you locked in today." },
   ];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden">
 
+      {/* MODALS */}
       {activeModal === 'terms' && <LegalModal title="Customer Terms of Service" sections={customerTermsData} onClose={closeModal} />}
       {activeModal === 'vendor' && <LegalModal title="Merchant Agreement" sections={vendorAgreementData} onClose={closeModal} />}
       {activeModal === 'privacy' && <LegalModal title="Privacy Policy" sections={privacyData} onClose={closeModal} />}
       
+      {/* NAVIGATION */}
       <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
@@ -316,6 +258,7 @@ export default function App() {
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('models')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Models</button>
               <button onClick={() => scrollToSection('benefits')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Benefits</button>
+              {/* This button changes the view entirely! */}
               <button onClick={() => setCurrentView('merchants')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Trusted Merchants</button>
               <button onClick={() => scrollToSection('faq')} className="hover:text-[#A54600] transition-colors text-sm font-medium">FAQs</button>
               <button onClick={() => scrollToSection('download-section')} className="bg-[#A54600] hover:bg-[#8a3a00] text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-xl shadow-[#A54600]/20">Get The App</button>
@@ -342,6 +285,7 @@ export default function App() {
         )}
       </nav>
 
+      {/* HERO SECTION */}
       <section id="hero" className="relative pt-28 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#A54600]/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
@@ -356,7 +300,7 @@ export default function App() {
             <span className="text-[#A54600]">Lock the Deal.</span>
           </h1>
           <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2">
-            Korra is the standard for those who demand precision. We provide the payment rails and digital agreements for serious transactions. Lock the price today. Pay at your own pace.
+            Korra is the standard for those who demand precision. We provide the payment rails and digital agreements for serious transactions. Stop negotiating. Start closing.
           </p>
 
           <button onClick={() => setCurrentView('merchants')} className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl active:scale-95 flex items-center gap-2 mx-auto">
@@ -365,38 +309,41 @@ export default function App() {
         </div>
       </section>
 
+      {/* EXPLICIT DOWNLOAD SECTION */}
       <section id="download-section" className="py-16 md:py-20 bg-white border-y border-slate-100">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Get Started Today</h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-base mb-10">
-              Our platform is built for everyone. Android users can download the native app directly. iOS users, or those who prefer browsers, can access our fully optimized Web Portal.
+              Our platform is built for everyone. Android users can download the native app directly. iOS users, or those who prefer browsers, can access our fully optimized Web App.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+              {/* CUSTOMER APP DOWNLOAD */}
               <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200 flex flex-col items-center">
                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-6"><ShieldCheck className="w-8 h-8 text-[#A54600]" /></div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Customer Portal</h3>
-                <p className="text-slate-500 text-sm mb-8 text-center">Secure a product today and pay on your own schedule. Zero interest.</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra</h3>
+                <p className="text-slate-500 text-sm mb-8 text-center">For Customers: Find merchants, lock prices, and pay small-small.</p>
                 <div className="w-full space-y-4">
                   <a href="https://app.korra.com.ng/downloads/korra.apk" className="w-full flex items-center justify-center gap-3 bg-slate-900 text-white px-6 py-4 rounded-xl hover:bg-slate-800 transition-all font-bold">
                     <Smartphone className="w-5 h-5" /> Download App (Android Only)
                   </a>
                   <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-3 bg-white text-slate-900 px-6 py-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all font-bold">
-                    <Globe className="w-5 h-5 text-[#A54600]" /> Launch Web App (iOS / android)
+                    <Globe className="w-5 h-5 text-[#A54600]" /> Launch Web App (iOS / Fallback)
                   </a>
                 </div>
               </div>
 
+              {/* BUSINESS APP DOWNLOAD */}
               <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200 flex flex-col items-center">
                 <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-6"><Store className="w-8 h-8 text-slate-900" /></div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-2">Merchant Portal</h3>
-                <p className="text-slate-500 text-sm mb-8 text-center">Generate plan code, automate collections, and receive instant settlements.</p>
+                <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra Business</h3>
+                <p className="text-slate-500 text-sm mb-8 text-center">For Merchants: Create codes, manage reservations, and get paid instantly.</p>
                 <div className="w-full space-y-4">
                   <a href="https://app.korra.com.ng/downloads/korra-business.apk" className="w-full flex items-center justify-center gap-3 bg-[#A54600] text-white px-6 py-4 rounded-xl hover:bg-[#8a3a00] transition-all font-bold">
                     <Smartphone className="w-5 h-5" /> Download App (Android Only)
                   </a>
                   <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-3 bg-white text-slate-900 px-6 py-4 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all font-bold">
-                    <Globe className="w-5 h-5 text-slate-900" /> Launch Web App (iOS / android)
+                    <Globe className="w-5 h-5 text-slate-900" /> Launch Web Portal (iOS / PC)
                   </a>
                 </div>
               </div>
@@ -404,6 +351,7 @@ export default function App() {
          </div>
       </section>
 
+      {/* TWO MODELS SECTION */}
       <section id="models" className="py-16 md:py-20 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -418,7 +366,7 @@ export default function App() {
               <ul className="space-y-4 text-slate-700 text-sm md:text-base">
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Best for:</strong> New customers & High Value items.</span></li>
                 <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit:</strong> Minimum 30% required.</span></li>
-                <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Total Commitment:</strong> Secured Commitment.</span></li>
+                <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Total Commitment:</strong> Funds locked immediately.</span></li>
                 <li className="flex gap-3"><Wallet className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> No Refunds. Store Credit only.</span></li>
               </ul>
             </div>
@@ -437,6 +385,7 @@ export default function App() {
         </div>
       </section>
 
+      {/* RULES & FEES */}
       <section id="economics" className="py-16 md:py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10 md:mb-16">
@@ -447,14 +396,14 @@ export default function App() {
             <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white shrink-0"><Store size={20} className="md:w-6 md:h-6"/></div><h3 className="text-xl md:text-2xl font-bold text-slate-900">For Merchants</h3></div>
               <ul className="space-y-5">
-                <li className="flex gap-4"><div className="mt-1 shrink-0"><Banknote className="text-[#A54600] w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Platform Fee</h4><p className="text-xs md:text-sm text-slate-600 mt-1">Deducted automatically upon successful payment settlement.</p></div></li>
+                <li className="flex gap-4"><div className="mt-1 shrink-0"><Banknote className="text-[#A54600] w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Platform Fee</h4><p className="text-xs md:text-sm text-slate-600 mt-1">Deducted automatically. Covers automated bookkeeping and payout infrastructure.</p></div></li>
                 <li className="flex gap-4"><div className="mt-1 shrink-0"><Lock className="text-[#A54600] w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">Instant Settlement</h4><p className="text-xs md:text-sm text-slate-600 mt-1">Funds are credited to your wallet immediately after customer payment is verified.</p></div></li>
               </ul>
             </div>
             <div className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 border border-slate-200 shadow-sm">
               <div className="flex items-center gap-3 mb-6"><div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-slate-900 flex items-center justify-center text-white shrink-0"><ShieldCheck size={20} className="md:w-6 md:h-6"/></div><h3 className="text-xl md:text-2xl font-bold text-slate-900">For Customers</h3></div>
               <ul className="space-y-5">
-                <li className="flex gap-4"><div className="mt-1 shrink-0"><TrendingUp className="text-slate-900 w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Initiation Fee</h4><p className="text-xs md:text-sm text-slate-600 mt-1">A one-time fee added to your down payment. Capped at ₦30,000 to ₦60,000 depending on the item value. Secures your transaction and guarantees your price will never increase.</p></div></li>
+                <li className="flex gap-4"><div className="mt-1 shrink-0"><TrendingUp className="text-slate-900 w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">3.5% Plan Initiation Fee</h4><p className="text-xs md:text-sm text-slate-600 mt-1">A one-time fee added to your down payment. Secures the "Price Lock" technology.</p></div></li>
                 <li className="flex gap-4"><div className="mt-1 shrink-0"><Lock className="text-slate-900 w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">Active Plan Limits</h4><p className="text-xs md:text-sm text-slate-600 mt-1">New users can manage up to 3 active plans simultaneously to ensure responsible purchasing.</p></div></li>
                 <li className="flex gap-4"><div className="mt-1 shrink-0"><CheckCircle className="text-slate-900 w-5 h-5" /></div><div><h4 className="font-bold text-slate-900 text-sm md:text-base">Commitment Policy</h4><p className="text-xs md:text-sm text-slate-600 mt-1">We do not offer cash refunds. Cancellation results in Store Credit only.</p></div></li>
               </ul>
@@ -463,6 +412,7 @@ export default function App() {
         </div>
       </section>
 
+      {/* VENDOR BENEFITS */}
       <section id="benefits" className="py-16 md:py-20 bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
            <div className="mb-20">
@@ -524,6 +474,7 @@ export default function App() {
         </div>
       </section>
 
+      {/* ABOUT US SECTION */}
       <section id="about" className="py-16 md:py-20 bg-slate-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-slate-200 mb-6"><Users className="w-4 h-4 text-slate-500" /><span className="text-xs font-bold text-slate-600 uppercase tracking-wide">About Us</span></div>
@@ -533,6 +484,7 @@ export default function App() {
         </div>
       </section>
 
+      {/* FAQ SECTION */}
       <section id="faq" className="py-16 md:py-20 bg-white border-t border-slate-100">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12"><h2 className="text-2xl md:text-3xl font-bold mb-4 text-slate-900">Frequently Asked Questions</h2></div>
@@ -550,6 +502,7 @@ export default function App() {
         </div>
       </section>
 
+      {/* FOOTER */}
       <footer className="bg-slate-900 text-slate-400 py-10 md:py-12 border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
