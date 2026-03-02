@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Point bots to your sitemap
+Sitemap: https://korra.com.ng/sitemap.xml
