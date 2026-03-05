@@ -504,8 +504,8 @@ export default function App() {
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white">Access The Infrastructure</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg mb-12">
-              For deliberate buyers everywhere looking to <strong>buy phones and laptops pay small small</strong>, the entire ecosystem is fully accessible. Install the native Android application or use our full Web Portals.
-            </p>
+  For deliberate buyers everywhere looking to <strong>buy phones and laptops pay small small</strong>, the entire ecosystem is fully accessible. Install the native Android application or use our full Web Portals.
+</p>
 
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
               {/* Customer Access */}
