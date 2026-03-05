@@ -4,10 +4,10 @@ import {
   CheckCircle, Banknote, Lock, Briefcase,
   ChevronDown, ChevronUp, RefreshCcw,
   Smartphone, Globe, Instagram, MessageCircle, Upload, Plus,
-  ArrowLeft, Search, ArrowRight, UserCheck
+  ArrowLeft, Search, ArrowRight, UserCheck, Twitter, Linkedin, AtSign, Megaphone
 } from 'lucide-react';
 
-// --- TIKTOK CUSTOM SVG ICON ---
+// --- CUSTOM SVG ICONS ---
 const TikTokIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/>
@@ -118,6 +118,7 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
         </div>
 
         <form onSubmit={handleUpload} className="space-y-6">
+          {/* Form fields identical to existing code */}
           <div className="grid md:grid-cols-2 gap-6">
             <div><label className="block text-sm font-bold text-slate-700 mb-2">Merchant Name</label><input required name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
             <div><label className="block text-sm font-bold text-slate-700 mb-2">Category</label><input required name="category" placeholder="e.g. Fashion, Gadgets" value={formData.category} onChange={handleChange} className="w-full px-4 py-3 border border-slate-300 rounded-lg outline-none"/></div>
@@ -227,7 +228,7 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
               <div key={merchant.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide z-10">{merchant.category}</div>
-                  <img src={merchant.imageUrl} alt={merchant.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <img src={merchant.imageUrl} alt={`${merchant.name} - Korra flexible payment gateway merchant`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
                   <h3 className="text-xl font-bold text-slate-900 mb-1">{merchant.name}</h3>
@@ -282,7 +283,7 @@ export default function App() {
   if (isAdminRoute) return <AdminPortal goHome={() => window.location.href = '/'} liveMerchants={merchantsList} />;
   if (currentView === 'merchants') return <MerchantsDirectory goHome={() => setCurrentView('home')} liveMerchants={merchantsList} loading={loadingMerchants} />;
 
-  const toggleFaq = (index) => { setOpenFaq(openFaq === index ? null : index); };
+  const toggleFaq = (id) => { setOpenFaq(openFaq === id ? null : id); };
   
   const scrollToSection = (id) => {
     setIsMenuOpen(false);
@@ -290,16 +291,30 @@ export default function App() {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const faqs = [
-    { question: "Is Korra a loan or credit provider?", answer: "No. Korra is a structured payment infrastructure. We do not lend money, and there is absolutely zero interest, no late fees, and no debt. You are simply structuring payments toward an item you have chosen to acquire." },
-    { question: "Do you offer cash refunds if I cancel?", answer: (<div className="space-y-3"><p>No, we do not offer cash refunds. This policy protects the integrity of the transaction for the merchant.</p><p>If you cancel a plan, your paid balance (minus the Korra initiation fee) is immediately converted into <strong>Store Balance</strong>, which represents a liability the merchant owes you. You can use it to acquire other items from that specific merchant within 12 months.</p></div>) },
-    { question: "Do I have to pay weekly or daily?", answer: "No. Customers commit and pay at their own pace within the plan's minimum duration. The payment goals you set in the app are purely personal commitment tools and carry no penalties." },
-    { question: "Why isn't the app on the Play Store yet?", answer: "We are currently operating in a Direct Release phase for early adopters and verified merchants. This allows us to rapidly optimize our infrastructure before a wider public rollout." },
+  // --- COMPREHENSIVE FAQ DATA ---
+  const customerFaqs = [
+    { question: "What exactly is Korra?", answer: "Korra is a structured payment platform. You reserve what you want today with a minimum 30% down payment, pay toward the full amount at your own pace, and own it completely when done. No loans. No interest. No debt. Just your money moving toward something that becomes yours." },
+    { question: "Is Korra a loan app?", answer: "No. Korra does not lend you money, charge interest, or run a credit check. You are paying your own money toward something you already want in a structure that works for your timeline. There is no lender involved at any point." },
+    { question: "How does a plan work?", answer: "You and a merchant agree on an item and price through your own channels. The merchant generates a Payment Code on Korra. You enter the code in the app, review the plan summary, and pay your minimum 30% down payment. Your price is locked. Your item is reserved. You pay toward the balance at your own pace within the plan duration. When fully paid, Korra releases your Delivery Code and you collect your item." },
+    { question: "What is the Korra plan fee?", answer: "The plan fee is 3.5% of your total plan value. It is charged once at plan initiation from your Korra balance and is non-refundable under any circumstances. For plans above 857,143 naira the fee is capped at 30,000 naira. For plans above 1,714,286 naira it is capped at 60,000 naira." },
+    { question: "Is there a fixed payment schedule?", answer: "No. You pay toward your plan at your own pace within the minimum duration. There are no mandatory daily or weekly payments. Payment goals you set in the app are personal commitment tools only and carry no penalties." },
+    { question: "What happens if my plan duration ends before I finish paying?", answer: "The plan closes automatically. Everything you paid excluding the non-refundable Korra plan fee converts to Store Balance credited to your merchant. Store Balance is a credit they owe you toward a future transaction with them. It is valid for 12 months from the date it was created." },
+    { question: "What happens when I cancel a plan?", answer: "Cancellation is instant. Select Close Plan and it closes immediately. Everything you paid excluding the Korra plan fee converts to Store Balance with your merchant. There are no cash refunds once a plan is initiated." },
+    { question: "Can I withdraw money I deposited into my Korra balance?", answer: "No. Your Korra balance exists only for initiating and paying toward active plans or purchasing an item in full. Korra is not a savings platform or a withdrawal service. Only deposit what you are ready to put toward a plan." },
+    { question: "What is the minimum down payment?", answer: "Under Korra Strict the platform default minimum down payment is 30% of the total plan value. This is enforced by Korra and cannot be negotiated down by the merchant. Under Korra Direct the merchant sets their own minimum down payment above or below the 30% default based on their relationship with the customer or their own risk appetite. Whichever applies to your plan will be clearly displayed on your plan confirmation screen before you commit." }
+  ];
+
+  const merchantFaqs = [
+    { question: "How does Korra work for my business?", answer: "You register, complete identity verification, and start generating Payment Codes for customers who want to reserve your items. When a customer pays their down payment you receive those funds immediately into your withdrawable wallet minus Korra's 3.5% merchant fee. You hold the item until full payment is complete. Each delivery confirmation you log grows your Business Capacity and builds your platform profile." },
+    { question: "When do I receive my money?", answer: "Every payment a customer makes settles into your withdrawable wallet immediately minus the 3.5% merchant fee. You do not wait for the full plan to complete. Korra absorbs all withdrawal transfer fees so you receive clean transfers with no additional deductions. Your first withdrawal requires completing a one-time live video verification call with the Korra team." },
+    { question: "What is Business Capacity?", answer: "Business Capacity is the total naira value of active reservations you can hold across all open plans simultaneously. Every merchant starts at 200,000 naira. Capacity frees up in real time as customer payments come in and grows permanently as you log delivery confirmations. Higher capacity unlocks higher value plan eligibility and platform recognition." },
+    { question: "What if a merchant refuses to honour my Store Balance?", answer: "A merchant who refuses to honour Store Balance is in material breach of Korra's Terms of Service and faces permanent platform ban. Korra will generate an Incident Report with the merchant's verified legal name, BVN, NIN, and business address. You will receive a Case Reference Number for independent legal action. Every merchant on Korra has a real verified identity on file. No merchant on this platform is anonymous." }
   ];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden">
       
+      {/* 🚀 SITELINK NAVIGATION MAP */}
       <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
@@ -310,7 +325,7 @@ export default function App() {
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('how-it-works')} className="hover:text-[#A54600] transition-colors text-sm font-medium">How it Works</button>
               <button onClick={() => scrollToSection('models')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Framework</button>
-              <button onClick={() => setCurrentView('merchants')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Verified Merchants</button>
+              <button onClick={() => setCurrentView('merchants')} className="hover:text-[#A54600] transition-colors text-sm font-medium">For Merchants</button>
               <button onClick={() => scrollToSection('faq')} className="hover:text-[#A54600] transition-colors text-sm font-medium">FAQs</button>
               <button onClick={() => scrollToSection('download-section')} className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all transform hover:scale-105 shadow-xl">Get Started</button>
             </div>
@@ -326,7 +341,7 @@ export default function App() {
             <div className="px-4 pt-4 pb-6 space-y-3">
               <button onClick={() => scrollToSection('how-it-works')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50">How it Works</button>
               <button onClick={() => scrollToSection('models')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50">Framework</button>
-              <button onClick={() => { setIsMenuOpen(false); setCurrentView('merchants'); }} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 text-[#A54600]">Verified Merchants</button>
+              <button onClick={() => { setIsMenuOpen(false); setCurrentView('merchants'); }} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50 text-[#A54600]">For Merchants</button>
               <button onClick={() => scrollToSection('faq')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium hover:bg-slate-50">FAQs</button>
               <div className="pt-2">
                 <button onClick={() => scrollToSection('download-section')} className="w-full bg-slate-900 text-white px-4 py-3.5 rounded-xl font-bold text-base shadow-md">Get Started</button>
@@ -336,7 +351,7 @@ export default function App() {
         )}
       </nav>
 
-      {/* HERO SECTION */}
+      {/* 🚀 HERO SECTION (SEO CORE) */}
       <section id="hero" className="relative pt-28 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#A54600]/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
@@ -350,9 +365,11 @@ export default function App() {
             Smart People Own <br />
             <span className="text-[#A54600]">Things Differently.</span>
           </h1>
-          <p className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2">
-            Korra is the structured payment infrastructure that empowers deliberate buyers to secure and own what they want on their terms. Commit at your pace, own with dignity.
-          </p>
+          
+          {/* SEO Magic: Injecting core infrastructure & BNPL alternative keywords seamlessly */}
+          <h2 className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2 font-normal">
+            Korra is the premier <strong>structured ownership infrastructure in Nigeria</strong> and the ultimate <strong>BNPL alternative</strong>. We provide a <strong>commit at your pace payment rail</strong> that empowers deliberate buyers to <strong>secure high-value items without debt</strong>.
+          </h2>
 
           <button onClick={() => setCurrentView('merchants')} className="bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl active:scale-95 flex items-center gap-2 mx-auto">
              <Store size={20}/> View Verified Merchants
@@ -360,7 +377,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* HOW IT WORKS SECTION */}
+      {/* 🚀 HOW IT WORKS SECTION */}
       <section id="how-it-works" className="py-20 md:py-28 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -370,7 +387,7 @@ export default function App() {
 
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
             
-            {/* Customer Flow */}
+            {/* Customer Flow (SEO Integration) */}
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-white"><UserCheck size={20}/></div>
@@ -379,34 +396,33 @@ export default function App() {
               <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-slate-200 before:via-slate-200 before:to-transparent hidden md:block"></div>
               
               <div className="space-y-8 relative">
-                 {/* Line connection logic for mobile/desktop */}
                  <div className="absolute left-6 top-6 bottom-6 w-0.5 bg-slate-100 -z-10"></div>
                  
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-50 border-2 border-slate-200 flex items-center justify-center font-bold text-slate-500 shrink-0 bg-white">1</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Find Your Merchant</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Locate a verified merchant, negotiate your price offline, and request their Korra Payment Code.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">Whether you want to <strong>buy phones and laptops pay small small</strong> or <strong>buy premium wigs pay small small</strong>, simply locate a verified merchant, negotiate your price, and request a Korra Payment Code.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-50 border-2 border-slate-200 flex items-center justify-center font-bold text-slate-500 shrink-0 bg-white">2</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Structure Your Plan</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Enter the code in the Korra app. Make your minimum down payment to instantly lock the price and reserve the item.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">Enter the code in the Korra <strong>pay small small app for any product</strong>. Make your minimum down payment to lock the price and reserve your item.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-900 border-2 border-slate-900 flex items-center justify-center font-bold text-white shrink-0 shadow-lg">3</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Own With Dignity</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Complete your payments at your own pace. Once finished, generate your Delivery Code to collect your item.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">Complete your payments at your own pace to <strong>own any product without interest</strong>. Once finished, generate your Delivery Code to collect your item.</p>
                    </div>
                  </div>
               </div>
             </div>
 
-            {/* Merchant Flow */}
+            {/* Merchant Flow (SEO Integration) */}
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white"><Store size={20}/></div>
@@ -420,21 +436,21 @@ export default function App() {
                    <div className="w-12 h-12 rounded-full bg-orange-50 border-2 border-[#A54600]/20 flex items-center justify-center font-bold text-[#A54600] shrink-0 bg-white">1</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Generate a Code</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Agree on a price with your customer. Create a specific plan code in your Korra Business app and share it.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">Use our <strong>flexible payment gateway for merchants</strong> to create a specific plan code in your Korra Business app and share it with your customer.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-orange-50 border-2 border-[#A54600]/20 flex items-center justify-center font-bold text-[#A54600] shrink-0 bg-white">2</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Receive Instant Settlements</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">As the customer pays, funds settle into your Korra wallet immediately. Withdraw freely, no delays.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">As the customer pays, funds settle into your Korra wallet immediately. Enjoy <strong>flexible payments for business growth</strong> with no withdrawal delays.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-[#A54600] border-2 border-[#A54600] flex items-center justify-center font-bold text-white shrink-0 shadow-lg shadow-[#A54600]/20">3</div>
                    <div>
                      <h4 className="font-bold text-slate-900 text-lg mb-2">Handover & Grow</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Verify the customer's Delivery Code upon handover. Build your platform capacity and unlock higher transaction limits.</p>
+                     <p className="text-slate-600 text-sm leading-relaxed">Verify the Delivery Code upon handover. Korra acts as your secure <strong>structured payment API for ecommerce</strong> to build capacity and unlock higher limits.</p>
                    </div>
                  </div>
               </div>
@@ -444,12 +460,12 @@ export default function App() {
         </div>
       </section>
 
-      {/* MODELS SECTION */}
+      {/* 🚀 MODELS SECTION */}
       <section id="models" className="py-16 md:py-20 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-slate-900">Infrastructure Frameworks</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">Merchants dictate the rules of engagement using two distinct operating models.</p>
+            <p className="text-slate-600 max-w-2xl mx-auto">Merchants dictate the rules of engagement using two distinct operating models to offer an unmatched <strong>alternative to traditional credit</strong>.</p>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {/* Strict */}
@@ -458,7 +474,7 @@ export default function App() {
               <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra Strict</h3>
               <p className="text-sm text-slate-500 font-bold uppercase tracking-wider mb-6">Platform Enforced • High Discipline</p>
               <ul className="space-y-4 text-slate-700 text-sm md:text-base">
-                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Deposit Floor:</strong> Platform enforces a mandatory minimum 30% down payment.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Deposit Floor:</strong> Platform enforces a mandatory minimum 30% down payment to initiate <strong>zero interest installment plans</strong>.</span></li>
                 <li className="flex gap-3"><Lock className="text-slate-900 w-5 h-5 flex-shrink-0" /> <span><strong>Timeframes:</strong> Strict adherence to duration limits based on product value.</span></li>
                 <li className="flex gap-3"><RefreshCcw className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> No Cash Refunds. Converted to Store Balance only.</span></li>
               </ul>
@@ -470,7 +486,7 @@ export default function App() {
               <h3 className="text-2xl font-bold text-slate-900 mb-2">Korra Direct</h3>
               <p className="text-sm text-[#A54600] font-bold uppercase tracking-wider mb-6">Merchant Controlled • Trusted Relationships</p>
               <ul className="space-y-4 text-slate-700 text-sm md:text-base">
-                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit Flexibility:</strong> Merchant independently determines the acceptable down payment percentage.</span></li>
+                <li className="flex gap-3"><CheckCircle className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Deposit Flexibility:</strong> Merchant independently determines the acceptable down payment percentage for <strong>interest-free payments for wigs and electronics</strong>.</span></li>
                 <li className="flex gap-3"><Lock className="text-[#A54600] w-5 h-5 flex-shrink-0" /> <span><strong>Timeline Control:</strong> Merchant dictates extension permissions.</span></li>
                 <li className="flex gap-3"><RefreshCcw className="text-slate-400 w-5 h-5 flex-shrink-0" /> <span className="text-slate-500"><strong>Cancellation:</strong> No Cash Refunds. Converted to Store Balance only.</span></li>
               </ul>
@@ -479,7 +495,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* DOWNLOAD SECTION */}
+      {/* 🚀 DOWNLOAD SECTION */}
       <section id="download-section" className="py-20 md:py-28 bg-slate-900 text-white border-y border-slate-800">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 mb-6 md:mb-8 mx-auto">
@@ -488,7 +504,7 @@ export default function App() {
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold mb-6 text-white">Access The Infrastructure</h2>
             <p className="text-slate-400 max-w-2xl mx-auto text-base md:text-lg mb-12">
-              Android users can install the native application directly. iOS and Desktop users have full access via our optimized Web Portals.
+              From Lagos to deliberate buyers looking to <strong>buy phones and laptops pay small small in Ilorin</strong>, anyone can access the ecosystem. Install the native Android application or use our full Web Portals.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
@@ -526,32 +542,77 @@ export default function App() {
          </div>
       </section>
 
-      {/* FAQ SECTION */}
+      {/* 🚀 EXTENSIVE FAQ SECTION */}
       <section id="faq" className="py-16 md:py-24 bg-white border-t border-slate-100">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12"><h2 className="text-2xl md:text-4xl font-bold mb-4 text-slate-900">Platform Policies & FAQs</h2></div>
-          <div className="space-y-4">
-            {faqs.map((faq, index) => (
-              <div key={index} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <button onClick={() => toggleFaq(index)} className="w-full flex justify-between items-center p-6 text-left bg-white hover:bg-slate-50 transition-colors">
-                  <span className="font-bold text-slate-900 text-sm md:text-base pr-4">{faq.question}</span>
-                  {openFaq === index ? <ChevronUp className="text-[#A54600] flex-shrink-0" /> : <ChevronDown className="text-slate-400 flex-shrink-0" />}
-                </button>
-                {openFaq === index && <div className="p-6 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-0 bg-white">{faq.answer}</div>}
-              </div>
-            ))}
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-slate-900">Platform FAQs</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto text-base">Clear, transparent answers on how the Korra infrastructure operates.</p>
           </div>
+          
+          <div className="grid md:grid-cols-2 gap-10">
+            {/* Customers FAQs */}
+            <div>
+              <h3 className="text-xl font-bold text-[#A54600] mb-6 flex items-center gap-2 border-b border-slate-100 pb-2"><UserCheck size={24}/> FOR CUSTOMERS</h3>
+              <div className="space-y-4">
+                {customerFaqs.map((faq, index) => {
+                  const id = `customer-${index}`;
+                  return (
+                    <div key={id} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left bg-white hover:bg-slate-50 transition-colors">
+                        <span className="font-bold text-slate-900 text-sm pr-4">{faq.question}</span>
+                        {openFaq === id ? <ChevronUp className="text-[#A54600] flex-shrink-0" /> : <ChevronDown className="text-slate-400 flex-shrink-0" />}
+                      </button>
+                      {openFaq === id && <div className="p-5 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-0 bg-white">{faq.answer}</div>}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Merchants FAQs */}
+            <div>
+              <h3 className="text-xl font-bold text-[#A54600] mb-6 flex items-center gap-2 border-b border-slate-100 pb-2"><Store size={24}/> FOR MERCHANTS</h3>
+              <div className="space-y-4">
+                {merchantFaqs.map((faq, index) => {
+                  const id = `merchant-${index}`;
+                  return (
+                    <div key={id} className="bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                      <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left bg-white hover:bg-slate-50 transition-colors">
+                        <span className="font-bold text-slate-900 text-sm pr-4">{faq.question}</span>
+                        {openFaq === id ? <ChevronUp className="text-[#A54600] flex-shrink-0" /> : <ChevronDown className="text-slate-400 flex-shrink-0" />}
+                      </button>
+                      {openFaq === id && <div className="p-5 pt-0 text-sm text-slate-600 leading-relaxed border-t border-slate-100 mt-0 bg-white">{faq.answer}</div>}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* 🚀 FOOTER (SOCIALS & RC NUMBER ADDED) */}
       <footer className="bg-slate-50 text-slate-600 py-12 md:py-16 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-1 md:col-span-1">
                <div className="flex items-center gap-2 mb-4"><img src="/korra_logo_icon.webp" alt="Korra" className="w-8 h-8 opacity-80" /><span className="font-bold text-xl text-slate-900">Korra</span></div>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Structured ownership infrastructure for deliberate buyers and smart merchants.</p>
+              
+              {/* SOCIAL MEDIA ICONS */}
+              <div className="flex flex-wrap gap-4 mt-6">
+                 <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors" title="X (Twitter)"><Twitter size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-pink-600 transition-colors" title="Instagram"><Instagram size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors" title="TikTok"><TikTokIcon className="w-5 h-5"/></a>
+                 <a href="#" className="text-slate-400 hover:text-blue-600 transition-colors" title="LinkedIn"><Linkedin size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors" title="Threads"><AtSign size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp Channel"><Megaphone size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp DM"><MessageCircle size={20}/></a>
+              </div>
             </div>
+            
             <div className="grid grid-cols-2 gap-8 md:col-span-3">
                 <div>
                   <h4 className="text-slate-900 font-bold mb-4 text-sm uppercase tracking-wider">Customer Legal</h4>
@@ -571,7 +632,8 @@ export default function App() {
             </div>
           </div>
           <div className="border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-500 text-xs md:text-sm font-medium">© {new Date().getFullYear()} Korra Ltd. All rights reserved.</p>
+            {/* RC NUMBER INJECTED HERE */}
+            <p className="text-slate-500 text-xs md:text-sm font-medium">© {new Date().getFullYear()} Korra Ltd (RC xxxxx). All rights reserved.</p>
             <div className="flex gap-4 text-slate-400">
                <span>support@korra.com.ng</span>
                <span>•</span>
