@@ -123,19 +123,6 @@ const AdminPortal = ({ liveMerchants = [] }) => {
             <Plus size={20} /> {loading ? 'Saving...' : 'Add Merchant'}
           </button>
         </form>
-
-        {/* 🚀 THIS IS THE MISSING SECTION THAT WAS CAUSING THE LINTING ERROR */}
-        <div className="mt-12 border-t border-slate-100 pt-8">
-           <h3 className="font-bold text-lg text-slate-900 mb-4">Live Merchants ({liveMerchants.length})</h3>
-           <div className="space-y-3">
-              {liveMerchants.length === 0 && <p className="text-sm text-slate-400">No merchants found in database.</p>}
-              {liveMerchants.map(m => (
-                 <div key={m.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl border border-slate-200">
-                    <div><p className="font-bold text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.category}</p></div>
-                 </div>
-              ))}
-           </div>
-        </div>
       </div>
     </div>
   );
