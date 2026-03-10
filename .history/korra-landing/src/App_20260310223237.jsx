@@ -672,7 +672,7 @@ const HomeLayout = () => {
                  <a href="#" className="text-slate-400 hover:text-pink-600"><InstagramIcon className="w-4 h-4"/></a>
                  <a href="#" className="text-slate-400 hover:text-slate-900"><TikTokIcon className="w-4 h-4"/></a>
                  <a href="#" className="text-slate-400 hover:text-blue-600"><LinkedInIcon className="w-4 h-4"/></a>
-                 <a href="#" className="text-slate-400 hover:text-green-500"><WhatsAppIcon className="w-4 h-4"/></a>
+                 <a href="#" className="text-slate-400 hover:text-blue-600"><What className="w-4 h-4"/></a>
               </div>
             </div>
             
