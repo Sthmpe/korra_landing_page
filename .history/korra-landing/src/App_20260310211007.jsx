@@ -309,11 +309,10 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
           {categories.map((cat, idx) => (
             <button 
               key={idx} 
-              onClick={() => {
+            onClick={() => {
                 setMerchantFilter(cat);
                 setCurrentPage(1); // ✅ Reset immediately
-              }} 
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
+              }} className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
               {cat}
             </button>
           ))}
@@ -354,7 +353,7 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
                   <p className="text-sm text-slate-600 mb-6 flex-1 line-clamp-2">{merchant.description}</p>
                   
                   <div className="flex items-center gap-3 pt-4 border-t border-slate-100" onClick={(e) => e.stopPropagation() /* Prevent card click when clicking links */}>
-                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><WhatsAppIcon className="w-5 h-5"/></a>)}
+                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><MessageCircle size={16} /></a>)}
                     {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><InstagramIcon className="w-4 h-4" /></a>)}
                     {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors" title="TikTok"><TikTokIcon className="w-4 h-4" /></a>)}
                     {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors" title="Website"><Globe size={16} /></a>)}

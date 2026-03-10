@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
-  Menu, X, ShieldCheck, Store,
-  CheckCircle, Lock, Briefcase,
+  Menu, X, ShieldCheck, Store, Hexagon,
+  CheckCircle, Banknote, Lock, Briefcase,
   ChevronDown, ChevronUp, RefreshCcw,
-  Smartphone, Globe, Upload, Plus, MessageCircle,
-  ArrowLeft, Search, ArrowRight, UserCheck, MapPin
+  Smartphone, Globe, Instagram, MessageCircle, Upload, Plus,
+  ArrowLeft, Search, ArrowRight, UserCheck, Twitter, Linkedin, AtSign, Megaphone
 } from 'lucide-react';
 
 // --- CUSTOM SVG ICONS ---
@@ -18,6 +18,9 @@ const TikTokIcon = ({ className }) => (
   </svg>
 );
 
+// ============================================================================
+// LEGAL LINKS CONFIGURATION
+// ============================================================================
 const KorraLinks = {
   vendorTermsPdf: 'https://drive.google.com/uc?export=download&id=1hYJ1ZFdH2J7znT7zz_E2xm--CWO7fGAL',
   vendorPartnershipPdf: 'https://drive.google.com/uc?export=download&id=1K2jqJ0XB3lS_w1b64MCyvfUaPnaJyFJP',
@@ -27,7 +30,7 @@ const KorraLinks = {
 };
 
 // ============================================================================
-// 1. ADMIN PORTAL
+// 1. ADMIN PORTAL (Merchant Management)
 // ============================================================================
 const AdminPortal = ({ goHome, liveMerchants = [] }) => {
   const [password, setPassword] = useState('');
@@ -159,114 +162,36 @@ const AdminPortal = ({ goHome, liveMerchants = [] }) => {
 };
 
 // ============================================================================
-// 2. MERCHANT DYNAMIC PROFILE PAGE (NEW - FOR SEO & DEEP LINKING)
-// ============================================================================
-const MerchantProfile = ({ merchant, goBack }) => {
-  // Inject SEO Schema specifically for this merchant
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.innerHTML = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Store",
-      "name": merchant.name,
-      "image": merchant.imageUrl,
-      "description": merchant.description,
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": merchant.location,
-        "addressCountry": "Nigeria"
-      },
-      "url": `https://korra.com.ng/merchant/${merchant.name.toLowerCase().replace(/\s+/g, '-')}`
-    });
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); }
-  }, [merchant]);
-
-  return (
-    <div className="min-h-screen bg-slate-50 pb-20">
-      <nav className="bg-white border-b border-slate-200 sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <button onClick={goBack} className="flex items-center gap-2 text-slate-600 hover:text-[#A54600] font-bold text-sm">
-            <ArrowLeft size={18} /> Directory
-          </button>
-          <span className="font-bold text-lg text-slate-900 truncate px-4">{merchant.name}</span>
-          <div className="w-20"></div>
-        </div>
-      </nav>
-
-      <div className="max-w-4xl mx-auto px-4 pt-10">
-        <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200">
-          <div className="h-64 md:h-80 w-full relative">
-            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-slate-900 uppercase tracking-wider z-10">
-              {merchant.category}
-            </div>
-            {/* SEO ALT TAG FIX */}
-            <img src={merchant.imageUrl} alt={`${merchant.name} store on Korra - buy now pay small small with zero interest`} className="w-full h-full object-cover" />
-          </div>
-          
-          <div className="p-8 md:p-12">
-            <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">{merchant.name}</h1>
-            <p className="text-slate-500 font-bold flex items-center gap-2 mb-8"><MapPin size={18}/> {merchant.location}, Nigeria</p>
-            
-            <div className="prose prose-slate max-w-none mb-10">
-              <p className="text-lg text-slate-600 leading-relaxed">{merchant.description}</p>
-            </div>
-
-            <div className="bg-orange-50 border border-[#A54600]/20 rounded-2xl p-6 mb-10">
-              <h3 className="font-bold text-[#A54600] text-lg mb-2">Available on Korra</h3>
-              <p className="text-slate-700 text-sm md:text-base">This merchant accepts Korra flexible payments. Contact them directly via the links below to negotiate a price, ask for their Korra Payment Code, and reserve your item today.</p>
-            </div>
-
-            <h3 className="font-bold text-slate-900 text-lg mb-4 border-b border-slate-100 pb-2">Contact Merchant</h3>
-            <div className="flex flex-wrap items-center gap-4">
-              {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-xl bg-green-50 text-green-700 hover:bg-green-100 font-bold transition-colors"><WhatsAppIcon className="w-5 h-5" /> WhatsApp</a>)}
-              {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-xl bg-pink-50 text-pink-700 hover:bg-pink-100 font-bold transition-colors"><InstagramIcon className="w-5 h-5" /> Instagram</a>)}
-              {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 text-slate-900 hover:bg-slate-200 font-bold transition-colors"><TikTokIcon className="w-5 h-5" /> TikTok</a>)}
-              {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold transition-colors"><Globe className="w-5 h-5" /> Website</a>)}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ============================================================================
-// 3. MERCHANTS DIRECTORY PAGE
+// 2. DEDICATED MERCHANTS DIRECTORY PAGE
 // ============================================================================
 const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
   const [merchantFilter, setMerchantFilter] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [selectedMerchant, setSelectedMerchant] = useState(null); // Hook for Dynamic Page
   const ITEMS_PER_PAGE = 9;
 
-  const categories = ['All', ...new Set(liveMerchants.map(m => m.category))];
-  
-  // 🚀 FIXED: useMemo implementation for performance
-  const filteredMerchants = useMemo(() => {
-    return liveMerchants.filter(m => {
-      const matchesCategory = merchantFilter === 'All' || m.category === merchantFilter;
-      const searchLower = searchQuery.toLowerCase();
-      const matchesSearch = (m.name || '').toLowerCase().includes(searchLower) || 
-                            (m.location || '').toLowerCase().includes(searchLower) || 
-                            (m.category || '').toLowerCase().includes(searchLower);
-      return matchesCategory && matchesSearch;
-    });
-  }, [liveMerchants, merchantFilter, searchQuery]);
+  // Reset to page 1 if they type in the search bar or change category
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [merchantFilter, searchQuery]);
 
-  // 🚀 FIXED: Calculate pagination AFTER filtering
+  // Calculate slices for pagination
   const totalPages = Math.ceil(filteredMerchants.length / ITEMS_PER_PAGE);
   const currentMerchants = filteredMerchants.slice(
     (currentPage - 1) * ITEMS_PER_PAGE, 
     currentPage * ITEMS_PER_PAGE
   );
-
-  // Show Dynamic Profile if selected
-  if (selectedMerchant) {
-    return <MerchantProfile merchant={selectedMerchant} goBack={() => setSelectedMerchant(null)} />;
-  }
+  
+  const categories = ['All', ...new Set(liveMerchants.map(m => m.category))];
+  
+  const filteredMerchants = liveMerchants.filter(m => {
+    const matchesCategory = merchantFilter === 'All' || m.category === merchantFilter;
+    const searchLower = searchQuery.toLowerCase();
+    const matchesSearch = (m.name || '').toLowerCase().includes(searchLower) || 
+                          (m.location || '').toLowerCase().includes(searchLower) || 
+                          (m.category || '').toLowerCase().includes(searchLower);
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="min-h-screen bg-slate-50 pb-20">
@@ -297,94 +222,69 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
              type="text" 
              placeholder="Search by store name, location, or category..." 
              value={searchQuery}
-             onChange={(e) => {
-                setSearchQuery(e.target.value);
-                setCurrentPage(1); // ✅ Reset immediately
-              }}
+             onChange={(e) => setSearchQuery(e.target.value)}
              className="w-full pl-12 pr-4 py-4 rounded-2xl border border-slate-200 focus:border-[#A54600] focus:ring-2 focus:ring-[#A54600]/20 outline-none text-slate-900 shadow-sm transition-all"
            />
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-10">
           {categories.map((cat, idx) => (
-            <button 
-              key={idx} 
-              onClick={() => {
-                setMerchantFilter(cat);
-                setCurrentPage(1); // ✅ Reset immediately
-              }} 
-              className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
+            <button key={idx} onClick={() => setMerchantFilter(cat)} className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${merchantFilter === cat ? 'bg-slate-900 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-400'}`}>
               {cat}
             </button>
           ))}
         </div>
 
         {loading ? (
-          // 🚀 PRO LOADING SKELETON
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="h-[350px] bg-white animate-pulse rounded-3xl border border-slate-100 flex flex-col">
-                <div className="h-48 bg-slate-200 w-full"></div>
-                <div className="p-6 space-y-4">
-                  <div className="h-6 bg-slate-200 rounded w-3/4"></div>
-                  <div className="h-4 bg-slate-200 rounded w-1/2"></div>
-                  <div className="h-4 bg-slate-200 rounded w-full"></div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <div className="text-center py-20 text-slate-500 font-bold animate-pulse">Loading merchant database...</div>
         ) : filteredMerchants.length === 0 ? (
           <div className="text-center py-20 text-slate-500">No merchants found matching your criteria.</div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {currentMerchants.map((merchant) => (
-              <div 
-                key={merchant.id} 
-                onClick={() => setSelectedMerchant(merchant)} // Open Dynamic Page
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col cursor-pointer"
-              >
+              <div key={merchant.id} className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all group flex flex-col">
                 <div className="h-48 overflow-hidden relative">
                   <div className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold text-slate-900 uppercase tracking-wide z-10">{merchant.category}</div>
-                  {/* 🚀 SEO ALT TAG FIX */}
-                  <img src={merchant.imageUrl} alt={`${merchant.name} store on Korra - buy now pay small small with zero interest`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  {/* SEO HIDDEN IN ALT TAG */}
+                  <img src={merchant.imageUrl} alt={`${merchant.name} - Korra flexible payment gateway, zero interest installment plans, buy phones and laptops pay small small`} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 </div>
                 <div className="p-6 flex-1 flex flex-col">
-                  <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-[#A54600] transition-colors">{merchant.name}</h3>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">{merchant.name}</h3>
                   <p className="text-xs font-bold text-[#A54600] mb-3 flex items-center gap-1"><Store size={12}/> {merchant.location}</p>
-                  <p className="text-sm text-slate-600 mb-6 flex-1 line-clamp-2">{merchant.description}</p>
+                  <p className="text-sm text-slate-600 mb-6 flex-1">{merchant.description}</p>
                   
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-100" onClick={(e) => e.stopPropagation() /* Prevent card click when clicking links */}>
-                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><WhatsAppIcon className="w-5 h-5"/></a>)}
-                    {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><InstagramIcon className="w-4 h-4" /></a>)}
+                  <div className="flex items-center gap-3 pt-4 border-t border-slate-100">
+                    {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 hover:bg-green-100 transition-colors" title="WhatsApp"><MessageCircle size={16} /></a>)}
+                    {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-pink-50 flex items-center justify-center text-pink-600 hover:bg-pink-100 transition-colors" title="Instagram"><Instagram size={16} /></a>)}
                     {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-900 hover:bg-slate-200 transition-colors" title="TikTok"><TikTokIcon className="w-4 h-4" /></a>)}
                     {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition-colors" title="Website"><Globe size={16} /></a>)}
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-        )}
 
-        {/* Pagination Controls */}
-        {!loading && totalPages > 1 && (
-          <div className="flex justify-center items-center gap-4 mt-12">
-            <button 
-              disabled={currentPage === 1} 
-              onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-              className="px-4 py-2 border border-slate-200 bg-white rounded-lg font-bold text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
-            >
-              Previous
-            </button>
-            <span className="text-sm font-bold text-slate-600">
-              Page {currentPage} of {totalPages}
-            </span>
-            <button 
-              disabled={currentPage === totalPages} 
-              onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-              className="px-4 py-2 border border-slate-200 bg-white rounded-lg font-bold text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
-            >
-              Next
-            </button>
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-4 mt-12">
+                <button 
+                  disabled={currentPage === 1} 
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  className="px-4 py-2 border border-slate-200 bg-white rounded-lg font-bold text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                >
+                  Previous
+                </button>
+                <span className="text-sm font-bold text-slate-600">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button 
+                  disabled={currentPage === totalPages} 
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  className="px-4 py-2 border border-slate-200 bg-white rounded-lg font-bold text-slate-600 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-50 transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         )}
 
@@ -394,7 +294,7 @@ const MerchantsDirectory = ({ goHome, liveMerchants = [], loading }) => {
 }
 
 // ============================================================================
-// 4. MAIN APP COMPONENT
+// 3. MAIN APP COMPONENT
 // ============================================================================
 export default function App() {
   const [isAdminRoute] = useState(() => typeof window !== 'undefined' && window.location.search.includes('admin=true'));
@@ -405,26 +305,6 @@ export default function App() {
   // LIVE FIREBASE STATE
   const [merchantsList, setMerchantsList] = useState([]);
   const [loadingMerchants, setLoadingMerchants] = useState(true);
-
-  // 🚀 AUTOMATIC SEO SCHEMA INJECTION
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.innerHTML = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "OnlineMarketplace",
-      "name": "Korra",
-      "url": "https://korra.com.ng",
-      "description": "Reserve now pay later marketplace connecting buyers with trusted merchants in Nigeria",
-      "areaServed": "Nigeria",
-      "brand": {
-        "@type": "Brand",
-        "name": "Korra"
-      }
-    });
-    document.head.appendChild(script);
-    return () => { document.head.removeChild(script); }
-  }, []);
 
   useEffect(() => {
     const fetchMerchants = async () => {
@@ -481,6 +361,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
             <div className="flex-shrink-0 flex items-center gap-2 cursor-pointer" onClick={() => scrollToSection('hero')}>
+              {/* SEO HIDDEN IN ALT TAG */}
               <img src="/korra_logo_icon.webp" alt="Korra - Structured ownership infrastructure in Nigeria, BNPL alternative, pay small small app" className="h-12 w-12 md:h-12 md:w-12 object-contain" />
               <span className="font-bold text-xl md:text-2xl tracking-tight text-slate-900">Korra</span>
             </div>
@@ -513,7 +394,7 @@ export default function App() {
         )}
       </nav>
 
-      {/* 🚀 HERO SECTION (UPDATED COPYWRITING) */}
+      {/* 🚀 HERO SECTION (CLEAN & PREMIUM) */}
       <section id="hero" className="relative pt-28 pb-16 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 right-0 w-[300px] h-[300px] md:w-[600px] md:h-[600px] bg-[#A54600]/5 rounded-full blur-[60px] md:blur-[100px] -translate-y-1/2 translate-x-1/2"></div>
@@ -521,25 +402,25 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-slate-200 shadow-sm mb-6 md:mb-8 mx-auto">
             <span className="flex h-2 w-2 rounded-full bg-[#A54600]"></span>
-            <span className="text-[10px] md:text-xs font-bold text-slate-800 tracking-wide uppercase">No loans. No interest. No pressure.</span>
+            <span className="text-[10px] md:text-xs font-bold text-slate-800 tracking-wide uppercase">No Debt. No Interest. Pure Structure.</span>
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight mb-4 md:mb-6 leading-[1.1] text-slate-900">
-            Reserve What You Love. <br />
-            <span className="text-[#A54600]">Pay Small Small.</span><br />
-            Own It Completely.
+            Smart People Own <br />
+            <span className="text-[#A54600]">Things Differently.</span>
           </h1>
           
+          {/* RESTORED PREMIUM TEXT */}
           <h2 className="mt-4 md:mt-6 max-w-2xl mx-auto text-base md:text-xl text-slate-600 mb-8 md:mb-10 leading-relaxed px-2 font-normal">
-            Korra helps you reserve items from trusted merchants and pay gradually. Just simple payment plans that help you afford what matters.
+            Korra is the structured payment infrastructure that empowers deliberate buyers to secure and own what they want on their terms. Commit at your pace, own with dignity.
           </h2>
 
           <button onClick={() => setCurrentView('merchants')} className="bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all shadow-xl active:scale-95 flex items-center gap-2 mx-auto">
-             <Store size={20}/> Find Merchants
+             <Store size={20}/> View Verified Merchants
           </button>
         </div>
       </section>
 
-      {/* 🚀 HOW IT WORKS SECTION (UPDATED COPYWRITING) */}
+      {/* 🚀 HOW IT WORKS SECTION (CLEAN & PREMIUM) */}
       <section id="how-it-works" className="py-20 md:py-28 bg-white border-y border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -553,7 +434,7 @@ export default function App() {
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-white"><UserCheck size={20}/></div>
-                <h3 className="text-2xl font-bold text-slate-900">Smart Buyers</h3>
+                <h3 className="text-2xl font-bold text-slate-900">The Deliberate Buyer</h3>
               </div>
               <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-slate-200 before:via-slate-200 before:to-transparent hidden md:block"></div>
               
@@ -563,22 +444,22 @@ export default function App() {
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-50 border-2 border-slate-200 flex items-center justify-center font-bold text-slate-500 shrink-0 bg-white">1</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Find What You Want</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Discover trusted merchants selling phones, fashion, gadgets and more.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Find Your Merchant</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">Locate a verified merchant, negotiate your price offline, and request their Korra Payment Code.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-50 border-2 border-slate-200 flex items-center justify-center font-bold text-slate-500 shrink-0 bg-white">2</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Reserve It</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Pay a starting deposit to lock the price and secure the item.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Structure Your Plan</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">Enter the code in the Korra app. Make your minimum down payment to instantly lock the price and reserve the item.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-slate-900 border-2 border-slate-900 flex items-center justify-center font-bold text-white shrink-0 shadow-lg">3</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Pay Small Small</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Complete your payments gradually and collect your item when you finish.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Own With Dignity</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">Complete your payments at your own pace. Once finished, generate your Delivery Code to collect your item.</p>
                    </div>
                  </div>
               </div>
@@ -588,7 +469,7 @@ export default function App() {
             <div>
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 rounded-full bg-[#A54600] flex items-center justify-center text-white"><Store size={20}/></div>
-                <h3 className="text-2xl font-bold text-slate-900">Grow Your Sales With Korra</h3>
+                <h3 className="text-2xl font-bold text-slate-900">The Smart Merchant</h3>
               </div>
               
               <div className="space-y-8 relative">
@@ -597,22 +478,22 @@ export default function App() {
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-orange-50 border-2 border-[#A54600]/20 flex items-center justify-center font-bold text-[#A54600] shrink-0 bg-white">1</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Create a Payment Plan</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Turn interested shoppers into committed buyers by offering flexible payment plans.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Generate a Code</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">Agree on a price with your customer. Create a specific plan code in your Korra Business app and share it.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-orange-50 border-2 border-[#A54600]/20 flex items-center justify-center font-bold text-[#A54600] shrink-0 bg-white">2</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Customer Reserves Item</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">The customer pays the starting deposit on the Korra app to secure their purchase.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Receive Instant Settlements</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">As the customer pays, funds settle into your Korra wallet immediately. Withdraw freely, no delays.</p>
                    </div>
                  </div>
                  <div className="flex gap-6 relative z-10">
                    <div className="w-12 h-12 rounded-full bg-[#A54600] border-2 border-[#A54600] flex items-center justify-center font-bold text-white shrink-0 shadow-lg shadow-[#A54600]/20">3</div>
                    <div>
-                     <h4 className="font-bold text-slate-900 text-lg mb-2">Receive Payments Instantly</h4>
-                     <p className="text-slate-600 text-sm leading-relaxed">Funds settle into your Korra wallet immediately as the customer makes payments.</p>
+                     <h4 className="font-bold text-slate-900 text-lg mb-2">Handover & Grow</h4>
+                     <p className="text-slate-600 text-sm leading-relaxed">Verify the customer's Delivery Code upon handover. Build your platform capacity and unlock higher transaction limits.</p>
                    </div>
                  </div>
               </div>
@@ -622,7 +503,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 🚀 MODELS SECTION */}
+      {/* 🚀 MODELS SECTION (CLEAN & PREMIUM) */}
       <section id="models" className="py-16 md:py-20 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -657,7 +538,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 🚀 DOWNLOAD SECTION */}
+      {/* 🚀 DOWNLOAD SECTION (CLEAN & PREMIUM) */}
       <section id="download-section" className="py-20 md:py-28 bg-slate-900 text-white border-y border-slate-800">
          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 mb-6 md:mb-8 mx-auto">
@@ -780,13 +661,13 @@ export default function App() {
         </div>
       </section>
 
-      {/* 🚀 FOOTER */}
+      {/* 🚀 FOOTER (SOCIALS & RC NUMBER ADDED) */}
       <footer className="bg-slate-50 text-slate-600 py-12 md:py-16 border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="col-span-1 md:col-span-1">
                <div className="flex items-center gap-2 mb-4"><img src="/korra_logo_icon.webp" alt="Korra" className="w-8 h-8 opacity-80" /><span className="font-bold text-xl text-slate-900">Korra</span></div>
-              <p className="text-slate-500 text-sm leading-relaxed mb-6">Reserve what you love and pay small small with trusted merchants across Nigeria.</p>
+              <p className="text-slate-500 text-sm leading-relaxed mb-6">Structured ownership infrastructure for deliberate buyers and smart merchants.</p>
               
               {/* SOCIAL MEDIA ICONS */}
               <div className="flex flex-wrap gap-4 mt-6">
@@ -794,8 +675,9 @@ export default function App() {
                  <a href="#" className="text-slate-400 hover:text-pink-600 transition-colors" title="Instagram"><InstagramIcon className="w-5 h-5"/></a>
                  <a href="#" className="text-slate-400 hover:text-slate-900 transition-colors" title="TikTok"><TikTokIcon className="w-5 h-5"/></a>
                  <a href="#" className="text-slate-400 hover:text-blue-600 transition-colors" title="LinkedIn"><LinkedInIcon className="w-5 h-5"/></a>
-                 <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp DM"><WhatsAppIcon className="w-5 h-5"/></a>
                  <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp Channel"><WhatsAppIcon className="w-5 h-5"/></a>
+                 <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp Channel"><Megaphone size={20}/></a>
+                 <a href="#" className="text-slate-400 hover:text-green-600 transition-colors" title="WhatsApp DM"><MessageCircle size={20}/></a>
               </div>
             </div>
             
