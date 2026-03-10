@@ -251,8 +251,8 @@ const MerchantsDirectory = ({ liveMerchants = [], loading }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="text-center mb-8">
-          <h1 className="text-xl md:text-3xl font-extrabold text-slate-900 mb-2">Discover Your Next Acquisition.</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto text-sm">These merchants are fully verified on the Korra infrastructure.</p>
+          <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-3">Discover Your Next Acquisition.</h1>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">These merchants are fully verified on the Korra infrastructure.</p>
         </div>
 
         <div className="max-w-2xl mx-auto mb-8 relative">

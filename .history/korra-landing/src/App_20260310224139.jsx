@@ -251,13 +251,13 @@ const MerchantsDirectory = ({ liveMerchants = [], loading }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
         <div className="text-center mb-8">
-          <h1 className="text-xl md:text-3xl font-extrabold text-slate-900 mb-2">Discover Your Next Acquisition.</h1>
-          <p className="text-slate-600 max-w-2xl mx-auto text-sm">These merchants are fully verified on the Korra infrastructure.</p>
+          <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-3">Discover Your Next Acquisition.</h1>
+          <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">These merchants are fully verified on the Korra infrastructure.</p>
         </div>
 
         <div className="max-w-2xl mx-auto mb-8 relative">
            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none"><Search className="text-slate-400 w-5 h-5" /></div>
-           <input type="text" placeholder="Search store name, location..." value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} className="w-full pl-12 pr-4 py-3 rounded-xl bg-white shadow-sm focus:ring-2 focus:ring-[#A54600]/20 outline-none text-sm text-slate-900 transition-all" />
+           <input type="text" placeholder="Search store name, location..." value={searchQuery} onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }} className="w-full pl-12 pr-4 py-4 rounded-2xl bg-white shadow-sm focus:ring-2 focus:ring-[#A54600]/20 outline-none text-slate-900 transition-all" />
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -290,7 +290,7 @@ const MerchantsDirectory = ({ liveMerchants = [], loading }) => {
                 <div className="p-5 flex-1 flex flex-col">
                   <h3 className="text-base font-bold text-slate-900 mb-1 group-hover:text-[#A54600] transition-colors line-clamp-1">{merchant.name}</h3>
                   <p className="text-xs font-bold text-[#A54600] mb-2 flex items-center gap-1"><Store size={12}/> {merchant.location}</p>
-                  <p className="text-sm text-slate-500 flex-1 line-clamp-2">{merchant.description}</p>
+                  <p className="text-sm text-slate-600 flex-1 line-clamp-2">{merchant.description}</p>
                 </div>
               </Link>
             ))}
