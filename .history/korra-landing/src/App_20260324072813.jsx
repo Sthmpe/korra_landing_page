@@ -574,7 +574,7 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold text-white mb-2">Customer Access</h3>
                 <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">Manage plans, review balances, and generate Delivery Codes.</p>
                 <div className="w-full space-y-3">
-                  <a href="https://drive.google.com/uc?export=download&id=1Yvv24squjPq424ry9I7GRP1UfNXMuk0q" className="w-full flex items-center justify-center gap-2 bg-white text-slate-900 px-4 py-3 rounded-xl hover:bg-slate-100 font-bold text-sm inline-block text-center">
+                  <a href="https://drive.google.com/uc?export=download&id=1Yvv24squjPq424ry9I7GRP1UfNXMuk0q" className="w-full flex items-center justify-center gap-2 bg-white text-slate-900 px-4 py-3 rounded-xl hover:bg-slate-100 font-bold text-sm ">
                     <Smartphone className="w-4 h-4" /> App (Android)
                   </a>
                   <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-slate-700 text-white px-4 py-3 rounded-xl hover:bg-slate-600 font-bold text-sm">
@@ -588,7 +588,7 @@ const HomeLayout = () => {
                 <h3 className="text-xl font-bold text-white mb-2">Merchant Terminal</h3>
                 <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">Generate Codes, monitor Capacity, and withdraw settlements.</p>
                 <div className="w-full space-y-3">
-                  <a href="https://drive.google.com/uc?export=download&id=1Arcgl8M9k-jrLR0AcqIWOuN-oVUufpeQ" className="w-full flex items-center justify-center gap-2 bg-[#A54600] text-white px-4 py-3 rounded-xl hover:bg-[#8a3a00] font-bold text-sm inline-block text-center">
+                  <a href="https://drive.google.com/uc?export=download&id=1Arcgl8M9k-jrLR0AcqIWOuN-oVUufpeQ" className="w-full flex items-center justify-center gap-2 bg-[#A54600] text-white px-4 py-3 rounded-xl hover:bg-[#8a3a00] font-bold text-sm">
                     <Smartphone className="w-4 h-4" /> Terminal (Android)
                   </a>
                   <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full flex items-center justify-center gap-2 bg-slate-700 text-white px-4 py-3 rounded-xl hover:bg-slate-600 font-bold text-sm">
