@@ -694,7 +694,7 @@ const HomeLayout = () => {
             </div>
           </div>
           <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-3 border-t border-slate-100">
-            <p className="text-slate-500 text-xs font-medium">© {new Date().getFullYear()} Korra Ltd (RC 9428861).</p>
+            <p className="text-slate-500 text-xs font-medium">© {new Date().getFullYear()} Korra Ltd (RC xxxxx).</p>
             <div className="flex gap-3 text-slate-400 text-xs">
                <span>support@korra.com.ng</span>
                <span>•</span>

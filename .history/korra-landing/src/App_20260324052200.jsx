@@ -668,11 +668,11 @@ const HomeLayout = () => {
                <div className="flex items-center gap-2 mb-3"><img src="/korra_logo_icon.webp" alt="Korra" className="w-6 h-6" /><span className="font-bold text-lg text-slate-900">Korra</span></div>
               <p className="text-slate-500 text-xs md:text-sm mb-4">Reserve what you love and pay small small with trusted merchants.</p>
               <div className="flex gap-3">
-                 <a href="https://twitter.com/korraapp" className="text-slate-400 hover:text-slate-900"><XIcon className="w-4 h-4"/></a>
-                 <a href="https://www.instagram.com/korraapp" className="text-slate-400 hover:text-pink-600"><InstagramIcon className="w-4 h-4"/></a>
-                 <a href="https://www.tiktok.com/@korraapp" className="text-slate-400 hover:text-slate-900"><TikTokIcon className="w-4 h-4"/></a>
+                 <a href="#" className="text-slate-400 hover:text-slate-900"><XIcon className="w-4 h-4"/></a>
+                 <a href="#" className="text-slate-400 hover:text-pink-600"><InstagramIcon className="w-4 h-4"/></a>
+                 <a href="#" className="text-slate-400 hover:text-slate-900"><TikTokIcon className="w-4 h-4"/></a>
                  <a href="https://www.linkedin.com/company/korraapp" className="text-slate-400 hover:text-blue-600"><LinkedInIcon className="w-4 h-4"/></a>
-                 <a href="https://wa.me/2349152540533" className="text-slate-400 hover:text-green-500"><WhatsAppIcon className="w-4 h-4"/></a>
+                 <a href="https://wa.me/24" className="text-slate-400 hover:text-green-500"><WhatsAppIcon className="w-4 h-4"/></a>
               </div>
             </div>
             
@@ -694,7 +694,7 @@ const HomeLayout = () => {
             </div>
           </div>
           <div className="pt-6 flex flex-col md:flex-row justify-between items-center gap-3 border-t border-slate-100">
-            <p className="text-slate-500 text-xs font-medium">© {new Date().getFullYear()} Korra Ltd (RC 9428861).</p>
+            <p className="text-slate-500 text-xs font-medium">© {new Date().getFullYear()} Korra Ltd (RC xxxxx).</p>
             <div className="flex gap-3 text-slate-400 text-xs">
                <span>support@korra.com.ng</span>
                <span>•</span>
