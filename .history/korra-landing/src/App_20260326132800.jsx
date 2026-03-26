@@ -376,45 +376,17 @@ const HomeLayout = () => {
   };
 
   const customerFaqs = [
-    { 
-      question: "What is the best installment payment app in Nigeria?", 
-      answer: "Korra is the best installment payment app. It is a digital reservation platform that helps you secure what you want today with a minimum 30% down payment, and pay gradually. No loans. No interest. No debt." 
-    },
-    { 
-      question: "Is Korra a loaning or credit system?", 
-      answer: "No, Korra is not a loan or credit system. We use a safe 'pay small small' model. We do not lend you money or run a credit check. You make flexible payments and receive the goods only after full payment is complete, keeping you free from debt traps." 
-    },
-    { 
-      question: "How does the Korra installment plan work for customers?", 
-      answer: "The digital reservation process takes 4 steps: 1. Find a trusted Korra merchant and agree on an item. 2. Log into app.korra.com.ng with their Payment Code to accept your plan and pay the 30% down payment. 3. Pay small small at your own pace. 4. Pick up your item once the store balance is fully paid." 
-    },
-    { 
-      question: "What is a Store Balance on Korra and what happens if I cancel?", 
-      answer: "Your store balance is the total amount you have paid towards your reserved item. If you cancel a plan, cancellation is instant. Everything you paid (excluding the Korra plan fee) converts to Store Balance with your merchant. There are no cash refunds once initiated." 
-    },
-    { 
-      question: "What is the Korra plan fee?", 
-      answer: "The plan fee is 3.5% of your total plan value. It is charged once at plan initiation from your Korra balance and is non-refundable." 
-    }
+    { question: "What exactly is Korra?", answer: "Korra is a structured payment platform. You reserve what you want today with a minimum 30% down payment, pay toward the full amount at your own pace, and own it completely when done. No loans. No interest. No debt." },
+    { question: "Is Korra a loan app?", answer: "No. Korra does not lend you money, charge interest, or run a credit check." },
+    { question: "How does a plan work?", answer: "You and a merchant agree on an item and price. The merchant generates a Payment Code on Korra. You enter the code, review the plan, and pay your minimum 30% down payment. You pay toward the balance at your own pace." },
+    { question: "What is the Korra plan fee?", answer: "The plan fee is 3.5% of your total plan value. It is charged once at plan initiation from your Korra balance and is non-refundable." },
+    { question: "What happens when I cancel a plan?", answer: "Cancellation is instant. Everything you paid excluding the Korra plan fee converts to Store Balance with your merchant. There are no cash refunds once a plan is initiated." }
   ];
 
   const merchantFaqs = [
-    { 
-      question: "How do merchants use Korra?", 
-      answer: "Merchants can offer installments in 4 steps: 1. Sign up on business.korra.com.ng and verify your identity. 2. Create a digital reservation plan (Payment Code) for a customer. 3. Track the customer's store balance as they pay. 4. Fulfill the order safely once 100% payment is reached. When a customer pays their down payment, you receive those funds immediately." 
-    },
-    { 
-      question: "When do I receive my money?", 
-      answer: "Every payment a customer makes settles into your withdrawable wallet immediately minus the 3.5% merchant fee." 
-    },
-    { 
-      question: "What is Business Capacity?", 
-      answer: "Business Capacity is the total naira value of active reservations you can hold across all open plans simultaneously. Every merchant starts at 200,000 naira." 
-    },
-    { 
-      question: "What is Korra's projection and goal?", 
-      answer: "Korra's projection for this year is to empower 1,000 merchants to offer safe, reliable installment plans, helping businesses grow while protecting customers from predatory loans." 
-    }
+    { question: "How does Korra work for my business?", answer: "You register, complete identity verification, and start generating Payment Codes for customers. When a customer pays their down payment you receive those funds immediately." },
+    { question: "When do I receive my money?", answer: "Every payment a customer makes settles into your withdrawable wallet immediately minus the 3.5% merchant fee." },
+    { question: "What is Business Capacity?", answer: "Business Capacity is the total naira value of active reservations you can hold across all open plans simultaneously. Every merchant starts at 200,000 naira." }
   ];
 
   return (
