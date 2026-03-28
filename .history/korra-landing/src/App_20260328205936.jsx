@@ -378,49 +378,15 @@ const HomeLayout = () => {
   };
 
   const merchantFaqs = [
-    {
-      question: "How do I start accepting Korra payments?",
-      answer: "Create a free account on business.korra.com.ng. Once you're set up, you can start creating payment plans immediately for customers who want to pay in parts."
-    },
-    {
-      question: "When should I give the item to the customer?",
-      answer: "You release the item only after full payment is completed. Korra shows you exactly when the customer has paid 100%, so there is no confusion."
-    },
-    {
-      question: "What happens if a customer doesn’t complete payment?",
-      answer: "If a customer stops or cancels, their payments convert into a Store Balance with your business. You keep your item, and the value stays with you."
-    },
-    {
-      question: "Do I receive payments immediately?",
-      answer: "Yes. Every payment a customer makes is settled to you based on your setup. You don’t have to wait until the full amount is completed to receive funds."
-    },
-    {
-      question: "Why should I use Korra instead of tracking manually?",
-      answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
-    }
+    { question: "How do I start accepting Korra payments?", answer: "Create a free account on business.korra.com.ng. Once your business is verified, you can immediately start generating payment plans for customers who cannot pay your full price upfront." },
+    { question: "When do I hand over the item to the customer?", answer: "You only release the physical item to the customer after the Korra dashboard confirms their balance has hit 100% of your asking price. You take zero credit risk." },
+    { question: "What happens if a customer stops paying?", answer: "If a customer defaults or cancels, their payments convert into a Store Balance locked to your business. You do not lose money, and you keep your inventory until a purchase is complete." }
   ];
 
   const customerFaqs = [
-    {
-      question: "Is Korra a loan or credit system?",
-      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment no debt, no interest."
-    },
-    {
-      question: "How does the Korra payment plan work?",
-      answer: "Your merchant creates a payment plan for you. You pay a deposit, then continue paying small small at your own pace until the full amount is completed."
-    },
-    {
-      question: "What is a Store Balance?",
-      answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
-    },
-    {
-      question: "What happens if I cancel a plan?",
-      answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
-    },
-    {
-      question: "Can I pay anytime or am I fixed to a schedule?",
-      answer: "You can pay anytime and any amount. Korra gives you flexibility to pay at your own pace while keeping everything clearly recorded."
-    }
+    { question: "Is Korra a loaning or credit system?", answer: "No, Korra is not a loan or credit system. We use a safe 'pay small small' model. We do not lend you money or run a credit check. You make flexible payments and receive the goods only after full payment is complete, keeping you free from debt traps." },
+    { question: "How does the Korra installment plan work?", answer: "1. Find a trusted Korra merchant and agree on an item. 2. Log into app.korra.com.ng with your Payment Code. 3. Pay small small at your own pace. 4. Pick up your item once the store balance is fully paid." },
+    { question: "What is a Store Balance on Korra?", answer: "Your store balance is the total amount you have paid towards your reserved item. If you cancel a plan, your funds safely convert to Store Balance with your merchant so you do not lose your money." }
   ];
 
   return (
@@ -651,7 +617,7 @@ const HomeLayout = () => {
             </div>
             <h2 className="text-2xl md:text-4xl font-bold mb-4">Use Korra Anywhere</h2>
             <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">
-              Access Korra on your phone or browser, simple and fast.
+              iOS and Desktop users have full access via our optimized Web Portals, or download the official Android applications for the best experience.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -663,7 +629,7 @@ const HomeLayout = () => {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Merchant Access</h3>
                 <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Close more sales and let Korra handle the tracking.
+                  Close more sales today and let the system handle the payments completely stress-free.
                 </p>
                 <div className="w-full space-y-3">
                   <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-[#A54600] hover:bg-[#8a3a00] text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
@@ -682,7 +648,7 @@ const HomeLayout = () => {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Buyer Access</h3>
                 <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Pay small small without stress or pressure.
+                  Afford the items you love easily and pay small-small with absolutely zero pressure.
                 </p>
                 <div className="w-full space-y-3">
                   <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">

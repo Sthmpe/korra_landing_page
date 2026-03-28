@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import { 
   Menu, X, ShieldCheck, Store,
   CheckCircle, Lock, Briefcase,
   ChevronDown, ChevronUp, RefreshCcw,
   Smartphone, Globe, Upload, Plus,
   ArrowLeft, Search, ArrowRight, UserCheck, MapPin,
-  TrendingUp, Activity, CheckSquare, Download
+  TrendingUp, Activity, CheckSquare
 } from 'lucide-react';
 
 // --- CUSTOM SVG ICONS ---
@@ -25,15 +25,14 @@ const KorraLinks = {
   vendorPartnershipPdf: 'https://drive.google.com/uc?export=download&id=1K2jqJ0XB3lS_w1b64MCyvfUaPnaJyFJP',
   vendorPrivacyPdf: 'https://drive.google.com/uc?export=download&id=1P9rBibP5HASwzaGaFcnRTwSFjOlMBtNk',
   customerTermsPdf: 'https://drive.google.com/uc?export=download&id=1hYJ1ZFdH2J7znT7zz_E2xm--CWO7fGAL',
-  customerPrivacyPdf: 'https://drive.google.com/uc?export=download&id=1P9rBibP5HASwzaGaFcnRTwSFjOlMBtNk',
-  merchantApk: 'https://drive.google.com/uc?export=download&id=1Arcgl8M9k-jrLR0AcqIWOuN-oVUufpeQ',
-  customerApk: 'https://drive.google.com/uc?export=download&id=1Yvv24squjPq424ry9I7GRP1UfNXMuk0q'
+  customerPrivacyPdf: 'https://drive.google.com/uc?export=download&id=1P9rBibP5HASwzaGaFcnRTwSFjOlMBtNk'
 };
 
 // ============================================================================
 // 1. ADMIN PORTAL (Untouched functionality)
 // ============================================================================
 const AdminPortal = ({ liveMerchants = [] }) => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [formData, setFormData] = useState({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
@@ -76,7 +75,7 @@ const AdminPortal = ({ liveMerchants = [] }) => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative">
-        <Link to="/" className="absolute top-8 left-8 text-white flex items-center p-2 hover:text-[#A54600]"><ArrowLeft size={24}/></Link>
+        <button onClick={() => navigate('/')} className="absolute top-8 left-8 text-white flex items-center p-2 hover:text-[#A54600]"><ArrowLeft size={24}/></button>
         <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl">
           <div className="flex justify-center mb-6"><Lock className="text-[#A54600] w-10 h-10" /></div>
           <h2 className="text-xl font-bold text-center mb-6 text-slate-900">Admin Portal</h2>
@@ -99,7 +98,7 @@ const AdminPortal = ({ liveMerchants = [] }) => {
             </h1>
           </div>
           <div className="flex gap-4 shrink-0">
-             <Link to="/" className="text-xs md:text-sm font-bold text-slate-500 hover:text-slate-900">Exit</Link>
+             <button onClick={() => navigate('/')} className="text-xs md:text-sm font-bold text-slate-500 hover:text-slate-900">Exit</button>
              <button onClick={() => setIsAuthenticated(false)} className="text-xs md:text-sm font-bold text-red-500 hover:text-red-700">Lock</button>
           </div>
         </div>
@@ -363,12 +362,12 @@ const CategoryPage = ({ liveMerchants = [], loading }) => {
 }
 
 // ============================================================================
-// 5. UNIFIED SCROLLING LANDING PAGE (Main '/' Route)
+// 5A. B2B MERCHANT LANDING PAGE (Main '/' Route)
 // ============================================================================
 const HomeLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
-  const [showAccountModal, setShowAccountModal] = useState(false);
+  const navigate = useNavigate();
   
   const toggleFaq = (id) => { setOpenFaq(openFaq === id ? null : id); };
   const scrollToSection = (id) => {
@@ -378,83 +377,23 @@ const HomeLayout = () => {
   };
 
   const merchantFaqs = [
-    {
-      question: "How do I start accepting Korra payments?",
-      answer: "Create a free account on business.korra.com.ng. Once you're set up, you can start creating payment plans immediately for customers who want to pay in parts."
+    { 
+      question: "How do I start accepting Korra payments?", 
+      answer: "Create a free account on business.korra.com.ng. Once your business is verified, you can immediately start generating payment plans for customers who cannot pay your full price upfront." 
     },
-    {
-      question: "When should I give the item to the customer?",
-      answer: "You release the item only after full payment is completed. Korra shows you exactly when the customer has paid 100%, so there is no confusion."
+    { 
+      question: "When do I hand over the item to the customer?", 
+      answer: "You only release the physical item to the customer after the Korra dashboard confirms their balance has hit 100% of your asking price. You take zero credit risk." 
     },
-    {
-      question: "What happens if a customer doesn’t complete payment?",
-      answer: "If a customer stops or cancels, their payments convert into a Store Balance with your business. You keep your item, and the value stays with you."
-    },
-    {
-      question: "Do I receive payments immediately?",
-      answer: "Yes. Every payment a customer makes is settled to you based on your setup. You don’t have to wait until the full amount is completed to receive funds."
-    },
-    {
-      question: "Why should I use Korra instead of tracking manually?",
-      answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
-    }
-  ];
-
-  const customerFaqs = [
-    {
-      question: "Is Korra a loan or credit system?",
-      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment no debt, no interest."
-    },
-    {
-      question: "How does the Korra payment plan work?",
-      answer: "Your merchant creates a payment plan for you. You pay a deposit, then continue paying small small at your own pace until the full amount is completed."
-    },
-    {
-      question: "What is a Store Balance?",
-      answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
-    },
-    {
-      question: "What happens if I cancel a plan?",
-      answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
-    },
-    {
-      question: "Can I pay anytime or am I fixed to a schedule?",
-      answer: "You can pay anytime and any amount. Korra gives you flexibility to pay at your own pace while keeping everything clearly recorded."
+    { 
+      question: "What happens if a customer stops paying?", 
+      answer: "If a customer defaults or cancels, their payments convert into a Store Balance locked to your business. You do not lose money, and you keep your inventory until a purchase is complete." 
     }
   ];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden">
       
-      {/* 🚀 ACCOUNT SELECTION MODAL */}
-      {showAccountModal && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4" onClick={() => setShowAccountModal(false)}>
-          <div className="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl relative" onClick={e => e.stopPropagation()}>
-            <button onClick={() => setShowAccountModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-900 bg-slate-100 p-2 rounded-full"><X size={20} /></button>
-            <h3 className="text-2xl font-extrabold text-slate-900 mb-2 text-center">Join Korra</h3>
-            <p className="text-slate-600 text-sm mb-8 text-center">Choose how you want to use the platform.</p>
-            
-            <div className="space-y-4">
-              <a href="https://business.korra.com.ng" className="flex items-center gap-4 p-4 rounded-2xl border-2 border-slate-100 hover:border-[#A54600] transition-colors group">
-                <div className="w-12 h-12 bg-orange-50 text-[#A54600] rounded-full flex items-center justify-center group-hover:bg-[#A54600] group-hover:text-white transition-colors"><Store size={24}/></div>
-                <div>
-                  <h4 className="font-bold text-slate-900">I am a Merchant</h4>
-                  <p className="text-xs text-slate-500">Create a business account to sell.</p>
-                </div>
-              </a>
-              
-              <a href="https://app.korra.com.ng" className="flex items-center gap-4 p-4 rounded-2xl border-2 border-slate-100 hover:border-blue-600 transition-colors group">
-                <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors"><UserCheck size={24}/></div>
-                <div>
-                  <h4 className="font-bold text-slate-900">I am a Buyer</h4>
-                  <p className="text-xs text-slate-500">Log in to track my payments.</p>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-
       {/* 🚀 NAVBAR */}
       <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -465,10 +404,9 @@ const HomeLayout = () => {
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('how-it-works')} className="hover:text-[#A54600] transition-colors text-sm font-medium">How it Works</button>
-              <button onClick={() => scrollToSection('customers')} className="hover:text-[#A54600] transition-colors text-sm font-medium">For Customers</button>
-              <button onClick={() => scrollToSection('download-section')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Platform Access</button>
               <button onClick={() => scrollToSection('faq')} className="hover:text-[#A54600] transition-colors text-sm font-medium">FAQs</button>
-              <button onClick={() => setShowAccountModal(true)} className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm shadow-md transition-transform active:scale-95">Open Account</button>
+              <Link to="/customers" className="hover:text-[#A54600] transition-colors text-sm font-medium">For Customers</Link>
+              <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm shadow-md">Open Free Account</a>
             </div>
             <div className="md:hidden">
               <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-500 p-2">
@@ -481,11 +419,10 @@ const HomeLayout = () => {
           <div className="md:hidden bg-white absolute w-full left-0 top-16 shadow-lg">
             <div className="px-4 pt-2 pb-6 space-y-2">
               <button onClick={() => scrollToSection('how-it-works')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">How it Works</button>
-              <button onClick={() => scrollToSection('customers')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">For Customers</button>
-              <button onClick={() => scrollToSection('download-section')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">Platform Access</button>
               <button onClick={() => scrollToSection('faq')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">FAQs</button>
+              <Link to="/customers" onClick={() => setIsMenuOpen(false)} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium text-[#A54600]">For Customers</Link>
               <div className="pt-2">
-                <button onClick={() => { setIsMenuOpen(false); setShowAccountModal(true); }} className="w-full text-center block bg-slate-900 text-white px-4 py-3 rounded-xl font-bold text-base shadow-md">Open Account</button>
+                <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full text-center block bg-slate-900 text-white px-4 py-3 rounded-xl font-bold text-base">Open Free Account</a>
               </div>
             </div>
           </div>
@@ -500,15 +437,15 @@ const HomeLayout = () => {
             <span className="text-[#A54600]">can’t pay upfront.</span>
           </h1>
           <h2 className="mt-4 max-w-2xl mx-auto text-sm md:text-lg text-slate-600 mb-10 leading-relaxed">
-            Let your customers start paying today with a small deposit while Korra tracks everything for you, no stress, no confusion.
+            Let your customers lock in their purchase with a deposit today, while Korra tracks the rest of the payments for you. Zero stress. Zero confusion.
           </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button onClick={() => setShowAccountModal(true)} className="w-full sm:w-auto bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-colors">
-              Open Merchant Account
-            </button>
-            <button onClick={() => scrollToSection('customers')} className="w-full sm:w-auto bg-white border-2 border-slate-200 hover:border-[#A54600] hover:text-[#A54600] text-slate-700 px-8 py-4 rounded-xl font-bold text-base transition-colors">
+            <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-colors">
+              Open Free Business Account
+            </a>
+            <Link to="/customers" className="w-full sm:w-auto bg-white border-2 border-slate-200 hover:border-[#A54600] hover:text-[#A54600] text-slate-700 px-8 py-4 rounded-xl font-bold text-base transition-colors">
               I am a Buyer
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -517,242 +454,105 @@ const HomeLayout = () => {
       <section className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Sell More Without Stress</h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Run Your Installments Like a Pro.</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-orange-50 p-8 rounded-3xl">
               <TrendingUp className="text-[#A54600] w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold text-slate-900 mb-2">Close More Sales Today</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Stop letting customers walk out because they don't have the full cash. Let them start paying immediately.</p>
+              <p className="text-slate-600 text-sm leading-relaxed">Stop letting customers walk out because they don't have the full cash. Lock them in immediately with a digital reservation.</p>
             </div>
             <div className="bg-slate-50 p-8 rounded-3xl">
               <Activity className="text-slate-900 w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold text-slate-900 mb-2">Zero Manual Tracking</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Forget notebooks and chat calculations. Korra automatically records every payment and updates balances.</p>
+              <p className="text-slate-600 text-sm leading-relaxed">Throw away the notebook. Korra automatically records every deposit and updates the customer's balance. No math required.</p>
             </div>
             <div className="bg-slate-50 p-8 rounded-3xl">
               <CheckSquare className="text-slate-900 w-8 h-8 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 mb-2">No Confusion or Arguments</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">You and your customer always see the same payment progress clear and transparent.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">No Arguments or Confusion</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">Both you and the customer see the exact same balance on your phones at all times. Total transparency and trust.</p>
             </div>
             <div className="bg-orange-50 p-8 rounded-3xl">
               <ShieldCheck className="text-[#A54600] w-8 h-8 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Safe Fulfillment</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Only release the item when full payment is complete. No risk, no pressure.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">100% Safe Fulfillment</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">You keep the physical item until the Korra ledger shows 100% paid. No credit risk. No chargebacks. You are completely protected.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 🚀 HOW IT WORKS (SPLIT VIEW) */}
+      {/* 🚀 HOW IT WORKS (SIMPLE TOOL) */}
       <section id="how-it-works" className="py-16 md:py-24 bg-slate-900 text-white px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold mb-4">How it Works.</h2>
-            <p className="text-slate-400 text-sm md:text-base">A simple system for merchants. A flexible way for customers to pay.</p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
-            {/* For Merchants */}
-            <div>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-[#A54600] flex items-center justify-center text-white"><Store size={18}/></div>
-                <h3 className="text-xl font-bold text-white">For Merchants</h3>
-              </div>
-              <div className="space-y-6">
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">1</div>
-                   <div><h4 className="font-bold text-white mb-1">Create a Plan</h4><p className="text-slate-400 text-sm">Set price and deposit amount in seconds</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">2</div>
-                   <div><h4 className="font-bold text-white mb-1">Send to Customer</h4><p className="text-slate-400 text-sm">Share link or code</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">3</div>
-                   <div><h4 className="font-bold text-white mb-1">Customer Pay Small-Small</h4><p className="text-slate-400 text-sm">They pay gradually at their pace</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-[#A54600] flex items-center justify-center font-bold text-white shrink-0 shadow-md">4</div>
-                   <div><h4 className="font-bold text-white mb-1">Release Item</h4><p className="text-slate-400 text-sm">Once payment is complete</p></div>
-                 </div>
-              </div>
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-12">Setup a Plan in 30 Seconds.</h2>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div className="bg-slate-800 p-6 rounded-3xl text-left">
+              <div className="w-10 h-10 bg-[#A54600] rounded-full flex items-center justify-center font-bold text-white mb-4">1</div>
+              <h3 className="font-bold text-lg mb-2">Create a Plan</h3>
+              <p className="text-slate-400 text-sm">Enter the item price and the required deposit on your Korra Business app.</p>
             </div>
-
-            {/* For Buyers */}
-            <div>
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-white"><UserCheck size={18}/></div>
-                <h3 className="text-xl font-bold text-white">For Buyers</h3>
-              </div>
-              <div className="space-y-6">
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">1</div>
-                   <div><h4 className="font-bold text-white mb-1">Find a merchant</h4><p className="text-slate-400 text-sm">Discover trusted Korra merchants.</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">2</div>
-                   <div><h4 className="font-bold text-white mb-1">Reserve with a deposit</h4><p className="text-slate-400 text-sm">Pay a starting deposit to secure your item.</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">3</div>
-                   <div><h4 className="font-bold text-white mb-1">Pay Small Small</h4><p className="text-slate-400 text-sm">Make flexible payments at your own pace.</p></div>
-                 </div>
-                 <div className="flex gap-4">
-                   <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-slate-900 shrink-0 shadow-md">4</div>
-                   <div><h4 className="font-bold text-white mb-1">Collect when complete</h4><p className="text-slate-400 text-sm">Pick up your item once fully paid.</p></div>
-                 </div>
-              </div>
+            <div className="bg-slate-800 p-6 rounded-3xl text-left">
+              <div className="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-white mb-4">2</div>
+              <h3 className="font-bold text-lg mb-2">Send to Customer</h3>
+              <p className="text-slate-400 text-sm">The customer logs in and securely accepts the payment plan on their phone.</p>
+            </div>
+            <div className="bg-slate-800 p-6 rounded-3xl text-left">
+              <div className="w-10 h-10 bg-slate-700 rounded-full flex items-center justify-center font-bold text-white mb-4">3</div>
+              <h3 className="font-bold text-lg mb-2">They Pay Small-Small</h3>
+              <p className="text-slate-400 text-sm">The customer makes flexible deposits directly into their secure Korra Store Balance.</p>
+            </div>
+            <div className="bg-slate-800 p-6 rounded-3xl text-left">
+              <div className="w-10 h-10 bg-[#A54600] rounded-full flex items-center justify-center font-bold text-white mb-4">4</div>
+              <h3 className="font-bold text-lg mb-2">Hand Over Goods</h3>
+              <p className="text-slate-400 text-sm">Once the system confirms full payment, you release the item to the buyer.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 🚀 FOR YOUR CUSTOMERS SECTION */}
-      <section id="customers" className="py-16 md:py-24 bg-orange-50 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xs font-bold text-[#A54600] uppercase tracking-widest mb-4">For Your Customers</h2>
-          <h3 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-6">Let your customers get what they want without paying everything upfront.</h3>
-          <p className="text-slate-600 text-sm md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            With Korra, customers can reserve items and pay small small over time, no loans, no pressure, and no hidden charges.
+      {/* 🚀 CUSTOMER CORNER (TRAFFIC COP) */}
+      <section className="py-16 bg-orange-50 px-4">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">Looking to buy your next gadget debt-free?</h2>
+          <p className="text-slate-600 text-sm md:text-base mb-8 leading-relaxed">
+            Korra is not a loan app. We provide the secure payment gateway for you to reserve items from trusted merchants and pay at your own pace without harassment.
           </p>
-          
-          <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12 text-left">
-            <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
-              <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">Pay gradually at your own pace.</p>
-            </div>
-            <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
-              <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">No interest or hidden fees.</p>
-            </div>
-            <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
-              <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">Always know what you’ve paid</p>
-            </div>
-            <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
-              <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">If you cancel, your money stays as store balance</p>
-            </div>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+             <a href="https://app.korra.com.ng" className="bg-slate-900 hover:bg-slate-800 text-white px-6 py-3 rounded-xl font-bold text-sm transition-colors">Download Customer App</a>
+             <Link to="/merchants" className="bg-white text-slate-900 px-6 py-3 rounded-xl font-bold text-sm shadow-sm hover:shadow-md transition-all">View Merchants using Korra</Link>
           </div>
-
-          <Link to="/merchants" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-bold text-sm shadow-md transition-all">
-            <Search size={18}/> Looking to buy? Find merchants that accept Korra
-          </Link>
         </div>
       </section>
 
-      {/* 🚀 ACCESS THE PLATFORM SECTION (Downloads & Web App) */}
-      <section id="download-section" className="py-16 md:py-20 bg-slate-900 text-white">
-         <div className="max-w-5xl mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 mb-6 mx-auto">
-              <span className="flex h-2 w-2 rounded-full bg-green-400"></span>
-              <span className="text-[10px] font-bold text-slate-300 tracking-wide uppercase">Systems Online</span>
-            </div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">Use Korra Anywhere</h2>
-            <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">
-              Access Korra on your phone or browser, simple and fast.
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              
-              {/* Merchant Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <Store className="w-6 h-6 text-[#A54600]" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Merchant Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Close more sales and let Korra handle the tracking.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-[#A54600] hover:bg-[#8a3a00] text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Terminal
-                  </a>
-                </div>
-              </div>
-
-              {/* Buyer Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <UserCheck className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Buyer Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Pay small small without stress or pressure.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Portal
-                  </a>
-                </div>
-              </div>
-
-            </div>
-        </div>
-      </section>
-
-      {/* 🚀 FAQ SECTION (SPLIT) */}
+      {/* 🚀 FAQ SECTION */}
       <section id="faq" className="py-16 md:py-24 bg-white px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Platform FAQs</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">Merchant FAQs</h2>
           </div>
-          
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-            {/* Merchant FAQs */}
-            <div>
-              <h3 className="text-lg font-bold text-[#A54600] mb-6 flex items-center gap-2"><Store size={20}/> For Merchants</h3>
-              <div className="space-y-4">
-                {merchantFaqs.map((faq, index) => {
-                  const id = `merchant-${index}`;
-                  return (
-                    <div key={id} className="bg-slate-50 rounded-2xl overflow-hidden">
-                      <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left">
-                        <span className="font-bold text-slate-900 text-sm pr-4">{faq.question}</span>
-                        {openFaq === id ? <ChevronUp className="text-[#A54600] shrink-0 w-5 h-5" /> : <ChevronDown className="text-slate-400 shrink-0 w-5 h-5" />}
-                      </button>
-                      {openFaq === id && <div className="px-5 pb-5 text-sm text-slate-600 leading-relaxed">{faq.answer}</div>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Buyer FAQs */}
-            <div>
-              <h3 className="text-lg font-bold text-slate-900 mb-6 flex items-center gap-2"><UserCheck size={20}/> For Buyers</h3>
-              <div className="space-y-4">
-                {customerFaqs.map((faq, index) => {
-                  const id = `customer-${index}`;
-                  return (
-                    <div key={id} className="bg-slate-50 rounded-2xl overflow-hidden">
-                      <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left">
-                        <span className="font-bold text-slate-900 text-sm pr-4">{faq.question}</span>
-                        {openFaq === id ? <ChevronUp className="text-[#A54600] shrink-0 w-5 h-5" /> : <ChevronDown className="text-slate-400 shrink-0 w-5 h-5" />}
-                      </button>
-                      {openFaq === id && <div className="px-5 pb-5 text-sm text-slate-600 leading-relaxed">{faq.answer}</div>}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+          <div className="space-y-4">
+            {merchantFaqs.map((faq, index) => {
+              const id = `merchant-${index}`;
+              return (
+                <div key={id} className="bg-slate-50 rounded-2xl overflow-hidden">
+                  <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left">
+                    <span className="font-bold text-slate-900 text-sm md:text-base pr-4">{faq.question}</span>
+                    {openFaq === id ? <ChevronUp className="text-[#A54600] shrink-0 w-5 h-5" /> : <ChevronDown className="text-slate-400 shrink-0 w-5 h-5" />}
+                  </button>
+                  {openFaq === id && <div className="px-5 pb-5 text-sm text-slate-600 leading-relaxed">{faq.answer}</div>}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 🚀 FINAL CTA */}
+      {/* 🚀 FINAL CTA & FOOTER */}
       <section className="py-16 md:py-20 bg-slate-50 px-4 text-center">
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Turn "I'll come back" into a closed sale today.</h2>
           <p className="text-slate-600 text-sm md:text-base mb-8">Join the smart merchants in Ilorin who are growing their revenue without the stress of manual tracking.</p>
-          <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="inline-block bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-colors">
+          <a href="https://business.korra.com.ng" className="inline-block bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-colors">
             Create Your Free Merchant Account
           </a>
         </div>
@@ -794,7 +594,7 @@ const HomeLayout = () => {
                </div>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4 border-t border-slate-100">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-4">
             <p className="text-slate-500 text-xs font-medium">© {new Date().getFullYear()} KorraHQ Byte Limited (RC 9428861).</p>
             <div className="flex gap-3 text-slate-400 text-xs">
                <span>support@korra.com.ng</span>
@@ -802,6 +602,114 @@ const HomeLayout = () => {
                <span>Ilorin, Kwara State.</span>
             </div>
           </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+// ============================================================================
+// 5B. B2C CUSTOMER LANDING PAGE (Route '/customers')
+// ============================================================================
+const CustomerLayout = () => {
+  const [openFaq, setOpenFaq] = useState(null);
+  const navigate = useNavigate();
+  
+  const toggleFaq = (id) => { setOpenFaq(openFaq === id ? null : id); };
+
+  const customerFaqs = [
+    { question: "Is Korra a loaning or credit system?", answer: "No, Korra is not a loan or credit system. We use a safe 'pay small small' model. We do not lend you money or run a credit check. You make flexible payments and receive the goods only after full payment is complete, keeping you free from debt traps." },
+    { question: "How does the Korra installment plan work?", answer: "1. Find a trusted Korra merchant and agree on an item. 2. Log into app.korra.com.ng with your Payment Code. 3. Pay small small at your own pace. 4. Pick up your item once the store balance is fully paid." },
+    { question: "What is a Store Balance on Korra?", answer: "Your store balance is the total amount you have paid towards your reserved item. If you cancel a plan, your funds safely convert to Store Balance with your merchant so you do not lose your money." }
+  ];
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-[#A54600] selection:text-white">
+      
+      {/* 🚀 NAVBAR */}
+      <nav className="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
+            <img src="/korra_logo_icon.webp" alt="Korra App" className="h-10 w-10 object-contain" />
+            <span className="font-bold text-xl tracking-tight text-slate-900">Korra</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <Link to="/" className="text-sm font-bold text-slate-500 hover:text-[#A54600]">For Merchants</Link>
+            <a href="https://app.korra.com.ng" className="bg-[#A54600] text-white px-5 py-2 rounded-full font-bold text-sm shadow-md">Login</a>
+          </div>
+        </div>
+      </nav>
+
+      {/* 🚀 HERO (CUSTOMER FOCUSED) */}
+      <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 px-4 text-center">
+        <div className="max-w-3xl mx-auto">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white shadow-sm mb-6">
+            <span className="flex h-2 w-2 rounded-full bg-[#A54600]"></span>
+            <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">No loans. No interest. No pressure.</span>
+          </div>
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight mb-6 leading-[1.1] text-slate-900">
+            Reserve What You Love. <br />
+            <span className="text-[#A54600]">Pay Small Small.</span>
+          </h1>
+          <p className="text-slate-600 text-sm md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
+            Korra helps you reserve items from trusted merchants and pay gradually. Just simple payment plans that help you afford what matters without going into debt.
+          </p>
+          <Link to="/merchants" className="bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg inline-flex items-center gap-2">
+            <Search size={18}/> Find Korra Merchants
+          </Link>
+        </div>
+      </section>
+
+      {/* 🚀 THE KORRA PROMISE */}
+      <section className="py-16 bg-white px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-orange-50 p-8 rounded-3xl text-center">
+              <ShieldCheck size={32} className="mx-auto text-[#A54600] mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-slate-900">No Interest, Ever</h3>
+              <p className="text-slate-600 text-sm">The price you see is the price you pay. No hidden fees or sudden markups.</p>
+            </div>
+            <div className="bg-slate-50 p-8 rounded-3xl text-center">
+              <Lock size={32} className="mx-auto text-slate-900 mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-slate-900">Secure Payments</h3>
+              <p className="text-slate-600 text-sm">Your payments are locked and secured directly with verified merchant partners.</p>
+            </div>
+            <div className="bg-orange-50 p-8 rounded-3xl text-center">
+              <RefreshCcw size={32} className="mx-auto text-[#A54600] mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-slate-900">Fair Cancellations</h3>
+              <p className="text-slate-600 text-sm">Change your mind? Your money safely converts to a store balance. No penalties.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 🚀 CUSTOMER FAQS */}
+      <section className="py-16 px-4">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-center text-slate-900 mb-10">Buyer FAQs</h2>
+          <div className="space-y-4">
+            {customerFaqs.map((faq, index) => {
+              const id = `customer-${index}`;
+              return (
+                <div key={id} className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <button onClick={() => toggleFaq(id)} className="w-full flex justify-between items-center p-5 text-left">
+                    <span className="font-bold text-slate-900 text-sm md:text-base pr-4">{faq.question}</span>
+                    {openFaq === id ? <ChevronUp className="text-[#A54600] shrink-0 w-5 h-5" /> : <ChevronDown className="text-slate-400 shrink-0 w-5 h-5" />}
+                  </button>
+                  {openFaq === id && <div className="px-5 pb-5 text-sm text-slate-600 leading-relaxed">{faq.answer}</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+      
+      {/* 🚀 FOOTER */}
+      <footer className="bg-white text-slate-600 py-10 mt-10">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <div className="flex justify-center mb-6"><img src="/korra_logo_icon.webp" alt="Korra" className="w-8 h-8" /></div>
+          <p className="text-sm font-bold text-slate-900 mb-2">KorraHQ Byte Limited</p>
+          <p className="text-xs text-slate-500">Ilorin, Kwara State | support@korra.com.ng</p>
         </div>
       </footer>
     </div>
@@ -839,6 +747,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeLayout />} />
+        <Route path="/customers" element={<CustomerLayout />} />
         <Route path="/merchants" element={<MerchantsDirectory liveMerchants={merchantsList} loading={loadingMerchants} />} />
         <Route path="/merchant/:slug" element={<MerchantProfile liveMerchants={merchantsList} loading={loadingMerchants} />} />
         <Route path="/:categorySlug" element={<CategoryPage liveMerchants={merchantsList} loading={loadingMerchants} />} />

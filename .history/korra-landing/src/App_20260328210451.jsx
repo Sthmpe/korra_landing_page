@@ -378,50 +378,50 @@ const HomeLayout = () => {
   };
 
   const merchantFaqs = [
-    {
-      question: "How do I start accepting Korra payments?",
-      answer: "Create a free account on business.korra.com.ng. Once you're set up, you can start creating payment plans immediately for customers who want to pay in parts."
-    },
-    {
-      question: "When should I give the item to the customer?",
-      answer: "You release the item only after full payment is completed. Korra shows you exactly when the customer has paid 100%, so there is no confusion."
-    },
-    {
-      question: "What happens if a customer doesn’t complete payment?",
-      answer: "If a customer stops or cancels, their payments convert into a Store Balance with your business. You keep your item, and the value stays with you."
-    },
-    {
-      question: "Do I receive payments immediately?",
-      answer: "Yes. Every payment a customer makes is settled to you based on your setup. You don’t have to wait until the full amount is completed to receive funds."
-    },
-    {
-      question: "Why should I use Korra instead of tracking manually?",
-      answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
-    }
-  ];
+  {
+    question: "How do I start accepting Korra payments?",
+    answer: "Create a free account on business.korra.com.ng. Once you're set up, you can start creating payment plans immediately for customers who want to pay in parts."
+  },
+  {
+    question: "When should I give the item to the customer?",
+    answer: "You release the item only after full payment is completed. Korra shows you exactly when the customer has paid 100%, so there is no confusion."
+  },
+  {
+    question: "What happens if a customer doesn’t complete payment?",
+    answer: "If a customer stops or cancels, their payments convert into a Store Balance with your business. You keep your item, and the value stays with you."
+  },
+  {
+    question: "Do I receive payments immediately?",
+    answer: "Yes. Every payment a customer makes is settled to you based on your setup. You don’t have to wait until the full amount is completed to receive funds."
+  },
+  {
+    question: "Why should I use Korra instead of tracking manually?",
+    answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
+  }
+];
 
-  const customerFaqs = [
-    {
-      question: "Is Korra a loan or credit system?",
-      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment no debt, no interest."
-    },
-    {
-      question: "How does the Korra payment plan work?",
-      answer: "Your merchant creates a payment plan for you. You pay a deposit, then continue paying small small at your own pace until the full amount is completed."
-    },
-    {
-      question: "What is a Store Balance?",
-      answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
-    },
-    {
-      question: "What happens if I cancel a plan?",
-      answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
-    },
-    {
-      question: "Can I pay anytime or am I fixed to a schedule?",
-      answer: "You can pay anytime and any amount. Korra gives you flexibility to pay at your own pace while keeping everything clearly recorded."
-    }
-  ];
+const customerFaqs = [
+  {
+    question: "Is Korra a loan or credit system?",
+    answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment — no debt, no interest."
+  },
+  {
+    question: "How does the Korra payment plan work?",
+    answer: "Your merchant creates a payment plan for you. You pay a deposit, then continue paying small small at your own pace until the full amount is completed."
+  },
+  {
+    question: "What is a Store Balance?",
+    answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
+  },
+  {
+    question: "What happens if I cancel a plan?",
+    answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
+  },
+  {
+    question: "Can I pay anytime or am I fixed to a schedule?",
+    answer: "You can pay anytime and any amount. Korra gives you flexibility to pay at your own pace while keeping everything clearly recorded."
+  }
+];
 
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-[#A54600] selection:text-white overflow-x-hidden">

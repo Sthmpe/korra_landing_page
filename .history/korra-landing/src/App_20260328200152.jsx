@@ -378,49 +378,15 @@ const HomeLayout = () => {
   };
 
   const merchantFaqs = [
-    {
-      question: "How do I start accepting Korra payments?",
-      answer: "Create a free account on business.korra.com.ng. Once you're set up, you can start creating payment plans immediately for customers who want to pay in parts."
-    },
-    {
-      question: "When should I give the item to the customer?",
-      answer: "You release the item only after full payment is completed. Korra shows you exactly when the customer has paid 100%, so there is no confusion."
-    },
-    {
-      question: "What happens if a customer doesn’t complete payment?",
-      answer: "If a customer stops or cancels, their payments convert into a Store Balance with your business. You keep your item, and the value stays with you."
-    },
-    {
-      question: "Do I receive payments immediately?",
-      answer: "Yes. Every payment a customer makes is settled to you based on your setup. You don’t have to wait until the full amount is completed to receive funds."
-    },
-    {
-      question: "Why should I use Korra instead of tracking manually?",
-      answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
-    }
+    { question: "How do I start accepting Korra payments?", answer: "Create a free account on business.korra.com.ng. Once your business is verified, you can immediately start generating payment plans for customers who cannot pay your full price upfront." },
+    { question: "When do I hand over the item to the customer?", answer: "You only release the physical item to the customer after the Korra dashboard confirms their balance has hit 100% of your asking price. You take zero credit risk." },
+    { question: "What happens if a customer stops paying?", answer: "If a customer defaults or cancels, their payments convert into a Store Balance locked to your business. You do not lose money, and you keep your inventory until a purchase is complete." }
   ];
 
   const customerFaqs = [
-    {
-      question: "Is Korra a loan or credit system?",
-      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment no debt, no interest."
-    },
-    {
-      question: "How does the Korra payment plan work?",
-      answer: "Your merchant creates a payment plan for you. You pay a deposit, then continue paying small small at your own pace until the full amount is completed."
-    },
-    {
-      question: "What is a Store Balance?",
-      answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
-    },
-    {
-      question: "What happens if I cancel a plan?",
-      answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
-    },
-    {
-      question: "Can I pay anytime or am I fixed to a schedule?",
-      answer: "You can pay anytime and any amount. Korra gives you flexibility to pay at your own pace while keeping everything clearly recorded."
-    }
+    { question: "Is Korra a loaning or credit system?", answer: "No, Korra is not a loan or credit system. We use a safe 'pay small small' model. We do not lend you money or run a credit check. You make flexible payments and receive the goods only after full payment is complete, keeping you free from debt traps." },
+    { question: "How does the Korra installment plan work?", answer: "1. Find a trusted Korra merchant and agree on an item. 2. Log into app.korra.com.ng with your Payment Code. 3. Pay small small at your own pace. 4. Pick up your item once the store balance is fully paid." },
+    { question: "What is a Store Balance on Korra?", answer: "Your store balance is the total amount you have paid towards your reserved item. If you cancel a plan, your funds safely convert to Store Balance with your merchant so you do not lose your money." }
   ];
 
   return (
@@ -466,7 +432,6 @@ const HomeLayout = () => {
             <div className="hidden md:flex items-center space-x-8">
               <button onClick={() => scrollToSection('how-it-works')} className="hover:text-[#A54600] transition-colors text-sm font-medium">How it Works</button>
               <button onClick={() => scrollToSection('customers')} className="hover:text-[#A54600] transition-colors text-sm font-medium">For Customers</button>
-              <button onClick={() => scrollToSection('download-section')} className="hover:text-[#A54600] transition-colors text-sm font-medium">Platform Access</button>
               <button onClick={() => scrollToSection('faq')} className="hover:text-[#A54600] transition-colors text-sm font-medium">FAQs</button>
               <button onClick={() => setShowAccountModal(true)} className="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2 rounded-full font-bold text-sm shadow-md transition-transform active:scale-95">Open Account</button>
             </div>
@@ -482,10 +447,9 @@ const HomeLayout = () => {
             <div className="px-4 pt-2 pb-6 space-y-2">
               <button onClick={() => scrollToSection('how-it-works')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">How it Works</button>
               <button onClick={() => scrollToSection('customers')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">For Customers</button>
-              <button onClick={() => scrollToSection('download-section')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">Platform Access</button>
               <button onClick={() => scrollToSection('faq')} className="w-full text-left block px-3 py-3 rounded-md text-base font-medium">FAQs</button>
               <div className="pt-2">
-                <button onClick={() => { setIsMenuOpen(false); setShowAccountModal(true); }} className="w-full text-center block bg-slate-900 text-white px-4 py-3 rounded-xl font-bold text-base shadow-md">Open Account</button>
+                <button onClick={() => { setIsMenuOpen(false); setShowAccountModal(true); }} className="w-full text-center block bg-slate-900 text-white px-4 py-3 rounded-xl font-bold text-base">Open Account</button>
               </div>
             </div>
           </div>
@@ -500,7 +464,7 @@ const HomeLayout = () => {
             <span className="text-[#A54600]">can’t pay upfront.</span>
           </h1>
           <h2 className="mt-4 max-w-2xl mx-auto text-sm md:text-lg text-slate-600 mb-10 leading-relaxed">
-            Let your customers start paying today with a small deposit while Korra tracks everything for you, no stress, no confusion.
+            Let your customers lock in their purchase with a deposit today, while Korra tracks the rest of the payments for you. Zero stress. Zero confusion.
           </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onClick={() => setShowAccountModal(true)} className="w-full sm:w-auto bg-[#A54600] hover:bg-[#8a3a00] text-white px-8 py-4 rounded-xl font-bold text-base shadow-lg transition-colors">
@@ -517,28 +481,28 @@ const HomeLayout = () => {
       <section className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Sell More Without Stress</h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Run Your Installments Like a Pro.</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-orange-50 p-8 rounded-3xl">
               <TrendingUp className="text-[#A54600] w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold text-slate-900 mb-2">Close More Sales Today</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Stop letting customers walk out because they don't have the full cash. Let them start paying immediately.</p>
+              <p className="text-slate-600 text-sm leading-relaxed">Stop letting customers walk out because they don't have the full cash. Lock them in immediately with a digital reservation.</p>
             </div>
             <div className="bg-slate-50 p-8 rounded-3xl">
               <Activity className="text-slate-900 w-8 h-8 mb-4" />
               <h3 className="text-xl font-bold text-slate-900 mb-2">Zero Manual Tracking</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Forget notebooks and chat calculations. Korra automatically records every payment and updates balances.</p>
+              <p className="text-slate-600 text-sm leading-relaxed">Throw away the notebook. Korra automatically records every deposit and updates the customer's balance. No math required.</p>
             </div>
             <div className="bg-slate-50 p-8 rounded-3xl">
               <CheckSquare className="text-slate-900 w-8 h-8 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 mb-2">No Confusion or Arguments</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">You and your customer always see the same payment progress clear and transparent.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">No Arguments or Confusion</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">Both you and the customer see the exact same balance on your phones at all times. Total transparency and trust.</p>
             </div>
             <div className="bg-orange-50 p-8 rounded-3xl">
               <ShieldCheck className="text-[#A54600] w-8 h-8 mb-4" />
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Safe Fulfillment</h3>
-              <p className="text-slate-600 text-sm leading-relaxed">Only release the item when full payment is complete. No risk, no pressure.</p>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">100% Safe Fulfillment</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">You keep the physical item until the Korra ledger shows 100% paid. No credit risk. No chargebacks. You are completely protected.</p>
             </div>
           </div>
         </div>
@@ -549,7 +513,7 @@ const HomeLayout = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-2xl md:text-4xl font-extrabold mb-4">How it Works.</h2>
-            <p className="text-slate-400 text-sm md:text-base">A simple system for merchants. A flexible way for customers to pay.</p>
+            <p className="text-slate-400 text-sm md:text-base">A simple tool for merchants. A safe payment plan for buyers.</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
@@ -562,19 +526,19 @@ const HomeLayout = () => {
               <div className="space-y-6">
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">1</div>
-                   <div><h4 className="font-bold text-white mb-1">Create a Plan</h4><p className="text-slate-400 text-sm">Set price and deposit amount in seconds</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Create a Plan</h4><p className="text-slate-400 text-sm">Enter the item price and deposit on your Korra app.</p></div>
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">2</div>
-                   <div><h4 className="font-bold text-white mb-1">Send to Customer</h4><p className="text-slate-400 text-sm">Share link or code</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Send to Customer</h4><p className="text-slate-400 text-sm">Customer accepts the payment plan on their phone.</p></div>
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">3</div>
-                   <div><h4 className="font-bold text-white mb-1">Customer Pay Small-Small</h4><p className="text-slate-400 text-sm">They pay gradually at their pace</p></div>
+                   <div><h4 className="font-bold text-white mb-1">They Pay Small-Small</h4><p className="text-slate-400 text-sm">Customer makes flexible deposits into their balance.</p></div>
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-[#A54600] flex items-center justify-center font-bold text-white shrink-0 shadow-md">4</div>
-                   <div><h4 className="font-bold text-white mb-1">Release Item</h4><p className="text-slate-400 text-sm">Once payment is complete</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Hand Over Goods</h4><p className="text-slate-400 text-sm">System confirms full payment, you release the item.</p></div>
                  </div>
               </div>
             </div>
@@ -588,11 +552,11 @@ const HomeLayout = () => {
               <div className="space-y-6">
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">1</div>
-                   <div><h4 className="font-bold text-white mb-1">Find a merchant</h4><p className="text-slate-400 text-sm">Discover trusted Korra merchants.</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Find What You Want</h4><p className="text-slate-400 text-sm">Discover trusted Korra merchants.</p></div>
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">2</div>
-                   <div><h4 className="font-bold text-white mb-1">Reserve with a deposit</h4><p className="text-slate-400 text-sm">Pay a starting deposit to secure your item.</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Reserve It</h4><p className="text-slate-400 text-sm">Pay a starting deposit to secure your item.</p></div>
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-slate-300 shrink-0">3</div>
@@ -600,7 +564,7 @@ const HomeLayout = () => {
                  </div>
                  <div className="flex gap-4">
                    <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-slate-900 shrink-0 shadow-md">4</div>
-                   <div><h4 className="font-bold text-white mb-1">Collect when complete</h4><p className="text-slate-400 text-sm">Pick up your item once fully paid.</p></div>
+                   <div><h4 className="font-bold text-white mb-1">Collect Your Item</h4><p className="text-slate-400 text-sm">Pick up your item once fully paid.</p></div>
                  </div>
               </div>
             </div>
@@ -614,7 +578,7 @@ const HomeLayout = () => {
           <h2 className="text-xs font-bold text-[#A54600] uppercase tracking-widest mb-4">For Your Customers</h2>
           <h3 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-6">Let your customers get what they want without paying everything upfront.</h3>
           <p className="text-slate-600 text-sm md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed">
-            With Korra, customers can reserve items and pay small small over time, no loans, no pressure, and no hidden charges.
+            With Korra, customers can reserve items and pay small small over time — no loans, no pressure, and no hidden charges.
           </p>
           
           <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto mb-12 text-left">
@@ -628,11 +592,11 @@ const HomeLayout = () => {
             </div>
             <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
               <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">Always know what you’ve paid</p>
+              <p className="text-sm font-bold text-slate-900">Clear payment tracking.</p>
             </div>
             <div className="flex items-start gap-3 bg-white p-5 rounded-2xl shadow-sm">
               <CheckCircle className="text-[#A54600] w-6 h-6 shrink-0" />
-              <p className="text-sm font-bold text-slate-900">If you cancel, your money stays as store balance</p>
+              <p className="text-sm font-bold text-slate-900">If you cancel, your money stays as store balance.</p>
             </div>
           </div>
 
@@ -649,52 +613,46 @@ const HomeLayout = () => {
               <span className="flex h-2 w-2 rounded-full bg-green-400"></span>
               <span className="text-[10px] font-bold text-slate-300 tracking-wide uppercase">Systems Online</span>
             </div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">Use Korra Anywhere</h2>
-            <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">
-              Access Korra on your phone or browser, simple and fast.
-            </p>
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">Access The Infrastructure</h2>
+            <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">Android users can install the native application. iOS and Desktop users have full access via our optimized Web Portals.Use our optimized Web Apps anywhere, or download the official Android applications for the best experience.</p>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              
-              {/* Merchant Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <Store className="w-6 h-6 text-[#A54600]" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Merchant Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Close more sales and let Korra handle the tracking.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-[#A54600] hover:bg-[#8a3a00] text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Terminal
-                  </a>
-                </div>
-              </div>
-
-              {/* Buyer Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <UserCheck className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Buyer Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Pay small small without stress or pressure.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Portal
-                  </a>
-                </div>
-              </div>
-
+            
+      <section className="py-16 md:py-24 bg-slate-50 px-4 text-center">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-4">Access the Platform</h2>
+          <p className="text-slate-600 text-sm md:text-base mb-12">Use our optimized Web Apps anywhere, or download the official Android applications for the best experience.</p>
+          
+          <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {/* Merchant Access */}
+            <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm flex flex-col items-center">
+               <div className="w-12 h-12 bg-orange-50 text-[#A54600] rounded-full flex items-center justify-center mb-4"><Store size={24}/></div>
+               <h3 className="font-bold text-lg text-slate-900 mb-6">Merchant Access</h3>
+               <div className="w-full space-y-3">
+                 <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                    <Download size={18}/> Download Android App
+                 </a>
+                 <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
+                    <Globe size={18}/> Open Web Terminal
+                 </a>
+               </div>
             </div>
+
+            {/* Buyer Access */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
+                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4"><UserCheck className="w-6 h-6 text-white" /></div>
+                <h3 className="text-xl font-bold text-white mb-2">Customer Access</h3>
+                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">Manage plans, review balances, and generate Delivery Codes.</p>
+               <div className="w-full space-y-3">
+                 <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                    <Download size={18}/> Download Android App
+                 </a>
+                 <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
+                    <Globe size={18}/> Open Web Portal
+                 </a>
+               </div>
+            </div>
+          </div>
         </div>
       </section>
 

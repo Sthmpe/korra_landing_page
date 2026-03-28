@@ -403,7 +403,7 @@ const HomeLayout = () => {
   const customerFaqs = [
     {
       question: "Is Korra a loan or credit system?",
-      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment no debt, no interest."
+      answer: "No. Korra is not a loan or credit platform. You simply pay small small over time and receive your item after full payment — no debt, no interest."
     },
     {
       question: "How does the Korra payment plan work?",
