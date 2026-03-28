@@ -439,7 +439,7 @@ const HomeLayout = () => {
                 <div className="w-12 h-12 bg-orange-50 text-[#A54600] rounded-full flex items-center justify-center group-hover:bg-[#A54600] group-hover:text-white transition-colors"><Store size={24}/></div>
                 <div>
                   <h4 className="font-bold text-slate-900">I am a Merchant</h4>
-                  <p className="text-xs text-slate-500">Create a business account.</p>
+                  <p className="text-xs text-slate-500">Create a business account to sell.</p>
                 </div>
               </a>
               

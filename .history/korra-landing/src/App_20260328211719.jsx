@@ -439,7 +439,7 @@ const HomeLayout = () => {
                 <div className="w-12 h-12 bg-orange-50 text-[#A54600] rounded-full flex items-center justify-center group-hover:bg-[#A54600] group-hover:text-white transition-colors"><Store size={24}/></div>
                 <div>
                   <h4 className="font-bold text-slate-900">I am a Merchant</h4>
-                  <p className="text-xs text-slate-500">Create a business account.</p>
+                  <p className="text-xs text-slate-500">Create a business account to sell.</p>
                 </div>
               </a>
               
@@ -517,7 +517,7 @@ const HomeLayout = () => {
       <section className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Sell More Without the Stress of Tracking Payments</h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Sell More Without Stress</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-orange-50 p-8 rounded-3xl">
