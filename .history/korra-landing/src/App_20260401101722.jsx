@@ -664,7 +664,7 @@ const HomeLayout = () => {
 
           <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10">
             {/* What Korra Does */}
-            <div className="bg-slate-50 rounded-3xl p-6 md:p-8">
+            <div className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
               <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
                 <CheckCircle className="text-green-500 w-5 h-5"/> What Korra Does
               </h3>
