@@ -422,8 +422,8 @@ const HomeLayout = () => {
       answer: "Your Store Balance is the total amount you have paid towards an item. You can track it at any time as you continue your payments."
     },
     {
-      question: "What happens if I don't complete my payments on time?",
-      answer: "If a payment plan is not completed within the agreed timeline, it will be automatically closed. Any amount you have paid remains as Store Balance with the merchant, which you can use for future purchases."
+      question: "What happens if I cancel a plan?",
+      answer: "If you cancel, your money is not lost. It stays as Store Balance with that merchant, and you can use it to buy something else from them."
     },
     {
       question: "Can I pay anytime or am I fixed to a schedule?",
@@ -433,14 +433,7 @@ const HomeLayout = () => {
       question: "Does Korra guarantee products or act as an escrow?",
       answer: "No. Korra is not an escrow service and does not hold funds or guarantee product delivery. We provide a secure system to track your payments and ensure transparency between you and the merchant. Payments are processed through our licensed payment partner and go directly to the merchant. We strongly recommend that you only transact with merchants you trust before starting a payment plan."
     },
-    {
-      question: "Are there any fees or interest rates?",
-      answer: "Korra charges a one-time 3.5% platform fee when you start a payment plan. There are no interest charges, no hidden fees, and no late penalties. You simply reserve your item and pay gradually at your own pace."
-    },
-    {
-      question: "Are there any fees or interest rates?",
-      answer: "Korra charges a one-time 3.5% platform fee when you start a payment plan. There are no interest charges, no hidden fees, and no late penalties. You simply reserve your item and pay gradually at your own pace."
-    }
+    
   ];
 
   return (
@@ -784,73 +777,73 @@ const HomeLayout = () => {
       {/* 🚀 HOW KORRA WORKS BEHIND THE SCENES (Trust Clarification) */}
       <section id="responsibilities" className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10 md:mb-14">
+          <div className="text-center mb-12">
             <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">How Korra Works Behind the Scenes</h2>
             <p className="text-slate-600 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed">
               Korra helps you manage installment payments in a clear, transparent, and organized way. Behind the scenes, we provide the infrastructure that records every payment and keeps both customer and merchant aligned.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-10">
+          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10">
             {/* What Korra Does */}
-            <div className="bg-slate-50 rounded-3xl p-6 md:p-8">
-              <h3 className="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <CheckCircle className="text-green-500 w-5 h-5 shrink-0"/> What Korra Does
+            <div className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <CheckCircle className="text-green-500 w-5 h-5"/> What Korra Does
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Tracks all installment payments in real time</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Provides a shared record for both customer and merchant</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Sends automated reminders and updates</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Processes payments securely through our licensed payment partner</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Tracks all installment payments in real time</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Provides a shared record for both customer and merchant</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Sends automated reminders and updates</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Processes payments securely through our licensed payment partner</li>
               </ul>
             </div>
 
             {/* What Korra Does Not Do */}
-            <div className="bg-slate-50 rounded-3xl p-6 md:p-8">
-              <h3 className="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <X className="text-red-500 w-5 h-5 bg-red-100 rounded-full p-0.5 shrink-0"/> What Korra Does Not Do
+            <div className="bg-slate-50 rounded-3xl p-6 md:p-8 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <X className="text-red-500 w-5 h-5 bg-red-100 rounded-full p-0.5"/> What Korra Does Not Do
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> Korra is not an escrow service</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> We do not hold or release funds on behalf of users</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> We do not sell, supply, or deliver products</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> Product quality and delivery are handled directly by the merchant you choose</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> Korra is not an escrow service</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> We do not hold or release funds on behalf of users</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> We do not sell, supply, or deliver products</li>
+                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> Product quality and delivery are handled directly by the merchant you choose</li>
               </ul>
             </div>
 
             {/* Merchant Responsibility */}
-            <div className="bg-orange-50/60 rounded-3xl p-6 md:p-8">
-              <h3 className="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Store className="text-[#A54600] w-5 h-5 shrink-0"/> Merchant Responsibility
+            <div className="bg-orange-50 rounded-3xl p-6 md:p-8 border border-orange-100 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <Store className="text-[#A54600] w-5 h-5"/> Merchant Responsibility
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Ensuring product availability and accuracy</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Honoring agreed prices after a plan is created</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Delivering the item once full payment is completed</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Following Korra’s platform rules and standards</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Ensuring product availability and accuracy</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Honoring agreed prices after a plan is created</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Delivering the item once full payment is completed</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Following Korra’s platform rules and standards</li>
               </ul>
             </div>
 
             {/* Customer Responsibility */}
-            <div className="bg-blue-50/60 rounded-3xl p-6 md:p-8">
-              <h3 className="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <UserCheck className="text-blue-600 w-5 h-5 shrink-0"/> Customer Responsibility
+            <div className="bg-blue-50 rounded-3xl p-6 md:p-8 border border-blue-100 shadow-sm">
+              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                <UserCheck className="text-blue-600 w-5 h-5"/> Customer Responsibility
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Choosing trusted merchants before starting a plan</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Reviewing and agreeing to merchant terms</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Completing payments within the agreed timeline</li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Not sharing collection or pickup codes before receiving the item</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Choosing trusted merchants before starting a plan</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Reviewing and agreeing to merchant terms</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Completing payments within the agreed timeline</li>
+                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Not sharing collection or pickup codes before receiving the item</li>
               </ul>
             </div>
           </div>
 
           {/* Important Notice */}
-          <div className="bg-slate-900 text-white rounded-3xl p-6 md:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 max-w-4xl mx-auto">
+          <div className="bg-slate-900 text-white rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-xl max-w-4xl mx-auto">
             <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
               <ShieldCheck className="text-[#A54600] w-6 h-6" />
             </div>
-            <p className="text-sm md:text-base text-slate-300 text-center sm:text-left leading-relaxed">
+            <p className="text-sm md:text-base text-slate-300 text-center sm:text-left">
               <strong className="text-white block sm:inline mb-1 sm:mb-0">Important Notice: </strong> 
               Korra provides the structure and transparency for installment payments, but transactions are ultimately between the customer and the merchant.
             </p>
