@@ -397,10 +397,6 @@ const HomeLayout = () => {
     {
       question: "Why should I use Korra instead of tracking manually?",
       answer: "Korra removes the stress of tracking payments across chats and notes. Everything is recorded automatically, so you always know who has paid and who hasn’t."
-    },
-    {
-      question: "Does Korra handle fulfillment or hold customer funds?",
-      answer: "No. Korra does not act as an escrow service and does not hold customer funds. All payments are settled directly to your account via our payment partner as customers pay. You are fully responsible for product availability, fulfillment, and honoring the terms agreed with your customer. Korra provides the infrastructure to track payments and manage installment plans."
     }
   ];
 
