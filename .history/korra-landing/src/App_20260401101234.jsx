@@ -652,83 +652,6 @@ const HomeLayout = () => {
         </div>
       </section>
 
-      {/* 🚀 PLATFORM ROLE & RESPONSIBILITIES */}
-      <section id="responsibilities" className="py-16 md:py-24 bg-white px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">Platform Role & Responsibilities</h2>
-            <p className="text-slate-600 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed">
-              Korra is a payment infrastructure designed to help merchants and customers manage installment payments in a clear and organized way. Every payment made on Korra is clearly recorded and visible to both parties, ensuring transparency at all times.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6 lg:gap-8 mb-10">
-            {/* What Korra Does */}
-            <div className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <CheckCircle className="text-green-500 w-5 h-5"/> What Korra Does
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Tracks all installment payments in real time</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Provides a shared record for both customer and merchant</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Sends automated reminders and updates</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-green-500 font-bold">•</span> Processes payments securely through our licensed payment partner</li>
-              </ul>
-            </div>
-
-            {/* What Korra Does Not Do */}
-            <div className="bg-slate-50 rounded-3xl p-6 md:p-8 border border-slate-100">
-              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <X className="text-red-500 w-5 h-5 bg-red-100 rounded-full p-0.5"/> What Korra Does Not Do
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> Korra is not an escrow service</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> We do not hold or release funds on behalf of users</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> We do not sell, supply, or deliver products</li>
-                <li className="flex gap-3 text-sm text-slate-600"><span className="text-red-500 font-bold">•</span> We do not guarantee product quality or delivery</li>
-              </ul>
-            </div>
-
-            {/* Merchant Responsibility */}
-            <div className="bg-orange-50 rounded-3xl p-6 md:p-8 border border-orange-100">
-              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <Store className="text-[#A54600] w-5 h-5"/> Merchant Responsibility
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Ensuring product availability and accuracy</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Honoring agreed prices after a plan is created</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Delivering the item once full payment is completed</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-[#A54600] font-bold">•</span> Following Korra’s platform rules and standards</li>
-              </ul>
-            </div>
-
-            {/* Customer Responsibility */}
-            <div className="bg-blue-50 rounded-3xl p-6 md:p-8 border border-blue-100">
-              <h3 className="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
-                <UserCheck className="text-blue-600 w-5 h-5"/> Customer Responsibility
-              </h3>
-              <ul className="space-y-3">
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Choosing trusted merchants before starting a plan</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Reviewing and agreeing to merchant terms</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Completing payments within the agreed timeline</li>
-                <li className="flex gap-3 text-sm text-slate-700"><span className="text-blue-600 font-bold">•</span> Not sharing collection or pickup codes before receiving the item</li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Important Notice */}
-          <div className="bg-slate-900 text-white rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row items-center gap-4 sm:gap-6 shadow-xl">
-            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center shrink-0">
-              <ShieldCheck className="text-[#A54600] w-6 h-6" />
-            </div>
-            <p className="text-sm md:text-base text-slate-300 text-center sm:text-left">
-              <strong className="text-white block sm:inline mb-1 sm:mb-0">Important Notice: </strong> 
-              Korra provides the structure and transparency for installment payments, but transactions are ultimately between the customer and the merchant.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* 🚀 ACCESS THE PLATFORM SECTION (Downloads & Web App) */}
       <section id="download-section" className="py-16 md:py-20 bg-slate-900 text-white">
          <div className="max-w-5xl mx-auto px-4 text-center">
@@ -784,6 +707,8 @@ const HomeLayout = () => {
             </div>
         </div>
       </section>
+
+      
 
       {/* 🚀 FAQ SECTION (SPLIT) */}
       <section id="faq" className="py-16 md:py-24 bg-white px-4">

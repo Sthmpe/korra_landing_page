@@ -652,6 +652,62 @@ const HomeLayout = () => {
         </div>
       </section>
 
+      {/* 🚀 ACCESS THE PLATFORM SECTION (Downloads & Web App) */}
+      <section id="download-section" className="py-16 md:py-20 bg-slate-900 text-white">
+         <div className="max-w-5xl mx-auto px-4 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 mb-6 mx-auto">
+              <span className="flex h-2 w-2 rounded-full bg-green-400"></span>
+              <span className="text-[10px] font-bold text-slate-300 tracking-wide uppercase">Systems Online</span>
+            </div>
+            <h2 className="text-2xl md:text-4xl font-bold mb-4">Use Korra Anywhere</h2>
+            <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">
+              Access Korra on your phone or browser, simple and fast.
+            </p>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              
+              {/* Merchant Access */}
+              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
+                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
+                  <Store className="w-6 h-6 text-[#A54600]" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Merchant Access</h3>
+                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
+                  Close more sales and let Korra handle the tracking.
+                </p>
+                <div className="w-full space-y-3">
+                  <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-[#A54600] hover:bg-[#8a3a00] text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                     <Download size={18}/> Download Android App
+                  </a>
+                  <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
+                     <Globe size={18}/> Open Web Terminal
+                  </a>
+                </div>
+              </div>
+
+              {/* Buyer Access */}
+              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
+                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
+                  <UserCheck className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Buyer Access</h3>
+                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
+                  Pay small small without stress or pressure.
+                </p>
+                <div className="w-full space-y-3">
+                  <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
+                     <Download size={18}/> Download Android App
+                  </a>
+                  <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
+                     <Globe size={18}/> Open Web Portal
+                  </a>
+                </div>
+              </div>
+
+            </div>
+        </div>
+      </section>
+
       {/* 🚀 PLATFORM ROLE & RESPONSIBILITIES */}
       <section id="responsibilities" className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-6xl mx-auto">
@@ -726,62 +782,6 @@ const HomeLayout = () => {
               Korra provides the structure and transparency for installment payments, but transactions are ultimately between the customer and the merchant.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* 🚀 ACCESS THE PLATFORM SECTION (Downloads & Web App) */}
-      <section id="download-section" className="py-16 md:py-20 bg-slate-900 text-white">
-         <div className="max-w-5xl mx-auto px-4 text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-800 mb-6 mx-auto">
-              <span className="flex h-2 w-2 rounded-full bg-green-400"></span>
-              <span className="text-[10px] font-bold text-slate-300 tracking-wide uppercase">Systems Online</span>
-            </div>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">Use Korra Anywhere</h2>
-            <p className="text-slate-400 text-sm md:text-base mb-10 max-w-lg mx-auto">
-              Access Korra on your phone or browser, simple and fast.
-            </p>
-
-            <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-              
-              {/* Merchant Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <Store className="w-6 h-6 text-[#A54600]" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Merchant Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Close more sales and let Korra handle the tracking.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.merchantApk} className="flex items-center justify-center gap-2 bg-[#A54600] hover:bg-[#8a3a00] text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://business.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Terminal
-                  </a>
-                </div>
-              </div>
-
-              {/* Buyer Access */}
-              <div className="bg-slate-800 rounded-3xl p-6 md:p-8 flex flex-col items-center">
-                <div className="w-12 h-12 bg-slate-700 rounded-xl flex items-center justify-center mb-4">
-                  <UserCheck className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-2">Buyer Access</h3>
-                <p className="text-slate-400 text-xs md:text-sm mb-6 text-center">
-                  Pay small small without stress or pressure.
-                </p>
-                <div className="w-full space-y-3">
-                  <a href={KorraLinks.customerApk} className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-md">
-                     <Download size={18}/> Download Android App
-                  </a>
-                  <a href="https://app.korra.com.ng" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-900 w-full px-6 py-3.5 rounded-xl font-bold text-sm transition-colors">
-                     <Globe size={18}/> Open Web Portal
-                  </a>
-                </div>
-              </div>
-
-            </div>
         </div>
       </section>
 
