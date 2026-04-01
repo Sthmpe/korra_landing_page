@@ -781,47 +781,27 @@ const HomeLayout = () => {
         </div>
       </section>
 
-      {/* 🚀 HOW KORRA WORKS BEHIND THE SCENES (Trust + Revenue Clarity) */}
+      {/* 🚀 HOW KORRA WORKS BEHIND THE SCENES (Trust Clarification) */}
       <section id="responsibilities" className="py-16 md:py-24 bg-white px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10 md:mb-14">
-            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">
-              How Korra Powers Your Sales Behind the Scenes
-            </h2>
+            <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 mb-4">How Korra Works Behind the Scenes</h2>
             <p className="text-slate-600 text-sm md:text-lg max-w-3xl mx-auto leading-relaxed">
-              Korra is not just a payment tool. It is the system that helps you turn “I’ll come back” into a completed sale. 
-              Behind the scenes, we provide the structure that keeps every transaction clear, secure, and moving forward.
+              Korra helps you manage installment payments in a clear, transparent, and organized way. Behind the scenes, we provide the infrastructure that records every payment and keeps both customer and merchant aligned.
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8 mb-10">
-            
             {/* What Korra Does */}
             <div className="bg-slate-50 rounded-3xl p-6 md:p-8">
               <h3 className="text-base md:text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
                 <CheckCircle className="text-green-500 w-5 h-5 shrink-0"/> What Korra Does
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-green-500 font-bold mt-0.5">•</span>
-                  Helps you lock in customers instantly, even if they can’t pay fully upfront
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-green-500 font-bold mt-0.5">•</span>
-                  Tracks every payment automatically so you never lose money or records
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-green-500 font-bold mt-0.5">•</span>
-                  Keeps both customer and merchant aligned with a shared live balance
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-green-500 font-bold mt-0.5">•</span>
-                  Sends smart reminders that keep customers paying and plans active
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-green-500 font-bold mt-0.5">•</span>
-                  Processes payments securely through our licensed payment partner
-                </li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Tracks all installment payments in real time</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Provides a shared record for both customer and merchant</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Sends automated reminders and updates</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-green-500 font-bold mt-0.5">•</span> Processes payments securely through our licensed payment partner</li>
               </ul>
             </div>
 
@@ -831,22 +811,10 @@ const HomeLayout = () => {
                 <X className="text-red-500 w-5 h-5 bg-red-100 rounded-full p-0.5 shrink-0"/> What Korra Does Not Do
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-red-500 font-bold mt-0.5">•</span>
-                  Korra is not an escrow service
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-red-500 font-bold mt-0.5">•</span>
-                  We do not hold or control merchant funds
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-red-500 font-bold mt-0.5">•</span>
-                  We do not sell or deliver products
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600">
-                  <span className="text-red-500 font-bold mt-0.5">•</span>
-                  Product quality and fulfillment are handled directly by the merchant
-                </li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> Korra is not an escrow service</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> We do not hold or release funds on behalf of users</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> We do not sell, supply, or deliver products</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-600"><span className="text-red-500 font-bold mt-0.5">•</span> Product quality and delivery are handled directly by the merchant you choose</li>
               </ul>
             </div>
 
@@ -856,22 +824,10 @@ const HomeLayout = () => {
                 <Store className="text-[#A54600] w-5 h-5 shrink-0"/> Merchant Responsibility
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-[#A54600] font-bold mt-0.5">•</span>
-                  Reserve items immediately once a plan is created (a reserved item is a committed sale)
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-[#A54600] font-bold mt-0.5">•</span>
-                  Honor the agreed price for the duration of the plan
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-[#A54600] font-bold mt-0.5">•</span>
-                  Deliver the item only after full payment is confirmed
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-[#A54600] font-bold mt-0.5">•</span>
-                  Maintain honesty and professionalism when dealing with customers
-                </li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Ensuring product availability and accuracy</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Honoring agreed prices after a plan is created</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Delivering the item once full payment is completed</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-[#A54600] font-bold mt-0.5">•</span> Following Korra’s platform rules and standards</li>
               </ul>
             </div>
 
@@ -881,22 +837,10 @@ const HomeLayout = () => {
                 <UserCheck className="text-blue-600 w-5 h-5 shrink-0"/> Customer Responsibility
               </h3>
               <ul className="space-y-3">
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-blue-600 font-bold mt-0.5">•</span>
-                  Choose merchants you trust before starting a plan
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-blue-600 font-bold mt-0.5">•</span>
-                  Commit to your payment plan to keep your reservation active
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-blue-600 font-bold mt-0.5">•</span>
-                  Review and agree to the terms before making payments
-                </li>
-                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700">
-                  <span className="text-blue-600 font-bold mt-0.5">•</span>
-                  Never share your pickup code until you receive your item
-                </li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Choosing trusted merchants before starting a plan</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Reviewing and agreeing to merchant terms</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Completing payments within the agreed timeline</li>
+                <li className="flex items-start gap-3 text-sm md:text-base text-slate-700"><span className="text-blue-600 font-bold mt-0.5">•</span> Not sharing collection or pickup codes before receiving the item</li>
               </ul>
             </div>
           </div>
@@ -908,11 +852,12 @@ const HomeLayout = () => {
             </div>
             <p className="text-sm md:text-base text-slate-300 text-center sm:text-left leading-relaxed">
               <strong className="text-white block sm:inline mb-1 sm:mb-0">Important Notice: </strong> 
-              Korra provides the system that makes installment sales possible, but every transaction happens directly between the customer and the merchant.
+              Korra provides the structure and transparency for installment payments, but transactions are ultimately between the customer and the merchant.
             </p>
           </div>
         </div>
       </section>
+      
 
       {/* 🚀 SECURITY & FOOTER */}
       <footer className="bg-white text-slate-600 py-12">
