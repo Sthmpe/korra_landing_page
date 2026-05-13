@@ -61,8 +61,8 @@ const AdminPortal = ({ liveMerchants = [] }) => {
         alert("Failed: " + (data.error || "Check your password."));
         if (data.error === "Unauthorized Access.") setIsAuthenticated(false);
       }
-    } catch (_error) {
-      alert("Network error. " + _error);
+    } catch (_error : any) {
+      alert("Network error. " + _error.message);
     } finally {
       setLoading(false);
     }
@@ -155,7 +155,7 @@ const MerchantsDirectory = ({ liveMerchants = [], loading }) => {
 // ============================================================================
 // 4. CATEGORY SEO PAGE (Untouched)
 // ============================================================================
-const CategoryPage = () => {
+const CategoryPage = ({ liveMerchants = [], loading }) => {
   const { categorySlug } = useParams();
   return <div className="min-h-screen bg-slate-50"><nav className="bg-white shadow-sm p-4"><Link to="/"><ArrowLeft size={24} /></Link></nav><div className="p-8"><h1>{categorySlug}</h1></div></div>;
 }
@@ -314,7 +314,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 <span className="underlined">structure</span>.
               </h1>
               <p className="lede reveal">
-                Many Nigerian businesses already let customers pay in parts. Korra helps you manage it properly  clear terms, payment visibility, and less stress. Without changing how you already sell.
+                Many Nigerian businesses already let customers pay in parts. Korra helps you manage it properly — clear terms, payment visibility, and less stress. Without changing how you already sell.
               </p>
               <div className="hero-ctas reveal">
                 <a href="#" className="btn btn-primary" onClick={triggerModal}>Get started as a business <span className="arrow">→</span></a>
@@ -332,7 +332,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 </div>
                 <div className="hero-stat">
                   <div className="v">100% merchant-controlled</div>
-                  <div className="l">You set the terms  every single time.</div>
+                  <div className="l">You set the terms — every single time.</div>
                 </div>
               </div>
             </div>
@@ -373,7 +373,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
               <span className="accent-orange">They just don't know you allow it.</span>
             </h2>
             <p className="lede reveal">
-              Korra makes the option visible  without the chaos. One link, one code, one structured plan from start to finish.
+              Korra makes the option visible — without the chaos. One link, one code, one structured plan from start to finish.
             </p>
             <div className="hero-ctas reveal">
               <a href="#" className="btn btn-primary" onClick={triggerModal}>Start managing installments <span className="arrow">→</span></a>
@@ -395,7 +395,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                   <span className="accent-orange">Korra helps you manage it better.</span>
                 </h2>
                 <p className="lede reveal">
-                  Stop limiting installment to only your most trusted customers. With Korra, you stay in control  set your own terms, track every payment, and reduce the stress of manual follow-up.
+                  Stop limiting installment to only your most trusted customers. With Korra, you stay in control — set your own terms, track every payment, and reduce the stress of manual follow-up.
                 </p>
               </div>
 
@@ -507,7 +507,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 <span className="accent-orange">With full clarity.</span>
               </h2>
               <p className="lede reveal" style={{ marginTop: '22px' }}>
-                Korra also has a free app for customers  a clear plan, visible progress, and structured commitment to the things they want.
+                Korra also has a free app for customers — a clear plan, visible progress, and structured commitment to the things they want.
               </p>
               <div className="hero-ctas reveal" style={{ marginTop: '28px' }}>
                 <a href="#" className="btn btn-dark btn-sm" onClick={triggerModal}>Download the Korra app <span className="arrow">→</span></a>
@@ -636,7 +636,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
               </h2>
             </div>
             <p className="lede reveal">
-              Korra structures the installment behavior that already exists in Nigerian commerce. No credit. No lending. Just clarity and control  built for how businesses actually sell.
+              Korra structures the installment behavior that already exists in Nigerian commerce. No credit. No lending. Just clarity and control — built for how businesses actually sell.
             </p>
           </div>
 
@@ -649,7 +649,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="why-card">
               <div className="why-num">02 / CONTROL</div>
               <div className="why-title">Merchant remains in control</div>
-              <div className="why-desc">You set the terms, the duration, the deposit. Korra manages the process  not the decisions.</div>
+              <div className="why-desc">You set the terms, the duration, the deposit. Korra manages the process — not the decisions.</div>
             </div>
             <div className="why-card">
               <div className="why-num">03 / EASE</div>
@@ -669,7 +669,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="why-card">
               <div className="why-num">06 / NIGERIA</div>
               <div className="why-title">Built for Nigerian commerce</div>
-              <div className="why-desc">Designed around how Nigerian businesses actually sell  fashion, gadgets, accessories, and more.</div>
+              <div className="why-desc">Designed around how Nigerian businesses actually sell — fashion, gadgets, accessories, and more.</div>
             </div>
           </div>
         </div>
@@ -678,8 +678,8 @@ const HomeLayout = ({ liveMerchants = [] }) => {
       {/* ============== FINAL CTA (orange) ============== */}
       <section className="section orange cta-orange" data-screen-label="08 Final CTA">
         <div className="container">
-          <h2 className="h1 reveal">When a customer is ready to commit  everything should already be in place.</h2>
-          <p className="lede reveal">Set up Korra today. The next time a customer asks about installment, you'll be ready to say yes  with structure.</p>
+          <h2 className="h1 reveal">When a customer is ready to commit — everything should already be in place.</h2>
+          <p className="lede reveal">Set up Korra today. The next time a customer asks about installment, you'll be ready to say yes — with structure.</p>
           <div className="hero-ctas reveal">
             <a href="#" className="btn btn-light" onClick={triggerModal}>Start free as a business <span className="arrow">→</span></a>
             <a href="#" className="btn btn-dark" onClick={triggerModal}>Download the customer app <span className="arrow">→</span></a>
@@ -695,7 +695,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="footer-brand">
               <a href="#" className="brand"><img src="/korra_logo_icon.webp" alt="Korra Logo" /><span className="wordmark" style={{ color: 'var(--white)' }}>KORRA</span></a>
               <div className="footer-tag">Smart People Own Things Differently.</div>
-              <div className="footer-desc">Structured installment payments for Nigerian businesses. Manage how your customers pay  with clarity and control.</div>
+              <div className="footer-desc">Structured installment payments for Nigerian businesses. Manage how your customers pay — with clarity and control.</div>
             </div>
             <div className="footer-col">
               <h4>Product</h4>
@@ -760,7 +760,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="modal-col">
               <div className="modal-col-tag">For Customers</div>
               <div className="modal-col-title">Buy with clarity</div>
-              <div className="modal-col-desc">Pay gradually for what you want  with a clear plan and visible progress.</div>
+              <div className="modal-col-desc">Pay gradually for what you want — with a clear plan and visible progress.</div>
               <div className="modal-actions">
                 <a href="https://app.korra.com.ng" className="btn btn-dark">Open Web App <span className="arrow">→</span></a>
                 <a href={KorraLinks.customerApk} className="btn btn-dark">Download APK</a>

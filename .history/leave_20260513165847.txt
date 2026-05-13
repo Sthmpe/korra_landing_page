@@ -1,0 +1,186 @@
+// ============================================================================
+// 1. ADMIN PORTAL (Untouched functionality)
+// ============================================================================
+const AdminPortal = ({ liveMerchants = [] }) => {
+  const [password, setPassword] = useState('');
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [formData, setFormData] = useState({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = (e) => { e.preventDefault(); setIsAuthenticated(true); };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch('https://ltytmqjpektcgwajfzfm.supabase.co/functions/v1/merchants-api', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          adminPassword: password,
+          merchantData: {
+            name: formData.name, category: formData.category, location: formData.location, description: formData.description, imageUrl: formData.imageUrl,
+            socials: { whatsapp: formData.whatsapp || "", instagram: formData.instagram || "", tiktok: formData.tiktok || "", website: formData.website || "" }
+          }
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.status === "SUCCESS") {
+        alert(`Merchant ${formData.name} added successfully! Refresh the page to see changes.`);
+        setFormData({ name: '', category: '', location: '', description: '', imageUrl: '', whatsapp: '', instagram: '', tiktok: '', website: '' });
+      } else {
+        alert("Failed: " + (data.error || "Check your password."));
+        if (data.error === "Unauthorized Access.") setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("Network error. Make sure your Edge Function is deployed.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4 relative">
+        <Link to="/" className="absolute top-8 left-8 text-white flex items-center p-2 hover:text-[#A54600]"><ArrowLeft size={24}/></Link>
+        <div className="bg-white p-8 rounded-2xl w-full max-w-md shadow-2xl">
+          <div className="flex justify-center mb-6"><Lock className="text-[#A54600] w-10 h-10" /></div>
+          <h2 className="text-xl font-bold text-center mb-6 text-slate-900">Admin Portal</h2>
+          <form onSubmit={handleLogin} className="space-y-4">
+            <input type="password" placeholder="Master Password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none focus:ring-2 focus:ring-[#A54600]" />
+            <button type="submit" className="w-full bg-[#A54600] text-white py-3 rounded-lg font-bold">Access Database</button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-slate-50 p-4 md:p-10">
+      <div className="max-w-4xl mx-auto bg-white p-6 md:p-10 rounded-3xl shadow-lg">
+        <div className="flex items-center justify-between mb-8 pb-4 flex-wrap gap-4">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-lg md:text-2xl font-bold text-slate-900 flex items-center gap-2 truncate">
+              <Upload className="text-[#A54600] shrink-0"/> Platform Injection
+            </h1>
+          </div>
+          <div className="flex gap-4 shrink-0">
+             <Link to="/" className="text-xs md:text-sm font-bold text-slate-500 hover:text-slate-900">Exit</Link>
+             <button onClick={() => setIsAuthenticated(false)} className="text-xs md:text-sm font-bold text-red-500 hover:text-red-700">Lock</button>
+          </div>
+        </div>
+        <form onSubmit={handleUpload} className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-6">
+            <div><label className="block text-sm font-bold text-slate-700 mb-2">Merchant Name</label><input required name="name" value={formData.name} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none"/></div>
+            <div><label className="block text-sm font-bold text-slate-700 mb-2">Category</label><input required name="category" placeholder="e.g. Fashion, Gadgets" value={formData.category} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none"/></div>
+            <div><label className="block text-sm font-bold text-slate-700 mb-2">Location</label><input required name="location" placeholder="e.g. Tanke, Ilorin" value={formData.location} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none"/></div>
+            <div><label className="block text-sm font-bold text-slate-700 mb-2">Banner Image URL</label><input required type="url" name="imageUrl" value={formData.imageUrl} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none"/></div>
+          </div>
+          <div><label className="block text-sm font-bold text-slate-700 mb-2">Short Description</label><input required name="description" value={formData.description} onChange={handleChange} className="w-full px-4 py-3 bg-slate-50 rounded-lg outline-none"/></div>
+          
+          <div className="pt-6">
+             <h3 className="font-bold text-slate-900 mb-4">Social Links</h3>
+             <div className="grid md:grid-cols-2 gap-6">
+                <div><label className="block text-xs font-bold text-slate-500 mb-2">WhatsApp</label><input name="whatsapp" value={formData.whatsapp} onChange={handleChange} className="w-full px-4 py-2 bg-slate-50 rounded-lg outline-none"/></div>
+                <div><label className="block text-xs font-bold text-slate-500 mb-2">Instagram</label><input name="instagram" value={formData.instagram} onChange={handleChange} className="w-full px-4 py-2 bg-slate-50 rounded-lg outline-none"/></div>
+                <div><label className="block text-xs font-bold text-slate-500 mb-2">TikTok Link</label><input name="tiktok" value={formData.tiktok} onChange={handleChange} placeholder="https://tiktok.com/..." className="w-full px-4 py-2 bg-slate-50 rounded-lg outline-none"/></div>
+                <div><label className="block text-xs font-bold text-slate-500 mb-2">Website Link</label><input name="website" value={formData.website} onChange={handleChange} placeholder="https://..." className="w-full px-4 py-2 bg-slate-50 rounded-lg outline-none"/></div>
+             </div>
+          </div>
+          <button disabled={loading} type="submit" className="w-full bg-[#A54600] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#8a3a00]">
+            <Plus size={20} /> {loading ? 'Saving...' : 'Add Merchant'}
+          </button>
+        </form>
+
+        <div className="mt-12 pt-8">
+           <h3 className="font-bold text-lg text-slate-900 mb-4">Live Merchants ({liveMerchants.length})</h3>
+           <div className="space-y-3">
+              {liveMerchants.length === 0 && <p className="text-sm text-slate-400">No merchants found in database.</p>}
+              {liveMerchants.map(m => (
+                 <div key={m.id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+                    <div><p className="font-bold text-slate-900">{m.name}</p><p className="text-xs text-slate-500">{m.category}</p></div>
+                 </div>
+              ))}
+           </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============================================================================
+// 2. MERCHANT DYNAMIC PROFILE PAGE 
+// ============================================================================
+const MerchantProfile = ({ liveMerchants = [], loading }) => {
+  const { slug } = useParams();
+  
+  const merchant = liveMerchants.find(m => m.name.toLowerCase().replace(/\s+/g, '-') === slug);
+
+  useEffect(() => {
+    if (merchant) {
+      const script = document.createElement('script');
+      script.type = 'application/ld+json';
+      script.innerHTML = JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Store",
+        "name": merchant.name,
+        "image": merchant.imageUrl,
+        "description": merchant.description,
+        "address": { "@type": "PostalAddress", "addressLocality": merchant.location, "addressCountry": "Nigeria" },
+        "url": `https://korra.com.ng/merchant/${slug}`
+      });
+      document.head.appendChild(script);
+      return () => { document.head.removeChild(script); }
+    }
+  }, [merchant, slug]);
+
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-slate-500">Loading store...</div>;
+  if (!merchant) return <div className="min-h-screen flex flex-col items-center justify-center text-slate-500"><p>Merchant not found.</p><Link to="/merchants" className="mt-4 text-[#A54600] font-bold">Go Back</Link></div>;
+
+  return (
+    <div className="min-h-screen bg-slate-50 pb-20">
+      <nav className="bg-white sticky top-0 z-50 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+          <Link to="/merchants" className="flex items-center text-slate-600 hover:text-[#A54600] p-2 -ml-2">
+            <ArrowLeft size={24} />
+          </Link>
+          <span className="font-bold text-lg text-slate-900 truncate px-4">{merchant.name}</span>
+          <div className="w-10"></div>
+        </div>
+      </nav>
+
+      <div className="max-w-4xl mx-auto px-4 pt-8 md:pt-10">
+        <div className="bg-white rounded-3xl overflow-hidden shadow-sm">
+          <div className="h-48 md:h-80 w-full relative">
+            <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold text-slate-900 uppercase tracking-wider z-10">
+              {merchant.category}
+            </div>
+            <img src={merchant.imageUrl} alt={`${merchant.name} store on Korra`} className="w-full h-full object-cover" />
+          </div>
+          
+          <div className="p-6 md:p-12">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-slate-900 mb-2">{merchant.name}</h1>
+            <p className="text-slate-500 text-sm md:text-base font-bold flex items-center gap-2 mb-6"><MapPin size={16}/> {merchant.location}, Nigeria</p>
+            <div className="prose prose-slate max-w-none mb-8"><p className="text-sm md:text-base text-slate-600 leading-relaxed">{merchant.description}</p></div>
+
+            <div className="bg-orange-50 rounded-2xl p-5 mb-8">
+              <h3 className="font-bold text-[#A54600] text-base mb-1">Available on Korra</h3>
+              <p className="text-slate-700 text-xs md:text-sm">This merchant accepts Korra flexible payments. Contact them directly via the links below to negotiate a price, ask for their Korra Payment Code, and reserve your item today.</p>
+            </div>
+
+            <h3 className="font-bold text-slate-900 text-base mb-3">Contact Merchant</h3>
+            <div className="flex flex-wrap items-center gap-3">
+              {merchant.socials?.whatsapp && (<a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-green-50 text-green-700 hover:bg-green-100 font-bold text-sm transition-colors"><WhatsAppIcon className="w-4 h-4" /> WhatsApp</a>)}
+              {merchant.socials?.instagram && (<a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-pink-50 text-pink-700 hover:bg-pink-100 font-bold text-sm transition-colors"><InstagramIcon className="w-4 h-4" /> Instagram</a>)}
+              {merchant.socials?.tiktok && (<a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 text-slate-900 hover:bg-slate-200 font-bold text-sm transition-colors"><TikTokIcon className="w-4 h-4" /> TikTok</a>)}
+              {merchant.socials?.website && (<a href={merchant.socials.website} target="_blank" rel="noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-blue-50 text-blue-700 hover:bg-blue-100 font-bold text-sm transition-colors"><Globe className="w-4 h-4" /> Website</a>)}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+

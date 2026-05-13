@@ -1,25 +1,10 @@
-import './index.css';
-import React, { useState, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useMemo } from 'react';
 import { BrowserRouter, Routes, Route, Link, useParams } from 'react-router-dom';
-import { 
-  Menu, X, ShieldCheck, Store,
-  CheckCircle, Lock, Briefcase,
-  ChevronDown, ChevronUp, RefreshCcw,
-  Smartphone, Globe, Upload, Plus,
-  ArrowLeft, Search, ArrowRight, UserCheck, MapPin,
-  TrendingUp, Activity, CheckSquare, Download
-} from 'lucide-react';
-
-// --- CUSTOM SVG ICONS ---
-const WhatsAppIcon = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>;
-const InstagramIcon = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>;
-const TikTokIcon = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.04-.1z"/></svg>;
-const XSocialIcon = ({ className }) => <svg className={className} viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.913l-5.4-7.06L4.5 22H1.244l8.07-9.222L1 2h7.077l4.875 6.45L18.244 2zm-1.213 18.169h1.83L7.046 3.74H5.082L17.031 20.17z"/></svg>;
+import { ArrowLeft, Upload, Lock } from 'lucide-react';
 
 const KorraLinks = {
   vendorTermsPdf: 'https://drive.google.com/uc?export=download&id=1hYJ1ZFdH2J7znT7zz_E2xm--CWO7fGAL',
   vendorPartnershipPdf: 'https://drive.google.com/uc?export=download&id=1K2jqJ0XB3lS_w1b64MCyvfUaPnaJyFJP',
-  vendorPrivacyPdf: 'https://drive.google.com/uc?export=download&id=1P9rBibP5HASwzaGaFcnRTwSFjOlMBtNk',
   customerTermsPdf: 'https://drive.google.com/uc?export=download&id=1hYJ1ZFdH2J7znT7zz_E2xm--CWO7fGAL',
   customerPrivacyPdf: 'https://drive.google.com/uc?export=download&id=1P9rBibP5HASwzaGaFcnRTwSFjOlMBtNk',
   merchantApk: 'https://drive.google.com/uc?export=download&id=1Arcgl8M9k-jrLR0AcqIWOuN-oVUufpeQ',
@@ -61,8 +46,8 @@ const AdminPortal = ({ liveMerchants = [] }) => {
         alert("Failed: " + (data.error || "Check your password."));
         if (data.error === "Unauthorized Access.") setIsAuthenticated(false);
       }
-    } catch (_error) {
-      alert("Network error. " + _error);
+    } catch (error) {
+      alert("Network error.");
     } finally {
       setLoading(false);
     }
@@ -155,7 +140,7 @@ const MerchantsDirectory = ({ liveMerchants = [], loading }) => {
 // ============================================================================
 // 4. CATEGORY SEO PAGE (Untouched)
 // ============================================================================
-const CategoryPage = () => {
+const CategoryPage = ({ liveMerchants = [], loading }) => {
   const { categorySlug } = useParams();
   return <div className="min-h-screen bg-slate-50"><nav className="bg-white shadow-sm p-4"><Link to="/"><ArrowLeft size={24} /></Link></nav><div className="p-8"><h1>{categorySlug}</h1></div></div>;
 }
@@ -166,9 +151,8 @@ const CategoryPage = () => {
 const HomeLayout = ({ liveMerchants = [] }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Smooth scroll logic
+  // Smooth scroll logic matching the anchor tags
   const handleNavClick = (e, targetId) => {
     e.preventDefault();
     const target = document.getElementById(targetId);
@@ -177,15 +161,19 @@ const HomeLayout = ({ liveMerchants = [] }) => {
     }
   };
 
-  // Nav shrink logic
+  // 1:1 Navbar shrink logic
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 12);
+    const nav = document.getElementById('nav');
+    const onScroll = () => {
+      if (window.scrollY > 12) nav?.classList.add('scrolled');
+      else nav?.classList.remove('scrolled');
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Strict staggered reveal animations matching exactly to the vanilla JS
+  // 1:1 Intersection Observer Logic 
   useLayoutEffect(() => {
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
@@ -196,21 +184,17 @@ const HomeLayout = ({ liveMerchants = [] }) => {
       });
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    // Stagger sibling reveals within parent
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach((el) => {
-      el.classList.remove('in'); // Reset on mount
+    document.querySelectorAll('.reveal').forEach((el) => {
+      el.classList.remove('in');
       io.observe(el);
     });
 
-    // Stagger children
     document.querySelectorAll('.stagger').forEach((parent) => {
       [...parent.children].forEach((child, i) => {
         child.style.transitionDelay = (i * 90) + 'ms';
       });
     });
 
-    // Within reveal groups: chain text/cta delays
     document.querySelectorAll('.hero-copy, .dark-statement, .section-head, .cust-grid > div:first-child').forEach((group) => {
       let i = 0;
       group.querySelectorAll('.reveal').forEach((el) => {
@@ -222,39 +206,30 @@ const HomeLayout = ({ liveMerchants = [] }) => {
     return () => io.disconnect();
   }, []);
 
-  // Handle body overflow when modal is open to ensure "smooth flow"
+  // 1:1 Modal Logic
   useEffect(() => {
-    if (showModal) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
+    if (showModal) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = '';
     return () => { document.body.style.overflow = ''; };
   }, [showModal]);
 
-  // Modal Escape key listener
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape' && showModal) {
-        setShowModal(false);
-      }
+      if (e.key === 'Escape' && showModal) setShowModal(false);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [showModal]);
 
-  const triggerModal = (e) => {
-    e.preventDefault();
-    setShowModal(true);
-  };
+  const triggerModal = (e) => { e.preventDefault(); setShowModal(true); };
 
   return (
     <>
       {/* ============== NAV ============== */}
-      <header className={`nav-shell ${isScrolled ? 'scrolled' : ''}`} id="nav">
+      <header className="nav-shell" id="nav">
         <div className="nav-inner">
           <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="brand" aria-label="Korra">
-            <img src="/korra_logo_icon.webp" alt="Korra Logo" />
+            <img src="/korra_logo_icon.webp" alt="Korra" />
             <span className="wordmark">KORRA</span>
           </a>
           <nav className="nav-links" aria-label="Primary">
@@ -263,43 +238,11 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <a className="nav-link" href="#directory" onClick={(e) => handleNavClick(e, 'directory')}>Merchant Directory</a>
             <a className="nav-link" href="#how" onClick={(e) => handleNavClick(e, 'how')}>How It Works</a>
           </nav>
-          {/* Desktop CTA */}
-          <div className="nav-ctas nav-ctas-desktop">
+          <div className="nav-ctas">
             <a href="#" className="btn btn-primary btn-sm" onClick={triggerModal}>Get Started Free</a>
           </div>
-          {/* Mobile hamburger */}
-          <button className="nav-hamburger" onClick={() => setMobileMenuOpen(true)} aria-label="Open menu">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-          </button>
         </div>
       </header>
-
-      {/* ============== MOBILE MENU OVERLAY ============== */}
-      {mobileMenuOpen && (
-        <div className="mobile-menu-overlay" onClick={() => setMobileMenuOpen(false)}>
-          <div className="mobile-menu-panel" onClick={(e) => e.stopPropagation()}>
-            <div className="mobile-menu-top">
-              <a href="#" className="brand" onClick={(e) => { e.preventDefault(); setMobileMenuOpen(false); window.scrollTo({top: 0, behavior: 'smooth'}); }}>
-                <img src="/korra_logo_icon.webp" alt="Korra Logo" />
-                <span className="wordmark">KORRA</span>
-              </a>
-              <button className="mobile-menu-close" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
-              </button>
-            </div>
-            <nav className="mobile-menu-links">
-              <a href="#businesses" onClick={(e) => { handleNavClick(e, 'businesses'); setMobileMenuOpen(false); }}>For Businesses <span className="arrow">→</span></a>
-              <a href="#customers" onClick={(e) => { handleNavClick(e, 'customers'); setMobileMenuOpen(false); }}>For Customers <span className="arrow">→</span></a>
-              <a href="#directory" onClick={(e) => { handleNavClick(e, 'directory'); setMobileMenuOpen(false); }}>Merchant Directory <span className="arrow">→</span></a>
-              <a href="#how" onClick={(e) => { handleNavClick(e, 'how'); setMobileMenuOpen(false); }}>How It Works <span className="arrow">→</span></a>
-            </nav>
-            <div className="mobile-menu-ctas">
-              <a href="https://business.korra.com.ng" className="btn btn-primary" onClick={() => setMobileMenuOpen(false)}>Get Started Free <span className="arrow">→</span></a>
-              <a href="#" className="btn btn-dark" onClick={(e) => { triggerModal(e); setMobileMenuOpen(false); }}>Download App</a>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ============== HERO ============== */}
       <section className="hero" data-screen-label="01 Hero">
@@ -314,7 +257,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 <span className="underlined">structure</span>.
               </h1>
               <p className="lede reveal">
-                Many Nigerian businesses already let customers pay in parts. Korra helps you manage it properly  clear terms, payment visibility, and less stress. Without changing how you already sell.
+                Many Nigerian businesses already let customers pay in parts. Korra helps you manage it properly — clear terms, payment visibility, and less stress. Without changing how you already sell.
               </p>
               <div className="hero-ctas reveal">
                 <a href="#" className="btn btn-primary" onClick={triggerModal}>Get started as a business <span className="arrow">→</span></a>
@@ -332,12 +275,11 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 </div>
                 <div className="hero-stat">
                   <div className="v">100% merchant-controlled</div>
-                  <div className="l">You set the terms  every single time.</div>
+                  <div className="l">You set the terms — every single time.</div>
                 </div>
               </div>
             </div>
 
-            {/* phone */}
             <div className="phone-stage reveal">
               <div className="phone-glow" aria-hidden="true"></div>
               <div className="phone">
@@ -373,7 +315,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
               <span className="accent-orange">They just don't know you allow it.</span>
             </h2>
             <p className="lede reveal">
-              Korra makes the option visible  without the chaos. One link, one code, one structured plan from start to finish.
+              Korra makes the option visible — without the chaos. One link, one code, one structured plan from start to finish.
             </p>
             <div className="hero-ctas reveal">
               <a href="#" className="btn btn-primary" onClick={triggerModal}>Start managing installments <span className="arrow">→</span></a>
@@ -395,7 +337,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                   <span className="accent-orange">Korra helps you manage it better.</span>
                 </h2>
                 <p className="lede reveal">
-                  Stop limiting installment to only your most trusted customers. With Korra, you stay in control  set your own terms, track every payment, and reduce the stress of manual follow-up.
+                  Stop limiting installment to only your most trusted customers. With Korra, you stay in control — set your own terms, track every payment, and reduce the stress of manual follow-up.
                 </p>
               </div>
 
@@ -435,7 +377,6 @@ const HomeLayout = ({ liveMerchants = [] }) => {
               </div>
             </div>
 
-            {/* duo phone mockup */}
             <div className="phone-duo reveal">
               <div className="phone-glow" aria-hidden="true" style={{ top: '30%', left: '25%', width: '50%', height: '50%' }}></div>
               <div className="phone">
@@ -507,7 +448,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 <span className="accent-orange">With full clarity.</span>
               </h2>
               <p className="lede reveal" style={{ marginTop: '22px' }}>
-                Korra also has a free app for customers  a clear plan, visible progress, and structured commitment to the things they want.
+                Korra also has a free app for customers — a clear plan, visible progress, and structured commitment to the things they want.
               </p>
               <div className="hero-ctas reveal" style={{ marginTop: '28px' }}>
                 <a href="#" className="btn btn-dark btn-sm" onClick={triggerModal}>Download the Korra app <span className="arrow">→</span></a>
@@ -574,10 +515,10 @@ const HomeLayout = ({ liveMerchants = [] }) => {
 
           <div className="directory-grid stagger reveal">
             {liveMerchants.length > 0 ? (
-              liveMerchants.slice(0, 6).map((merchant) => {
+              liveMerchants.slice(0, 6).map((merchant, idx) => {
                 const initials = merchant.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
                 return (
-                  <div key={merchant.id} className="merchant-card block">
+                  <div className="merchant-card" key={idx}>
                     <div className="merchant-top">
                       <div className="merchant-logo" style={{ background: '#0D0D0D' }}>
                         {initials}
@@ -592,32 +533,16 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                       {merchant.location}
                     </div>
                     <div className="merchant-socials">
-                      {merchant.socials?.whatsapp && (
-                        <a href={merchant.socials.whatsapp} target="_blank" rel="noreferrer" className="social-btn" aria-label="WhatsApp">
-                          <WhatsAppIcon className="w-4 h-4" />
-                        </a>
-                      )}
-                      {merchant.socials?.instagram && (
-                        <a href={merchant.socials.instagram} target="_blank" rel="noreferrer" className="social-btn" aria-label="Instagram">
-                          <InstagramIcon className="w-4 h-4" />
-                        </a>
-                      )}
-                      {merchant.socials?.website && (
-                        <a href={merchant.socials.website} target="_blank" rel="noreferrer" className="social-btn" aria-label="Website">
-                          <Globe className="w-4 h-4" />
-                        </a>
-                      )}
-                      {merchant.socials?.tiktok && (
-                        <a href={merchant.socials.tiktok} target="_blank" rel="noreferrer" className="social-btn" aria-label="X">
-                          <TikTokIcon className="w-4 h-4" />
-                        </a>
-                      )}
+                      <a href={merchant.socials?.whatsapp || '#'} className="social-btn" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5 0 1.5 1.1 2.9 1.2 3.1.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.6.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2C6.5 2 2 6.5 2 12c0 1.8.5 3.5 1.3 5L2 22l5.2-1.4c1.5.8 3.1 1.2 4.8 1.2 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg></a>
+                      <a href={merchant.socials?.instagram || '#'} className="social-btn" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+                      <a href={merchant.socials?.website || '#'} className="social-btn" aria-label="Website"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></a>
+                      <a href={merchant.socials?.tiktok || '#'} className="social-btn" aria-label="X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L23 22h-6.913l-5.4-7.06L4.5 22H1.244l8.07-9.222L1 2h7.077l4.875 6.45L18.244 2zm-1.213 18.169h1.83L7.046 3.74H5.082L17.031 20.17z"/></svg></a>
                     </div>
                   </div>
                 );
               })
             ) : (
-              <p className="text-slate-500">Loading verified merchants...</p>
+              <p style={{ color: 'var(--muted)' }}>Loading live merchants...</p>
             )}
           </div>
         </div>
@@ -636,7 +561,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
               </h2>
             </div>
             <p className="lede reveal">
-              Korra structures the installment behavior that already exists in Nigerian commerce. No credit. No lending. Just clarity and control  built for how businesses actually sell.
+              Korra structures the installment behavior that already exists in Nigerian commerce. No credit. No lending. Just clarity and control — built for how businesses actually sell.
             </p>
           </div>
 
@@ -649,7 +574,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="why-card">
               <div className="why-num">02 / CONTROL</div>
               <div className="why-title">Merchant remains in control</div>
-              <div className="why-desc">You set the terms, the duration, the deposit. Korra manages the process  not the decisions.</div>
+              <div className="why-desc">You set the terms, the duration, the deposit. Korra manages the process — not the decisions.</div>
             </div>
             <div className="why-card">
               <div className="why-num">03 / EASE</div>
@@ -669,7 +594,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="why-card">
               <div className="why-num">06 / NIGERIA</div>
               <div className="why-title">Built for Nigerian commerce</div>
-              <div className="why-desc">Designed around how Nigerian businesses actually sell  fashion, gadgets, accessories, and more.</div>
+              <div className="why-desc">Designed around how Nigerian businesses actually sell — fashion, gadgets, accessories, and more.</div>
             </div>
           </div>
         </div>
@@ -678,8 +603,8 @@ const HomeLayout = ({ liveMerchants = [] }) => {
       {/* ============== FINAL CTA (orange) ============== */}
       <section className="section orange cta-orange" data-screen-label="08 Final CTA">
         <div className="container">
-          <h2 className="h1 reveal">When a customer is ready to commit  everything should already be in place.</h2>
-          <p className="lede reveal">Set up Korra today. The next time a customer asks about installment, you'll be ready to say yes  with structure.</p>
+          <h2 className="h1 reveal">When a customer is ready to commit — everything should already be in place.</h2>
+          <p className="lede reveal">Set up Korra today. The next time a customer asks about installment, you'll be ready to say yes — with structure.</p>
           <div className="hero-ctas reveal">
             <a href="#" className="btn btn-light" onClick={triggerModal}>Start free as a business <span className="arrow">→</span></a>
             <a href="#" className="btn btn-dark" onClick={triggerModal}>Download the customer app <span className="arrow">→</span></a>
@@ -693,9 +618,9 @@ const HomeLayout = ({ liveMerchants = [] }) => {
         <div className="container-wide">
           <div className="footer-top">
             <div className="footer-brand">
-              <a href="#" className="brand"><img src="/korra_logo_icon.webp" alt="Korra Logo" /><span className="wordmark" style={{ color: 'var(--white)' }}>KORRA</span></a>
+              <a href="#" className="brand"><img src="/korra_logo_icon.webp" alt="" /><span className="wordmark" style={{ color: 'var(--white)' }}>KORRA</span></a>
               <div className="footer-tag">Smart People Own Things Differently.</div>
-              <div className="footer-desc">Structured installment payments for Nigerian businesses. Manage how your customers pay  with clarity and control.</div>
+              <div className="footer-desc">Structured installment payments for Nigerian businesses. Manage how your customers pay — with clarity and control.</div>
             </div>
             <div className="footer-col">
               <h4>Product</h4>
@@ -704,16 +629,14 @@ const HomeLayout = ({ liveMerchants = [] }) => {
                 <li><a href="#customers" onClick={(e) => handleNavClick(e, 'customers')}>For Customers</a></li>
                 <li><Link to="/merchants">Merchant Directory</Link></li>
                 <li><a href="#how" onClick={(e) => handleNavClick(e, 'how')}>How It Works</a></li>
-                <li><a href="#">Pricing</a></li>
               </ul>
             </div>
             <div className="footer-col">
-              <h4>Company</h4>
+              <h4>Legal</h4>
               <ul>
-                <li><a href="#">About Korra</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href={KorraLinks.customerTermsPdf}>Customer Terms</a></li>
+                <li><a href={KorraLinks.vendorTermsPdf}>Merchant Rules</a></li>
+                <li><a href={KorraLinks.customerPrivacyPdf}>Privacy Policy</a></li>
               </ul>
             </div>
             <div className="footer-col">
@@ -737,9 +660,9 @@ const HomeLayout = ({ liveMerchants = [] }) => {
 
       {/* ============== GET STARTED MODAL ============== */}
       <div className={`modal-shell ${showModal ? 'open' : ''}`} id="get-started-modal" aria-hidden={!showModal}>
-        <div className="modal-overlay" onClick={() => setShowModal(false)} data-modal-close></div>
+        <div className="modal-overlay" onClick={() => setShowModal(false)}></div>
         <div className="modal-card" role="dialog" aria-labelledby="modal-title" aria-modal={showModal}>
-          <button className="modal-close" onClick={() => setShowModal(false)} data-modal-close aria-label="Close">
+          <button className="modal-close" onClick={() => setShowModal(false)} aria-label="Close">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>
           </button>
           <div className="modal-head">
@@ -760,7 +683,7 @@ const HomeLayout = ({ liveMerchants = [] }) => {
             <div className="modal-col">
               <div className="modal-col-tag">For Customers</div>
               <div className="modal-col-title">Buy with clarity</div>
-              <div className="modal-col-desc">Pay gradually for what you want  with a clear plan and visible progress.</div>
+              <div className="modal-col-desc">Pay gradually for what you want — with a clear plan and visible progress.</div>
               <div className="modal-actions">
                 <a href="https://app.korra.com.ng" className="btn btn-dark">Open Web App <span className="arrow">→</span></a>
                 <a href={KorraLinks.customerApk} className="btn btn-dark">Download APK</a>
