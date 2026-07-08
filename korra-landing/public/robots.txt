@@ -3,3 +3,6 @@ Allow: /
 
 # Point bots to your sitemap
 Sitemap: https://korra.com.ng/sitemap.xml
+
+# Store + product pages sitemap (proxied to korra-store via vercel.json)
+Sitemap: https://korra.com.ng/store-sitemap.xml

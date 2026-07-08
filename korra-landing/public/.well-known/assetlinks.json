@@ -1,0 +1,42 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.korra.shop",
+      "sha256_cert_fingerprints": [
+        "b3:e1:8a:1b:26:66:2c:93:a6:dc:d7:42:fd:74:a4:8a:3c:7a:4e:8f:6b:db:26:c9:32:af:61:cd:6b:ec:22:75"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.korra.shop.live",
+      "sha256_cert_fingerprints": [
+        "8c:2f:90:6f:2d:14:b7:2e:e1:0f:a9:0d:7f:87:18:65:e6:36:f4:f2:99:40:65:e4:dc:0a:62:93:45:12:c6:ce"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.korra.business",
+      "sha256_cert_fingerprints": [
+        "b3:e1:8a:1b:26:66:2c:93:a6:dc:d7:42:fd:74:a4:8a:3c:7a:4e:8f:6b:db:26:c9:32:af:61:cd:6b:ec:22:75"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.korra.business.live",
+      "sha256_cert_fingerprints": [
+        "15:2d:f0:a2:94:61:f0:84:2b:ca:aa:ec:42:77:86:c5:cb:7b:6e:6e:b1:f4:95:1c:e2:ba:79:55:7c:ac:f1:58"
+      ]
+    }
+  }
+]

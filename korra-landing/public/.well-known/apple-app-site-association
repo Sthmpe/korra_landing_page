@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "YOUR_APPLE_TEAM_ID_HERE.com.korra.shop",
+        "paths": ["*"]
+      },
+      {
+        "appID": "YOUR_APPLE_TEAM_ID_HERE.com.korra.shop.live",
+        "paths": ["*"]
+      },
+      {
+        "appID": "YOUR_APPLE_TEAM_ID_HERE.com.korra.business",
+        "paths": ["*"]
+      },
+      {
+        "appID": "YOUR_APPLE_TEAM_ID_HERE.com.korra.business.live",
+        "paths": ["*"]
+      }
+    ]
+  }
+}
