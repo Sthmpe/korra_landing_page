@@ -1,0 +1,116 @@
+// Ported verbatim from the old index.html's <script type="application/ld+json">.
+// Organization + both sibling apps (business.korra.com.ng, app.korra.com.ng)
+// + the FAQPage that backed the home page's FAQ accordion.
+export const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': 'https://korra.com.ng/#organization',
+      name: 'Korra',
+      url: 'https://korra.com.ng',
+      logo: 'https://korra.com.ng/korra_logo_icon.webp',
+      description:
+        'Korra is a commitment infrastructure that helps merchants accept installment payments and keep customers committed to their brand, not just a single purchase.',
+      sameAs: ['https://instagram.com/korraapp', 'https://linkedin.com/company/korraapp'],
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://business.korra.com.ng/#software',
+      name: 'Korra Business',
+      url: 'https://business.korra.com.ng',
+      applicationCategory: 'BusinessApplication',
+      operatingSystem: 'Web, Android',
+      description:
+        'A simple system for merchants to accept installment payments, track customers, and reduce the stress of managing pay-small-small sales.',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': 'https://app.korra.com.ng/#software',
+      name: 'Korra App',
+      url: 'https://app.korra.com.ng',
+      applicationCategory: 'FinanceApplication',
+      operatingSystem: 'Web, Android',
+      description:
+        'A simple way for customers to pay small small for items from trusted merchants, without loans or pressure.',
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': 'https://korra.com.ng/#faq',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'What is the best installment payment app in Nigeria?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Korra helps merchants accept installment payments and allows customers to pay small small for items without stress or confusion.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What makes Korra different from a normal installment app?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Korra is more than an installment tool. It is commitment infrastructure that helps merchants turn one-time buyers into customers who stay committed to their brand, with structured payments, clear terms, and full payment visibility.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Is Korra a loaning or credit system?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Korra is not a loan or credit system. Customers simply pay in parts over time, and merchants track everything clearly without debt or interest.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How does the Korra installment plan work for customers?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Customers receive a payment plan from a merchant, pay small small over time, and complete payment before collecting their item.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'How do merchants use Korra?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Merchants create a payment plan, send it to customers, and track payments easily as customers pay in parts.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What is a Store Balance on Korra?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Store balance is the total amount a customer has paid. If a plan is cancelled, the money remains available to use with that merchant.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: "What is Korra's projection and goal?",
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: "Korra's goal is to become the leading digital layaway infrastructure connecting retail merchants with everyday buyers. This year, our projection is to empower over 1,000 businesses to close more sales with zero credit risk, while giving thousands of customers a dignified, zero-interest way to pay small-small for the items they love without the stress of predatory loans.",
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Does Korra act as an escrow service or guarantee product delivery?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'No. Korra is strictly a payment tracking technology, not a marketplace or an escrow service. We provide the software for customers to pay in flexible installments, with deposits processed through our licensed partner and settled directly to the merchant. We do not hold funds pending delivery, nor do we manage physical inventory. Merchants are fully responsible for fulfilling orders, and customers are responsible for transacting with businesses they trust. The commercial agreement and product handover remain 100% between the buyer and the seller.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'What are the fees to use Korra?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Korra charges a transparent service fee to maintain our secure payment tracking infrastructure. Fees are capped so you never overpay on large purchases. Because Korra is a digital layaway platform and not a loan provider, there are zero interest charges, no monthly subscriptions, and absolutely no late penalties.',
+          },
+        },
+      ],
+    },
+  ],
+};

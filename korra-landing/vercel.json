@@ -1,8 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/store", "destination": "https://korra-store.vercel.app/store" },
-    { "source": "/store/:path*", "destination": "https://korra-store.vercel.app/store/:path*" },
-    { "source": "/store-sitemap.xml", "destination": "https://korra-store.vercel.app/sitemap.xml" },
-    { "source": "/(.*)", "destination": "/index.html" }
-  ]
-}
